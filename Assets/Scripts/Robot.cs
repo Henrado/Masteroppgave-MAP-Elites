@@ -43,9 +43,9 @@ public class Robot : Agent
     {
         m_JdController = GetComponent<JointDriveController>();
         leg0List = new Transform[]{leg0, leg0Upper, leg0Lower};
-        leg1List = new Transform[]{leg1, leg1Upper, leg0Lower};
-        leg2List = new Transform[]{leg2, leg2Upper, leg0Lower};
-        leg3List = new Transform[]{leg3, leg3Upper, leg0Lower};
+        leg1List = new Transform[]{leg1, leg1Upper, leg1Lower};
+        leg2List = new Transform[]{leg2, leg2Upper, leg2Lower};
+        leg3List = new Transform[]{leg3, leg3Upper, leg3Lower};
         allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
 
         int countJoint = 3;
