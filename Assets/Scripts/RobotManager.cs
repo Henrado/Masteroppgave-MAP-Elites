@@ -13,7 +13,7 @@ using System;
 public class RobotManager : MonoBehaviour
 {
     RobotParameterChannel parameterChannel;
-    Bein[] robots;
+    Robot[] robots;
     public void Awake()
     {
         // We create the Side Channel
@@ -22,14 +22,18 @@ public class RobotManager : MonoBehaviour
         // When a Debug.Log message is created, we send it to the stringChannel
         // The channel must be registered with the SideChannelManager class
         SideChannelManager.RegisterSideChannel(parameterChannel);
-        Debug.Log("Våknet");
     }
     void Start() 
     {
-        this.robots = FindObjectsOfType<Bein>();
+        this.robots = FindObjectsOfType<Robot>();
 
-        foreach (Bein i in this.robots) {
-            i.SetParameters(4f);
+        if (parameterChannel.allParameters is null)
+        {
+            throw new ArgumentNullException("Got no parametrs from Python");
+        }
+
+        foreach (Robot i in this.robots) {
+            i.SetParameters(parameterChannel.allParameters);
         }
     }
 

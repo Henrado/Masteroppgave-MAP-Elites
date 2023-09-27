@@ -30,10 +30,17 @@ class RobotParameterChannel(SideChannel):
         # We call this method to queue the data we want to send
         super().queue_message_to_send(msg)
 
-    def send_config(self, config_length: int, tall) -> None:
+    def send_config(self, configParams) -> None:
+        countLegs = len(configParams)
+        countJoints = configParams[0].shape[0]
+        countParams = configParams[0].shape[1]
         msg = OutgoingMessage()
         msg.write_string("config")
-        msg.write_int32(config_length)
-        for val in tall:
-            msg.write_float32(val)
+        msg.write_int32(countLegs)
+        msg.write_int32(countJoints)
+        msg.write_int32(countParams)
+        for leg_i in range(countLegs):
+            for joint in range(countJoints):
+                for params in range(countParams):
+                    msg.write_float32(configParams[leg_i][joint, params])
         super().queue_message_to_send(msg)

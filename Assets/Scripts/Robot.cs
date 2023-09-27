@@ -6,6 +6,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgentsExamples;
 using Random = UnityEngine.Random;
+using System;
 
 [RequireComponent(typeof(JointDriveController))] // Required to set joint forces
 public class Robot : Agent
@@ -49,7 +50,7 @@ public class Robot : Agent
         allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
 
         int countJoint = 3;
-        int countVars = 5;
+        int countVars = 4;
         leg0Params = new float[countJoint,countVars];
         leg1Params = new float[countJoint,countVars];
         leg2Params = new float[countJoint,countVars];
@@ -93,7 +94,7 @@ public class Robot : Agent
         }
     }
 
-    private float GetWantedAngle(float A, float f, float t, float phi, float theta)
+    private float GetWantedAngle(float t, float A, float f, float phi, float theta)
     {
         return A*Mathf.Sin(2*Mathf.PI*f*t + phi) + theta;
     }
@@ -109,8 +110,9 @@ public class Robot : Agent
             float[] angels = new float[countAngels];
             for (int i = 0; i < angels.Length; i++)
             {
-                angels[i] = GetWantedAngle(jWP[i,0], jWP[i,1], jWP[i,2], jWP[i,3], jWP[i,4]);
+                angels[i] = GetWantedAngle(t, jWP[i,0], jWP[i,1], jWP[i,2], jWP[i,3]);
             }
+            //Debug.Log(angels[1]);
             bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, angels[0], 0);
             bpDict[allLegList[leg_i][1]].SetJointTargetRotation(angels[1], 0, 0);
             bpDict[allLegList[leg_i][2]].SetJointTargetRotation(angels[2], 0, 0);

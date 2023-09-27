@@ -23,13 +23,13 @@ class UnityEvaluator:
     def close(self):
         self.env.close()
 
-    def evaluate(self, config):
+    def evaluate(self, allParams):
         # Setup
-        for g in range(self.steps):
-            self.channel.send_config(len(config), config)
-            print("Sender data")
-            # Next sim step
-            # Calculating the boids action for each boid
-            self.env.step()
-        print("Sendt")
+        self.channel.send_config(allParams)
+        print("Sender data")
+        for episode in range(2):
+            for g in range(self.steps):
+                self.env.step()
+            self.env.reset()
+        print("Ferdig")
         # Simulation
