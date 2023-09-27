@@ -91,6 +91,7 @@ public class Robot : Agent
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
         {
             bodyPart.Reset(bodyPart);
+            t=0;
         }
     }
 

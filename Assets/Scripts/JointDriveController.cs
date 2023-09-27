@@ -51,8 +51,8 @@ namespace Unity.MLAgentsExamples
         {
             bp.rb.transform.position = bp.startingPos;
             bp.rb.transform.rotation = bp.startingRot;
-            //bp.rb.velocity = Vector3.zero;
-            //bp.rb.angularVelocity = Vector3.zero;
+            bp.rb.velocity = Vector3.zero;
+            bp.rb.angularVelocity = Vector3.zero;
             // if (bp.groundContact)
             // {
             //     bp.groundContact.touchingGround = false;
