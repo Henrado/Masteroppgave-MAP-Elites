@@ -27,13 +27,17 @@ public class Robot : Agent
     public Transform leg3;
     public Transform leg3Upper;
     public Transform leg3Lower;
-
     private Transform[] leg0List;
     private Transform[] leg1List;
     private Transform[] leg2List;
     private Transform[] leg3List;
+    private Transform[][] allLegList;
     private float t = 0f;
-    private float f_X = 1f;
+    private float[,] leg0Params;
+    private float[,] leg1Params;
+    private float[,] leg2Params;
+    private float[,] leg3Params;
+    private float[][,] allLegParams;
     
     public override void Initialize()
     {
@@ -42,6 +46,15 @@ public class Robot : Agent
         leg1List = new Transform[]{leg1, leg1Upper, leg0Lower};
         leg2List = new Transform[]{leg2, leg2Upper, leg0Lower};
         leg3List = new Transform[]{leg3, leg3Upper, leg0Lower};
+        allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
+
+        int countJoint = 3;
+        int countVars = 5;
+        leg0Params = new float[countJoint,countVars];
+        leg1Params = new float[countJoint,countVars];
+        leg2Params = new float[countJoint,countVars];
+        leg3Params = new float[countJoint,countVars];
+        allLegParams = new float[][,]{leg0Params, leg1Params, leg2Params, leg3Params};
 
         //Setup each body part
         m_JdController.SetupBodyPart(body);
@@ -58,10 +71,18 @@ public class Robot : Agent
             con.SetupBodyPart(i);
         }
     }
-    public void SetParameters(float x)
+    public void SetParameters(float[][,] newParamsList)
     {
-        this.f_X = x;
-        Debug.Log("Parametrs satt");
+        for (int leg_i = 0; leg_i < allLegParams.Length; leg_i++)
+        {
+            for (int joint = 0; joint < allLegParams[leg_i].GetLength(0); joint++)
+            {
+                for (int param = 0; param < allLegParams[leg_i].GetLength(1); param++)
+                {
+                    allLegParams[leg_i][joint,param] = newParamsList[leg_i][joint, param];
+                }
+            }
+        }
     }
 
     public override void OnEpisodeBegin()
@@ -72,23 +93,27 @@ public class Robot : Agent
         }
     }
 
+    private float GetWantedAngle(float A, float f, float t, float phi, float theta)
+    {
+        return A*Mathf.Sin(2*Mathf.PI*f*t + phi) + theta;
+    }
+
     void FixedUpdate()
     {
         var bpDict = m_JdController.bodyPartsDict;
-
-        // Pick a new target joint rotation
-        float A = 1f;
-        float f_X = 1f;
-        float f_Z = 0.1f;
-        float theta = 0f;
-        float phi = 0f;
         t+=0.01f;
-
-        float vinkel_X = A*Mathf.Sin(2*Mathf.PI*f_X*t + phi) + theta;
-        float vinkel_Z = A*Mathf.Sin(2*Mathf.PI*f_Z*t + phi) + theta;
-        //Debug.Log(vinkel);
-        bpDict[leg0].SetJointTargetRotation(0, vinkel_Z, 0);
-        bpDict[leg0Upper].SetJointTargetRotation(vinkel_X, 0, 0);
-        bpDict[leg0Lower].SetJointTargetRotation(vinkel_Z, 0, 0);
+        for (int leg_i = 0; leg_i < allLegList.Length; leg_i++)
+        {
+            float[,] jWP = allLegParams[leg_i]; // jointsWithParams
+            int countAngels = allLegParams[leg_i].GetLength(0);
+            float[] angels = new float[countAngels];
+            for (int i = 0; i < angels.Length; i++)
+            {
+                angels[i] = GetWantedAngle(jWP[i,0], jWP[i,1], jWP[i,2], jWP[i,3], jWP[i,4]);
+            }
+            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, angels[0], 0);
+            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(angels[1], 0, 0);
+            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(angels[2], 0, 0);
+        }
     }
 }
