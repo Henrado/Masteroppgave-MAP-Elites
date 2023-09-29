@@ -13,7 +13,7 @@ using System;
 public class RobotManager : MonoBehaviour
 {
     RobotParameterChannel parameterChannel;
-    Robot[] robots;
+    Robot[] robots; // Script navn
     public void Awake()
     {
         // We create the Side Channel
