@@ -1,4 +1,4 @@
-from Python.RobotParameterChannel import RobotParameterChannel
+from RobotParameterChannel import RobotParameterChannel
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
 import time
