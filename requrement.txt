@@ -1,0 +1,7 @@
+deap==1.3.3
+tqdm>=4.65.0
+matplotlib>=3.5.3
+protobuf==3.20.0
+numpy==1.21.2
+mlagents==0.30.0
+patool==1.12
