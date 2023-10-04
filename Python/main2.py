@@ -7,7 +7,7 @@ try:
     params = []
     for i in range(4):
         params.append(np.ones((3,4)))
-    env.evaluate(params)
+    env.evaluate()
 finally:
     env.close()
     

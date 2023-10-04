@@ -33,12 +33,9 @@ public class Robot : Agent
     private Transform[] leg2List;
     private Transform[] leg3List;
     private Transform[][] allLegList;
-    private float t = 0f;
-    private float[,] leg0Params;
-    private float[,] leg1Params;
-    private float[,] leg2Params;
-    private float[,] leg3Params;
-    private float[][,] allLegParams;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+    private Transform Center;
     
     public override void Initialize()
     {
@@ -49,20 +46,16 @@ public class Robot : Agent
         leg3List = new Transform[]{leg3, leg3Upper, leg3Lower};
         allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
 
-        int countJoint = 3;
-        int countVars = 4;
-        leg0Params = new float[countJoint,countVars];
-        leg1Params = new float[countJoint,countVars];
-        leg2Params = new float[countJoint,countVars];
-        leg3Params = new float[countJoint,countVars];
-        allLegParams = new float[][,]{leg0Params, leg1Params, leg2Params, leg3Params};
-
         //Setup each body part
         m_JdController.SetupBodyPart(body);
         SetupBodyPartList(m_JdController, leg0List);
         SetupBodyPartList(m_JdController, leg1List);
         SetupBodyPartList(m_JdController, leg2List);
         SetupBodyPartList(m_JdController, leg3List);
+
+        Center = transform.Find("Center");
+        startPosition = Center.localPosition;
+        startRotation = Center.localRotation;
     }
     
     private void SetupBodyPartList(JointDriveController con, Transform[] list)
@@ -72,51 +65,46 @@ public class Robot : Agent
             con.SetupBodyPart(i);
         }
     }
-    public void SetParameters(float[][,] newParamsList)
-    {
-        for (int leg_i = 0; leg_i < allLegParams.Length; leg_i++)
-        {
-            for (int joint = 0; joint < allLegParams[leg_i].GetLength(0); joint++)
-            {
-                for (int param = 0; param < allLegParams[leg_i].GetLength(1); param++)
-                {
-                    allLegParams[leg_i][joint,param] = newParamsList[leg_i][joint, param];
-                }
-            }
-        }
-    }
 
     public override void OnEpisodeBegin()
     {
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
         {
             bodyPart.Reset(bodyPart);
-            t=0;
         }
     }
 
-    private float GetWantedAngle(float t, float A, float f, float phi, float theta)
-    {
-        return A*Mathf.Sin(2*Mathf.PI*f*t + phi) + theta;
-    }
-
-    void FixedUpdate()
+    public override void OnActionReceived(ActionBuffers actions)
     {
         var bpDict = m_JdController.bodyPartsDict;
-        t+=0.01f;
+
         for (int leg_i = 0; leg_i < allLegList.Length; leg_i++)
         {
-            float[,] jWP = allLegParams[leg_i]; // jointsWithParams
-            int countAngels = allLegParams[leg_i].GetLength(0);
-            float[] angels = new float[countAngels];
-            for (int i = 0; i < angels.Length; i++)
-            {
-                angels[i] = GetWantedAngle(t, jWP[i,0], jWP[i,1], jWP[i,2], jWP[i,3]);
-            }
-            //Debug.Log(angels[1]);
-            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, angels[0], 0);
-            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(angels[1], 0, 0);
-            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(angels[2], 0, 0);
+            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, actions.ContinuousActions[3*leg_i+0], 0);
+            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+1], 0, 0);
+            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+2], 0, 0);
         }
+    }
+
+    public override void CollectObservations(VectorSensor sensor){
+        // Observe the agent's local rotation (3 observations)
+        sensor.AddObservation(Center.localRotation.eulerAngles);
+        // Get a vector from the startposition to the currentposition
+        Vector3 distanceWalked = Center.localPosition - startPosition;
+        // Observe a vector pointing from start position to where it is (3 observations)
+        sensor.AddObservation(distanceWalked);
+
+        // Observe a dot product that indicates whether the beak tip is in front of the flower (1 observation)
+        // (+1 means that the beak tip is directly in front of the flower, -1 means directly behind)
+        //sensor.AddObservation(Vector3.Dot(toFlower.normalized, -nearestFlower.FlowerUpVector.normalized));
+
+        // Observe a dot product that indicates whether the beak is pointing toward the flower (1 observation)
+        // (+1 means that the beak is pointing directly at the flower, -1 means directly away)
+        //sensor.AddObservation(Vector3.Dot(beakTip.forward.normalized, -nearestFlower.FlowerUpVector.normalized));
+
+        // Observe the relative distance from the beak tip to the flower (1 observation)
+        sensor.AddObservation(1);
+
+        // 10 total observations
     }
 }

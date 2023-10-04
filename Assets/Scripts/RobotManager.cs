@@ -26,15 +26,6 @@ public class RobotManager : MonoBehaviour
     void Start() 
     {
         this.robots = FindObjectsOfType<Robot>();
-
-        if (parameterChannel.allParameters is null)
-        {
-            throw new ArgumentNullException("Got no parametrs from Python");
-        }
-
-        foreach (Robot i in this.robots) {
-            i.SetParameters(parameterChannel.allParameters);
-        }
     }
 
     public void OnDestroy()
