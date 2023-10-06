@@ -1,4 +1,6 @@
 from deap import base
+import numpy as np
+
 
 class _Fitness(base.Fitness):
     def __init__(self):
@@ -6,9 +8,7 @@ class _Fitness(base.Fitness):
 
 class Individual:
     def __init__(self, genom ,pos=None):
-        self.rng = None
         self.fitness = _Fitness()
-        self.distance_moved = None
         self.genom = genom
         self.map_position = pos
 
@@ -17,5 +17,8 @@ class Individual:
     
     def getFitness(self):
         return self.fitness
+    
+    def get_actions(self, time):
+        return np.random.rand(1,12)
     
 

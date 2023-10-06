@@ -1,4 +1,5 @@
-from RobotParameterChannel import RobotParameterChannel
+from EA.Individual import Individual
+from Unity.RobotParameterChannel import RobotParameterChannel
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
 import time
@@ -23,7 +24,7 @@ class UnityEvaluator:
     def close(self):
         self.env.close()
 
-    def evaluate(self):
+    def evaluate(self, individ: Individual):
         DELTA_TIME = 0.2
         AMPLITUDE = 2
         N_EVALUATIONS = 20
@@ -34,11 +35,12 @@ class UnityEvaluator:
         self.env.reset()
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         fitness = 0
-        for j in range(MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
+        for time in range(MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
             obs,other = self.env.get_steps(individual_name)
             if (len(obs.agent_id)>0):
                 # random actions
-                action = np.random.rand(1,12) # Lager tilfeldige vinkler den skal treffe
+                # action = np.random.rand(1,12) # Lager tilfeldige vinkler den skal treffe
+                action = individ.get_actions(time)
                                             # Lagt opp slik:
                                             # [leg0, upperleg0, forleg0, leg1 ...]
                                             # Der verdien skal være mellom -1 til 1
@@ -47,9 +49,9 @@ class UnityEvaluator:
                 #for i in range(len(action[0])):
                 #    action[0,i] = np.sin(j * DELTA_TIME)
 
-                print(obs.agent_id) # Henter agentenes id
-                print(obs[0].obs[0]) # Henter observasjonene til agent 0 
-                print(obs[0].reward) # Henter rewarden til agent 0
+                #print(obs.agent_id) # Henter agentenes id
+                #print(obs[0].obs[0]) # Henter observasjonene til agent 0 
+                #print(obs[0].reward) # Henter rewarden til agent 0
 
                 for id in obs.agent_id: # Går gjennom alle agenter og setter dems actions 
                     self.env.set_action_for_agent(individual_name,id,ActionTuple(action))
@@ -57,5 +59,4 @@ class UnityEvaluator:
                 
             else:
                 print("Ingen obs fanget opp")
-        print(fitness)
-        return fitness
+        return fitness, [0,1,2]

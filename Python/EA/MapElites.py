@@ -5,7 +5,7 @@ import numpy as np
 import multiprocessing as mp
 from deap import base
 from deap import tools
-from Individual import Individual
+from EA.Individual import Individual
 
 class MapElites:
     def __init__(self, args):
@@ -35,17 +35,25 @@ class MapElites:
     def placeIndivideInMap(self, individ: Individual):
         position = individ.getEndPosition()
         index = np.interp(position, [-self.max_distance_meter, self.max_distance_meter], [0, self.map_resolution-1])
+        print(index)
         index = tuple(np.int32(np.rint(index)))
         print(index)
-        self.map[index] = individ.getFitness()
+        if self.map[index] is None or individ.getFitness() > self.map[index].getFitness():
+            self.map[index] = individ
+        else:
+            print("Passer ikke og blir kastet:", individ.getEndPosition())
 
     def initializePopulation(self, n : int):
         genom_length = 12
         pop = []
         for i in range(n):
-            genom = np.array([np.random() for _ in range(genom_length)])
+            genom = np.random.rand(1,genom_length)
             pop.append(Individual(genom))
         return pop
+    
+    def evaluatePopulation(self, env, population):
+        for individ in population:
+            fitness, features = env.evaluate(individ)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
