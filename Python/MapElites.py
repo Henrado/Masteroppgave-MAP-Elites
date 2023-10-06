@@ -27,9 +27,13 @@ class MapElites:
         #self.map = np.full((self.map_dimensions, args.map_resolution, args.map_resolution), None)
         self.map = np.full(self.map_sizes, None)
         
-        
         print(self.map)
         print(self.map.shape)
+
+    def placeIndivideInMap(self, individ):
+        position = individ.getEndPosition()
+        roundPosition = np.rint(position)
+        self.map[roundPosition] = 1
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
