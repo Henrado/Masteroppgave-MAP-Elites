@@ -1,5 +1,5 @@
 from mlagents_envs.environment import UnityEnvironment
-from unity_evaluator import UnityEvaluator
+from Unity.Unity_evaluator import UnityEvaluator
 import numpy as np
 
 try:
