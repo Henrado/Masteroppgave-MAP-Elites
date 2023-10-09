@@ -6,6 +6,7 @@ import multiprocessing as mp
 from deap import base
 from deap import tools
 from EA.Individual import Individual
+from EA.Sine_controller import SineController
 
 class MapElites:
     def __init__(self, args):
@@ -25,46 +26,44 @@ class MapElites:
         self.map_dimensions = args.map_dimensions
         self.map_resolution = args.map_resolution
         self.map_sizes = tuple([args.map_resolution for _ in range(self.map_dimensions)])
-        #self.map_shape = tuple([self.map_sizes[x] for x in range(self.map_dimensions)])
-        #self.map = np.full((self.map_dimensions, args.map_resolution, args.map_resolution), None)
         self.map = np.full(self.map_sizes, None)
         
-        #print(self.map)
-        #print(self.map.shape)
 
-    def placeIndivideInMap(self, individ: Individual):
-        position = individ.getEndPosition()
-        index = np.interp(position, [-self.max_distance_meter, self.max_distance_meter], [0, self.map_resolution-1])
-        print(index)
+    def placeIndivideInMap(self, individ: Individual, fitness, features):
+        index = np.interp(features, [-self.max_distance_meter, self.max_distance_meter], [0, self.map_resolution-1])
+        print(features)
         index = tuple(np.int32(np.rint(index)))
         print(index)
-        if self.map[index] is None or individ.getFitness() > self.map[index].getFitness():
+        if self.map[index] is not None: 
+            a = self.map[index].getFitness() 
+        else: 
+            a = None
+        print(fitness, a)
+        if self.map[index] is None or fitness > self.map[index].getFitness():
             self.map[index] = individ
         else:
-            print("Passer ikke og blir kastet:", individ.getEndPosition())
+            print("Passer ikke og blir kastet:", features)
 
     def initializePopulation(self, n : int):
-        genom_length = 12
+        count_leg = 4
+        actuators_leg = 3
+        params_actuators = 4
         pop = []
         for i in range(n):
-            genom = np.random.rand(1,genom_length)
-            pop.append(Individual(genom))
+            genom = np.zeros((count_leg,actuators_leg,params_actuators))
+            for leg_j in range(count_leg):
+                genom[leg_j] = np.random.rand(actuators_leg, params_actuators)
+            pop.append(Individual(genom, SineController))
         return pop
     
-    def evaluatePopulation(self, env, population):
-        for individ in population:
-            fitness, features = env.evaluate(individ)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group_evolution = parser.add_argument_group("Evolution parameters")
-    group_evolution.add_argument('-p', '--population_size', type=int, default=64)
+    group_evolution.add_argument('-p', '--population_size', type=int, default=1)
     group_evolution.add_argument('-cr', '--crossover_probability', type=float, default=0.0)
     group_evolution.add_argument('-dim', '--map_dimensions', type=int, default=3)
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=5)
     group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=5000)
     args = parser.parse_args()
-    ind = Individual(np.array([10,0,-5]))
     map = MapElites(args)
-    map.placeIndivideInMap(ind)
-    print(map.map)

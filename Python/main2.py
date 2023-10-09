@@ -7,7 +7,7 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group_evolution = parser.add_argument_group("Evolution parameters")
-    group_evolution.add_argument('-p', '--population_size', type=int, default=3)
+    group_evolution.add_argument('-p', '--population_size', type=int, default=10)
     group_evolution.add_argument('-cr', '--crossover_probability', type=float, default=0.0)
     group_evolution.add_argument('-dim', '--map_dimensions', type=int, default=3)
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=5)
@@ -19,8 +19,7 @@ if __name__ == "__main__":
         pop = map.population
         for p in pop:
             fitness, features = env.evaluate(p)
-            p.map_position = features
-            map.placeIndivideInMap(p)
+            map.placeIndivideInMap(p, fitness, features)
 
         print("Map:")
         print(map.map)

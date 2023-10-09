@@ -88,7 +88,10 @@ public class Robot : Agent
 
     public override void CollectObservations(VectorSensor sensor){
         // Observe the agent's local rotation (3 observations)
-        sensor.AddObservation(Center.localRotation.eulerAngles);
+        // sensor.AddObservation(Center.localRotation.eulerAngles);
+
+        // Observe the agent local position (3 observations)
+        sensor.AddObservation(Center.localPosition);
         // Get a vector from the startposition to the currentposition
         Vector3 distanceWalked = Center.localPosition - startPosition;
         // Observe a vector pointing from start position to where it is (3 observations)
@@ -105,6 +108,6 @@ public class Robot : Agent
         // Observe the relative distance from the beak tip to the flower (1 observation)
         sensor.AddObservation(1);
 
-        // 10 total observations
+        // 7 total observations
     }
 }

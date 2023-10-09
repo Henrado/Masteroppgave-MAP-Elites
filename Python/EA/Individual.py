@@ -1,16 +1,19 @@
 from deap import base
 import numpy as np
 
-
-class _Fitness(base.Fitness):
-    def __init__(self):
-        self.weights = 0
-
 class Individual:
-    def __init__(self, genom ,pos=None):
-        self.fitness = _Fitness()
+    def __init__(self, genom, controller ,pos=None):
+        self.fitness = 0
         self.genom = genom
         self.map_position = pos
+        self.controllers = self._initControllers(controller, genom)
+
+    def _initControllers(self, controller, genom):
+        controllers = []
+        for leg in range(len(genom)):
+            for actuator in range(len(genom[leg])):
+                controllers.append(controller(*genom[leg, actuator].T))
+        return controllers
 
     def getEndPosition(self):
         return self.map_position
@@ -19,6 +22,10 @@ class Individual:
         return self.fitness
     
     def get_actions(self, time):
-        return np.random.rand(1,12)
+        action_angels = np.zeros((1,len(self.controllers)))
+        # return self.controller.get_action(time)
+        for i in range(len(self.controllers)):
+            action_angels[0,i] = self.controllers[i].get_action(time)
+        return action_angels
     
 

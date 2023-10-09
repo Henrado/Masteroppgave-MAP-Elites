@@ -35,6 +35,7 @@ class UnityEvaluator:
         self.env.reset()
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         fitness = 0
+        end_position = np.zeros((1,3))
         for time in range(MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
             obs,other = self.env.get_steps(individual_name)
             if (len(obs.agent_id)>0):
@@ -50,7 +51,7 @@ class UnityEvaluator:
                 #    action[0,i] = np.sin(j * DELTA_TIME)
 
                 #print(obs.agent_id) # Henter agentenes id
-                #print(obs[0].obs[0]) # Henter observasjonene til agent 0 
+                end_position = obs[0].obs[0][:3] # Henter observasjonene til agent 0 
                 #print(obs[0].reward) # Henter rewarden til agent 0
 
                 for id in obs.agent_id: # Går gjennom alle agenter og setter dems actions 
@@ -59,4 +60,4 @@ class UnityEvaluator:
                 
             else:
                 print("Ingen obs fanget opp")
-        return fitness, [0,1,2]
+        return fitness, end_position
