@@ -45,7 +45,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481862971419635350}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1729
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -236,7 +236,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880940933131012760}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 0.0601
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -624,7 +624,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3016969919851613625}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 0.0601
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -841,7 +841,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3165960353256256372}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 0.0601
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1060,7 +1060,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3341108984630834624}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1.247
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1181,7 +1181,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3362569360941910051}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 0.0601
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1395,7 +1395,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3818871232214679063}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1729
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1603,19 +1603,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 7
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 0
+      m_NumContinuousActions: 12
       BranchSizes: 
-    VectorActionSize: 
+    VectorActionSize: 0c000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 0
+    VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorName: Qutee_behavior
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -1707,7 +1707,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3875444308877049551}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.4158
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1902,7 +1902,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5636825121042929898}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1729
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -2121,7 +2121,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5740930815832991541}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.4158
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -2317,7 +2317,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6360620923991331353}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.4158
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -2575,7 +2575,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7849041296976826372}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.4158
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -2769,7 +2769,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7942749327344339425}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1729
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
