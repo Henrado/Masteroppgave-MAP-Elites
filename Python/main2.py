@@ -19,7 +19,9 @@ if __name__ == "__main__":
         pop = map.population
         for p in pop:
             fitness, features = env.evaluate(p)
-            map.placeIndivideInMap(p, fitness, features)
+            end_position, end_rotation = features # Unpack features
+            xPos_zPos_yRot = np.array([end_position[0], end_position[2], end_rotation[1]])
+            map.placeIndivideInMap(p, fitness, xPos_zPos_yRot)
 
         print("Map:")
         print(map.map)

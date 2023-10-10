@@ -13,7 +13,8 @@ class MapElites:
         self.steps = 0
         self.crossover_probability = args.crossover_probability
         self.args = args
-        self.max_distance_meter = 10;
+        self.max_distance_meter = 10
+        self.max_rotation_degree = 360
 
         # Evaluation setup
         self.evaluation_steps = args.evaluation_steps
@@ -30,10 +31,11 @@ class MapElites:
         
 
     def placeIndivideInMap(self, individ: Individual, fitness, features):
-        index = np.interp(features, [-self.max_distance_meter, self.max_distance_meter], [0, self.map_resolution-1])
-        print(features)
-        index = tuple(np.int32(np.rint(index)))
-        print(index)
+        index_x_z = np.interp(features[:2], [-self.max_distance_meter, self.max_distance_meter], [0, self.map_resolution-1])
+        index_yRot = np.interp(features[2], [-self.max_rotation_degree, self.max_rotation_degree], [0, self.map_resolution-1])
+        print("features", features)
+        index = tuple(np.int32(np.rint(np.concatenate((index_x_z, index_yRot), axis=None))))
+        print("index", index)
         if self.map[index] is not None: 
             a = self.map[index].getFitness() 
         else: 

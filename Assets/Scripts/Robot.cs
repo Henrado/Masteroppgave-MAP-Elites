@@ -92,10 +92,13 @@ public class Robot : Agent
 
         // Observe the agent local position (3 observations)
         sensor.AddObservation(Center.localPosition);
+
+        // Observe the agent local rotation in eulerangels (3 observations)
+        sensor.AddObservation(Center.localRotation.eulerAngles);
         // Get a vector from the startposition to the currentposition
-        Vector3 distanceWalked = Center.localPosition - startPosition;
+        // Vector3 distanceWalked = Center.localPosition - startPosition;
         // Observe a vector pointing from start position to where it is (3 observations)
-        sensor.AddObservation(distanceWalked);
+        // sensor.AddObservation(distanceWalked);
 
         // Observe a dot product that indicates whether the beak tip is in front of the flower (1 observation)
         // (+1 means that the beak tip is directly in front of the flower, -1 means directly behind)
