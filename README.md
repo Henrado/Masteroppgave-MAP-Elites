@@ -18,3 +18,8 @@ Conda er nødvendig for lettere å lage og bytte mellom enver:
  ```conda activate env39```
  Innstallere pakker med pip:
  ```pip install -r requrement.txt```
+ Hvordan kjøre:
+Først start ```python Python\main2.py```
+Så når det ikke skjer noe i terminalen start simuleringen i unity editoren (Strykk play øverst)
+
+ 
