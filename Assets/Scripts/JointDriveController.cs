@@ -112,7 +112,7 @@ namespace Unity.MLAgentsExamples
         [HideInInspector] public Dictionary<Transform, BodyPart> bodyPartsDict = new Dictionary<Transform, BodyPart>();
 
         [HideInInspector] public List<BodyPart> bodyPartsList = new List<BodyPart>();
-        const float k_MaxAngularVelocity = 50.0f;
+        const float k_MaxAngularVelocity = 10.47f; // 100 RPM = 10.471976 rad/s
 
         /// <summary>
         /// Create BodyPart object and add it to dictionary.
