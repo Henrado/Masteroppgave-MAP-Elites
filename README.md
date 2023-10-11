@@ -9,6 +9,9 @@ Last ned Unity Hub:
 Last ned Unity version ```2021.3.8f1```
 Last ned Ml Agents pakken: Window --> Package Manager --> ML Agents ```2.0.1```
 
+#### Åpne prosjekt
+I unity HUB åpne prosjekt og velg hele mappen 
+
 #### Eget program:
 WIP. Skal lage et kjørende program for lettere kunne gjøre en instanse av simuleringen
 
@@ -22,5 +25,4 @@ Conda er nødvendig for lettere å lage og bytte mellom enver:
 ### Hvordan kjøre:
 Først start ```python Python\main2.py```
 Så når det ikke skjer noe i terminalen start simuleringen i unity editoren (Strykk play øverst)
-
  
