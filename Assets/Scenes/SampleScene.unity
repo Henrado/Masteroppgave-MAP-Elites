@@ -1235,6 +1235,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Qutee
       objectReference: {fileID: 0}
+    - target: {fileID: 4301497709997681824, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5226021884457143244, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_LocalRotation.w
