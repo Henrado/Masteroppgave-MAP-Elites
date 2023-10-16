@@ -68,5 +68,5 @@ class UnityEvaluator:
         end_x = end_position[0]
         end_z = end_position[2]
         end_yrot = end_rotation[1]
-        return (fitness,), (end_x, end_z, end_yrot)
+        return (fitness,), (end_yrot, end_x, end_z)
     
