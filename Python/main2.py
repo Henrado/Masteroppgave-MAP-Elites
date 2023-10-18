@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     # Lager MAP-ELITES:
     grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
-    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=20, batch_size=15,
+    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=30, batch_size=5,
                                                     dimension=dimension_count, optimisation_task="maximisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
     logger = algorithms.TQDMAlgorithmLogger(algo)
