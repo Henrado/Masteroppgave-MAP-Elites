@@ -662,17 +662,17 @@ PrefabInstance:
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: jointDampen
-      value: 2500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointSpring
-      value: 4900
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointForceLimit
-      value: 981
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1094689843737655413, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -782,6 +782,28 @@ PrefabInstance:
     - {fileID: 2183348220019005162, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
     - {fileID: 335848616265054696, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
+--- !u!1 &945984996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2812287885390639136, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 599232553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &945985002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945984996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470f17465ee91724eb29c75125eb4a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJointSpring: 2000
+  jointDampen: 500
+  maxJointForceLimit: 10000
+  bodyPartsList: []
 --- !u!1 &1022099598
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +960,7 @@ ArticulationBody:
     stiffness: 100
     damping: 20
     forceLimit: 981
-    target: 0
+    target: 3.01
     targetVelocity: 0
   m_ZDrive:
     lowerLimit: 0
