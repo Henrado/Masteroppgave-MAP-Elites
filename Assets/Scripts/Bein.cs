@@ -15,8 +15,11 @@ public class Bein : Agent
 
     [Header("Body Parts")][Space(10)] public Transform body;
     public Transform leg0Upper;
+
+    public AnimationCurve forceCurve;
+    public AnimationCurve torqueCurve;
     private float t = 0f;
-    public float venkel = -1f;
+    public float angle = 0f;
     
     public override void Initialize()
     {
@@ -41,11 +44,14 @@ public class Bein : Agent
 
         // Pick a new target joint rotation
         t+=0.01f;
+        m_JdController.GetCurrentJointForces();
+        forceCurve = bpDict[leg0Upper].jointForceCurve;
+        torqueCurve = bpDict[leg0Upper].jointTorqueCurve;
 
         //float vinkel_X = A*Mathf.Sin(2*Mathf.PI*f_X*t + phi) + theta;
         //float vinkel_Z = A*Mathf.Sin(2*Mathf.PI*f_Z*t + phi) + theta;
         //Debug.Log(vinkel);
-        bpDict[leg0Upper].SetJointTargetRotation(venkel, 0, 0);
+        bpDict[leg0Upper].SetJointTargetRotation(angle, 0, 0);
         //Debug.Log(bpDict[leg0Upper].joint.currentTorque);
         //Debug.Log(bpDict[leg0Upper].joint.currentTorque.magnitude);
     }
