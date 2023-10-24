@@ -95,7 +95,8 @@ namespace Unity.MLAgentsExamples
                 positionDamper = thisJdController.jointDampen,
                 maximumForce = rawVal
             };
-            joint.slerpDrive = jd;
+            joint.angularXDrive = jd;
+            joint.angularYZDrive = jd;
             currentStrength = jd.maximumForce;
         }
     }
@@ -148,7 +149,8 @@ namespace Unity.MLAgentsExamples
                     positionDamper = jointDampen,
                     maximumForce = maxJointForceLimit
                 };
-                bp.joint.slerpDrive = jd;
+                bp.joint.angularXDrive = jd;
+                bp.joint.angularYZDrive = jd;
             }
 
             bp.thisJdController = this;
