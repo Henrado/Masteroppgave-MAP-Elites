@@ -644,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 2812287885390639136, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5346727267386600851, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -1215,7 +1215,7 @@ PrefabInstance:
     - target: {fileID: 3844517171994416897, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4301497709997681824, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
@@ -1244,8 +1244,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
+      propertyPath: jointDampen
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
+      propertyPath: maxJointSpring
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
       propertyPath: maxJointForceLimit
-      value: 20000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6745284717984348855, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
