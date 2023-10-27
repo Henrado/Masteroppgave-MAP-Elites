@@ -36,6 +36,8 @@ public class Robot : Agent
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Transform Center;
+    public AnimationCurve forceCurve;
+    public AnimationCurve torqueCurve;
     
     public override void Initialize()
     {
@@ -80,10 +82,18 @@ public class Robot : Agent
 
         for (int leg_i = 0; leg_i < allLegList.Length; leg_i++)
         {
-            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, actions.ContinuousActions[3*leg_i+0], 0);
-            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+1], 0, 0);
-            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+2], 0, 0);
+            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, actions.ContinuousActions[3*leg_i+0], 0); //leg0
+            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+1], 0, 0); //upperleg0
+            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+2], 0, 0); //forleg0
         }
+    }
+    void FixedUpdate()
+    {
+        var bpDict = m_JdController.bodyPartsDict;
+
+        m_JdController.GetCurrentJointForces();
+        forceCurve = bpDict[leg0Upper].jointForceCurve;
+        torqueCurve = bpDict[leg0Upper].jointTorqueCurve;
     }
 
     public override void CollectObservations(VectorSensor sensor){
