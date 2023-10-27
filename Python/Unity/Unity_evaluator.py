@@ -1,4 +1,5 @@
 from EA.Individual import Individual
+from Unity.fitness_funtions import basicFitness
 from Unity.RobotParameterChannel import RobotParameterChannel
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
@@ -38,7 +39,6 @@ class UnityEvaluator:
         individ = self.individ(genom, self.controller)
         self.env.reset()
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
-        fitness = 0.5
         end_position = np.zeros((1,3))
         end_rotation = 0
         last_rotation = 0 # Denne kan ikke være np.zeros((1,3)) siden da vil last_rotation bli = [[x,y,z]] ikke [x,y,z]
@@ -68,5 +68,7 @@ class UnityEvaluator:
         end_x = end_position[0]
         end_z = end_position[2]
         end_yrot = end_rotation[1]
-        return (fitness,), (end_yrot, end_x, end_z)
+        fitness = basicFitness(end_x, end_z, end_yrot)
+        # print(fitness, end_yrot, end_x, end_z)
+        return (fitness,), (end_x, end_z)
     
