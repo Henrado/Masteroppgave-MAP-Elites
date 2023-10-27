@@ -13,7 +13,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group_evolution = parser.add_argument_group("Evolution parameters")
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=5)
-    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=500)
+    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=100)
     args = parser.parse_args()
     
     
@@ -30,15 +30,16 @@ if __name__ == "__main__":
     # MAP-ELITES variabler: 
     ind_domain = (-1., 1.) # Min og MAX for hver variabel i genomet 
     grid_shape = (args.map_resolution, args.map_resolution, args.map_resolution) # default: (5,5,5)
-    fitnes_min = -30
-    fitnes_max = 30
-    feature_shape_pos = (-10, 10)
+    fitnes_min = -0
+    fitnes_max = 1
+    feature_shape_pos = (-5, 5)
     feature_shape_rot = (-20, 20)
 
     # Lager MAP-ELITES:
-    grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
-    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=30, batch_size=5,
-                                                    dimension=dimension_count, optimisation_task="maximisation", ind_domain=ind_domain)
+    # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
+    grid = containers.Grid(shape=(args.map_resolution, args.map_resolution), max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_pos, feature_shape_pos))
+    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=100, batch_size=25,
+                                                    dimension=dimension_count, optimisation_task="minimisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
     logger = algorithms.TQDMAlgorithmLogger(algo)
     
@@ -49,14 +50,14 @@ if __name__ == "__main__":
         with ParallelismManager("none") as pMgr:
             best = algo.optimise(env.evaluate, executor = pMgr.executor, batch_mode=False) # Disable batch_mode (steady-state mode) to ask/tell new individuals without waiting the completion of each batch
 
+        print("\n" + algo.summary())
+
+        # Plot the results
+        plots.default_plots_grid(logger, output_dir="test_resultat")
+
+        print("\nAll results are available in the '%s' pickle file." % logger.final_filename)
     finally:
         env.close()
     
-    print("\n" + algo.summary())
-
-    # Plot the results
-    plots.default_plots_grid(logger, output_dir="test_resultat")
-
-    print("\nAll results are available in the '%s' pickle file." % logger.final_filename)
         
 
