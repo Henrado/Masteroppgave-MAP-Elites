@@ -1167,46 +1167,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BehaviorName
-      value: Qutee_behavior
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.VectorActionSpaceType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.VectorObservationSize
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.VectorActionSize.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457615160033346746, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3844517171994416897, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_Name
@@ -1237,11 +1197,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6612090276983492996, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: DecisionPeriod
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: jointDampen
@@ -1257,25 +1212,10 @@ PrefabInstance:
       propertyPath: maxJointForceLimit
       value: 520
       objectReference: {fileID: 0}
-    - target: {fileID: 6745284717984348855, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
@@ -1329,26 +1269,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef7725775c9dcdf4f9a308235288b43a, type: 3}
---- !u!1 &2131887602 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3341108984630834624, guid: ef7725775c9dcdf4f9a308235288b43a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1933565786}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2131887609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131887602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b324968e39f264889a83af814c30ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  agentDoneOnGroundContact: 0
-  penalizeGroundContact: 0
-  groundContactPenalty: 0
-  touchingGround: 0

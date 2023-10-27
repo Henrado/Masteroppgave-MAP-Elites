@@ -1025,6 +1025,7 @@ GameObject:
   - component: {fileID: 5010990357269736151}
   - component: {fileID: 7433217750411435489}
   - component: {fileID: 7379717140681033920}
+  - component: {fileID: 8684588392067018241}
   m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
@@ -1133,6 +1134,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 115, y: 2.2, z: 30}
   m_Center: {x: 0, y: 26.3, z: 0}
+--- !u!114 &8684588392067018241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3341108984630834624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b324968e39f264889a83af814c30ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  agentDoneOnGroundContact: 0
+  penalizeGroundContact: 0
+  groundContactPenalty: 0
+  touchingGround: 0
 --- !u!1 &3362569360941910051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1667,18 @@ MonoBehaviour:
   leg3: {fileID: 3807026086668323983}
   leg3Upper: {fileID: 7829576575944092846}
   leg3Lower: {fileID: 5468435855482016866}
+  forceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &6612090276983492996
 MonoBehaviour:
   m_ObjectHideFlags: 0
