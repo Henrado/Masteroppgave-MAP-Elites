@@ -13,7 +13,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group_evolution = parser.add_argument_group("Evolution parameters")
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=5)
-    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=50)
+    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=500)
     args = parser.parse_args()
     
     

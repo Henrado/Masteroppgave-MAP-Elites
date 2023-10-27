@@ -52,7 +52,7 @@ class UnityEvaluator:
                                             # [leg0, upperleg0, forleg0, leg1 ...]
                                             # Der verdien skal være mellom -1 til 1
                                             # Faktisk max vinkel kan settes i unity 
-
+                #action = np.zeros((1,12))
                 #print(obs.agent_id) # Henter agentenes id
                 end_position = obs[0].obs[0][:3] # Henter observasjonene til agent 0 
                 end_rotation += self.shortestAngle(obs[0].obs[0][3:6],last_rotation)

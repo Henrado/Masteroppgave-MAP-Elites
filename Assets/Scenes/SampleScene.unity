@@ -360,108 +360,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 25123364}
   smoothingTime: 0
---- !u!1 &341193323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5933270372711779898, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 599232553}
-  m_PrefabAsset: {fileID: 0}
---- !u!153 &341193328
-ConfigurableJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341193323}
-  m_ConnectedBody: {fileID: 964995517}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 5.000002, z: 0}
-  serializedVersion: 2
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
-  m_XMotion: 0
-  m_YMotion: 0
-  m_ZMotion: 0
-  m_AngularXMotion: 0
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
-  m_LinearLimitSpring:
-    spring: 0
-    damper: 0
-  m_LinearLimit:
-    limit: 0
-    bounciness: 0
-    contactDistance: 0
-  m_AngularXLimitSpring:
-    spring: 0
-    damper: 0
-  m_LowAngularXLimit:
-    limit: 0
-    bounciness: 0
-    contactDistance: 0
-  m_HighAngularXLimit:
-    limit: 0
-    bounciness: 0
-    contactDistance: 0
-  m_AngularYZLimitSpring:
-    spring: 0
-    damper: 0
-  m_AngularYLimit:
-    limit: 0
-    bounciness: 0
-    contactDistance: 0
-  m_AngularZLimit:
-    limit: 0
-    bounciness: 0
-    contactDistance: 0
-  m_TargetPosition: {x: 0, y: 0, z: 0}
-  m_TargetVelocity: {x: 0, y: 0, z: 0}
-  m_XDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_YDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_ZDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 1
-  m_AngularXDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_AngularYZDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_SlerpDrive:
-    serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 3.4028233e+38
-  m_ProjectionMode: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
-  m_ConfiguredInWorldSpace: 0
-  m_SwapBodies: 0
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1 &405080810
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +534,7 @@ PrefabInstance:
     - target: {fileID: 335848616265054696, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: m_Mass
-      value: 0.0000001
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335848616265054696, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -706,17 +604,17 @@ PrefabInstance:
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: jointDampen
-      value: 2500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointSpring
-      value: 4900
+      value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointForceLimit
-      value: 7000
+      value: 11000
       objectReference: {fileID: 0}
     - target: {fileID: 1094689843737655413, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -733,16 +631,6 @@ PrefabInstance:
       propertyPath: maxJointForceLimit
       value: 20000
       objectReference: {fileID: 0}
-    - target: {fileID: 2183348220019005162, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-        type: 3}
-      propertyPath: m_Mass
-      value: 0.000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2183348220019005162, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2676474324210393638, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: m_IsActive
@@ -756,22 +644,12 @@ PrefabInstance:
     - target: {fileID: 2812287885390639136, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3719632647479128194, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5346727267386600851, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6063348497814977642, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-        type: 3}
-      propertyPath: m_Mass
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6773024697258949711, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -782,6 +660,46 @@ PrefabInstance:
         type: 3}
       propertyPath: MaxStep
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644513334303245256, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
+      propertyPath: test.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 8711943845131411063, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -805,6 +723,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8727888028259446984, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
+      propertyPath: m_RotationDriveMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727888028259446984, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
+        type: 3}
       propertyPath: m_ProjectionDistance
       value: 0.001
       objectReference: {fileID: 0}
@@ -817,12 +740,6 @@ PrefabInstance:
     - {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
     - {fileID: 5346727267386600851, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0, type: 3}
---- !u!54 &964995517 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 2183348220019005162, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 599232553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1022099598
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1022099599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1298,7 +1215,7 @@ PrefabInstance:
     - target: {fileID: 3844517171994416897, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4301497709997681824, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
@@ -1327,13 +1244,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
+      propertyPath: jointDampen
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
+      propertyPath: maxJointSpring
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
       propertyPath: maxJointForceLimit
-      value: 20000
+      value: 520
       objectReference: {fileID: 0}
     - target: {fileID: 6745284717984348855, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
