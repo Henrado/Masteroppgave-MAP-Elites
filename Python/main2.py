@@ -35,13 +35,15 @@ if __name__ == "__main__":
     feature_shape_pos = (-5, 5)
     feature_shape_rot = (-20, 20)
 
+    output = "test_resultat"
+
     # Lager MAP-ELITES:
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
     grid = containers.Grid(shape=(args.map_resolution, args.map_resolution), max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_pos, feature_shape_pos))
-    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=100, batch_size=25,
+    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=30, batch_size=5,
                                                     dimension=dimension_count, optimisation_task="minimisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
-    logger = algorithms.TQDMAlgorithmLogger(algo)
+    logger = algorithms.TQDMAlgorithmLogger(algo, save_period=2)
     
     try:
         # Lager evaluator:
@@ -53,7 +55,7 @@ if __name__ == "__main__":
         print("\n" + algo.summary())
 
         # Plot the results
-        plots.default_plots_grid(logger, output_dir="test_resultat")
+        plots.default_plots_grid(logger, output_dir=output)
 
         print("\nAll results are available in the '%s' pickle file." % logger.final_filename)
     finally:
