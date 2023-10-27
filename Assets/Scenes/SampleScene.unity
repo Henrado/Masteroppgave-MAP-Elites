@@ -604,17 +604,17 @@ PrefabInstance:
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: jointDampen
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointSpring
-      value: 4900
+      value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 970451435893492354, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
       propertyPath: maxJointForceLimit
-      value: 1000
+      value: 11000
       objectReference: {fileID: 0}
     - target: {fileID: 1094689843737655413, guid: 0d9f8d74b7a77f140876a47fdcbcb6d0,
         type: 3}
@@ -759,7 +759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1022099599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1250,17 +1250,17 @@ PrefabInstance:
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: maxJointSpring
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: maxJointForceLimit
-      value: 100
+      value: 520
       objectReference: {fileID: 0}
     - target: {fileID: 6745284717984348855, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
