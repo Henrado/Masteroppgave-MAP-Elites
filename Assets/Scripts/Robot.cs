@@ -82,9 +82,9 @@ public class Robot : Agent
 
         for (int leg_i = 0; leg_i < allLegList.Length; leg_i++)
         {
-            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, actions.ContinuousActions[3*leg_i+0], 0);
-            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+1], 0, 0);
-            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+2], 0, 0);
+            bpDict[allLegList[leg_i][0]].SetJointTargetRotation(0, actions.ContinuousActions[3*leg_i+0], 0); //leg0
+            bpDict[allLegList[leg_i][1]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+1], 0, 0); //upperleg0
+            bpDict[allLegList[leg_i][2]].SetJointTargetRotation(actions.ContinuousActions[3*leg_i+2], 0, 0); //forleg0
         }
     }
     void FixedUpdate()
