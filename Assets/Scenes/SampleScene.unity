@@ -1207,11 +1207,6 @@ PrefabInstance:
       propertyPath: maxJointSpring
       value: 500
       objectReference: {fileID: 0}
-    - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
-        type: 3}
-      propertyPath: maxJointForceLimit
-      value: 520
-      objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: m_RootOrder
