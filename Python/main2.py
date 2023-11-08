@@ -15,6 +15,7 @@ if __name__ == "__main__":
     group_evolution = parser.add_argument_group("Evolution parameters")
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=10)
     group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=100)
+    group_evolution.add_argument('-e', '--experiment_name', type=str, default="test_resultat")
     args = parser.parse_args()
     
     
@@ -36,7 +37,12 @@ if __name__ == "__main__":
     feature_shape_pos = (-5, 5)
     feature_shape_rot = (-20, 20)
 
-    output = "test_8.11"
+
+    try: 
+        os.mkdir(args.experiment_name)
+    except OSError as error: 
+        print(error) 
+    output = args.experiment_name
 
     # Lager MAP-ELITES:
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
