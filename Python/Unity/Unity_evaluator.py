@@ -8,7 +8,7 @@ import numpy as np
 import os
 import struct
 
-BUILD_PATH="../Build/Linux/Figur2"
+BUILD_PATH="../Build/Linux/Figur2.x86_64"
 
 class UnityEvaluator:
     def __init__(self, evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=None, controller=None, genom_shape=None):
