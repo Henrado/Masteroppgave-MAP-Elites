@@ -25,7 +25,7 @@ class UnityEvaluator:
         self.controller = controller
         self.genom_shape = genom_shape
 
-    def _getBuild_Path():
+    def _getBuild_Path(self):
         plt = platform.system()
         if plt == "Windows":
             return "../Build/Windows/Figur2.exe"
