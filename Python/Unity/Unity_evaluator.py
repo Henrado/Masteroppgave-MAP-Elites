@@ -7,22 +7,35 @@ import time
 import numpy as np
 import os
 import struct
+import platform 
 
-BUILD_PATH="../Build/Linux/Figur2.x86_64"
 
 class UnityEvaluator:
     def __init__(self, evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=None, controller=None, genom_shape=None):
         self.MAX_N_STEPS_PER_EVALUATION = evaluation_steps
+        self.BUILD_PATH = self._getBuild_Path()
         if editor_mode:
             self.env = UnityEnvironment(file_name=None, seed=1)
         elif headless:
-            self.env = UnityEnvironment(file_name=BUILD_PATH, seed=1, no_graphics=True, worker_id=worker_id)
+            self.env = UnityEnvironment(file_name=self.BUILD_PATH, seed=1, no_graphics=True, worker_id=worker_id)
         else:
-            self.env = UnityEnvironment(file_name=BUILD_PATH, seed=1, no_graphics=False, worker_id=worker_id)
+            self.env = UnityEnvironment(file_name=self.BUILD_PATH, seed=1, no_graphics=False, worker_id=worker_id)
 
         self.individ = individ
         self.controller = controller
         self.genom_shape = genom_shape
+
+    def _getBuild_Path():
+        plt = platform.system()
+        if plt == "Windows":
+            return "../Build/Windows/Figur2.exe"
+        elif plt == "Linux":
+            return "../Build/Linux/Figur2.x86_64"
+        elif plt == "Darwin":
+            raise NotImplementedError("Mac er ikke implementer ennå")
+        else:
+            print("Unidentified system")
+            raise NotImplementedError("OS ikke gjennkjent")
 
     def close(self):
         self.env.close()
