@@ -7,6 +7,7 @@ import argparse
 from qdpy import algorithms, containers, plots
 from qdpy.base import ParallelismManager
 import math
+import os
 
 
 if __name__ == "__main__":
@@ -35,7 +36,7 @@ if __name__ == "__main__":
     feature_shape_pos = (-5, 5)
     feature_shape_rot = (-20, 20)
 
-    output = "test_resultat"
+    output = "test_8.11"
 
     # Lager MAP-ELITES:
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     algo = algorithms.RandomSearchMutPolyBounded(grid, budget=1000, batch_size=50,
                                                     dimension=dimension_count, optimisation_task="maximisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
-    logger = algorithms.TQDMAlgorithmLogger(algo, save_period=10)
+    logger = algorithms.TQDMAlgorithmLogger(algo, save_period=10, log_base_path=output)
     
     try:
         # Lager evaluator:
