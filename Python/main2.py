@@ -38,11 +38,11 @@ if __name__ == "__main__":
     feature_shape_rot = (-20, 20)
 
 
+    output = os.path.join("result", args.experiment_name)
     try: 
-        os.mkdir(args.experiment_name)
+        os.mkdir(output)
     except OSError as error: 
         print(error) 
-    output = args.experiment_name
 
     # Lager MAP-ELITES:
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
