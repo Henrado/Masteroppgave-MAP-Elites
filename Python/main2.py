@@ -14,7 +14,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group_evolution = parser.add_argument_group("Evolution parameters")
     group_evolution.add_argument('-res', '--map_resolution', type=int, default=10)
-    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=100)
+    group_evolution.add_argument('-n', '--evaluation_steps', type=int, default=200)
     group_evolution.add_argument('-e', '--experiment_name', type=str, default="test_resultat")
     args = parser.parse_args()
     
@@ -47,10 +47,10 @@ if __name__ == "__main__":
     # Lager MAP-ELITES:
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
     grid = containers.Grid(shape=(args.map_resolution, args.map_resolution), max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_pos, feature_shape_pos))
-    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=1000, batch_size=50,
+    algo = algorithms.RandomSearchMutPolyBounded(grid, budget=10000, batch_size=500,
                                                     dimension=dimension_count, optimisation_task="minimisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
-    logger = algorithms.TQDMAlgorithmLogger(algo, save_period=10, log_base_path=output)
+    logger = algorithms.TQDMAlgorithmLogger(algo, save_period=20, log_base_path=output)
     
     try:
         # Lager evaluator:
