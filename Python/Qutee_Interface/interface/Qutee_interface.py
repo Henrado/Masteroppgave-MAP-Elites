@@ -7,7 +7,7 @@ from XL330 import XL330
 # For å finne ut om  det er windows eller Linux
 if os.name == 'nt':
     # ex) Windows: "COM*", Linux: "/dev/ttyUSB*", Mac: "/dev/tty.usbserial-*"
-    DEVICENAME          = 'COM0'
+    DEVICENAME          = 'COM3'
     import msvcrt
     def getch():
         return msvcrt.getch().decode()
@@ -73,8 +73,65 @@ for i in DXL_ALL_ID:
     DXL_ALL_LIST.append(servo)
     DXL_ALL_DICT[i] = servo
 
-def setMinMaxValue(DiCT:dict, IDs, min, max):
+def setMinMaxValue(Dict:dict, IDs:list, min:int, max:int):
     for i in IDs:
-        DiCT[i].setMinMaxPositionValue(min, max)
+        Dict[i].setMinMaxPositionValue(min, max)
 
-def getG
+def getAllGoalPos(Dict:dict, IDs: list, input: list):
+    allGolPos = []
+    for i, ID in enumerate(IDs):
+        allGolPos.append(Dict[ID].getGoalPos(input[i]))
+    return allGolPos
+
+def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:int, ADDr: int, command: int, com_len: int):
+    if com_len == 1:
+        dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDr, command)
+    elif com_len == 2:
+        dxl_comm_result, dxl_error = packetHandler.write2ByteTxRx(portHandler, ID, ADDr, command)
+    elif com_len == 4:
+        dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(portHandler, ID, ADDr, command)
+    else:
+        print("No data lenght")
+        quit()
+    if dxl_comm_result != COMM_SUCCESS:
+        print("%d:%s" % ID,packetHandler.getTxRxResult(dxl_comm_result))
+    elif dxl_error != 0:
+        print("%d:%s" % ID,packetHandler.getRxPacketError(dxl_error))
+    else:
+        print("Dynamixel ID:%d has been successfully connected" % ID)
+
+def setTorque(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, command: int):
+    for i in IDs:
+        _sendPacketTxRx(packetHandler, portHandler, i, ADDR_TORQUE_ENABLE, command, 1)
+
+if __name__ == "__main__":
+    # Initialize PortHandler instance
+    # Set the port path
+    # Get methods and members of PortHandlerLinux or PortHandlerWindows
+    print(DEVICENAME)
+    portHandler = PortHandler(DEVICENAME)
+
+    # Initialize PacketHandler instance
+    # Set the protocol version
+    # Get methods and members of Protocol1PacketHandler or Protocol2PacketHandler
+    packetHandler = PacketHandler(PROTOCOL_VERSION)
+
+        # Open port
+    if portHandler.openPort():
+        print("Succeeded to open the port")
+    else:
+        print("Failed to open the port")
+        print("Press any key to terminate...")
+        getch()
+        quit()
+
+
+    # Set port baudrate
+    if portHandler.setBaudRate(BAUDRATE):
+        print("Succeeded to change the baudrate")
+    else:
+        print("Failed to change the baudrate")
+        print("Press any key to terminate...")
+        getch()
+        quit()
+    setTorque(packetHandler, portHandler, [DXL02_ID, DXL03_ID], TORQUE_DISABLE)
