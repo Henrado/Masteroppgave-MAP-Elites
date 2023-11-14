@@ -85,6 +85,10 @@ def getAllGoalPos(Dict:dict, IDs: list, input: list):
         allGolPos.append(Dict[ID].getGoalPos(input[i]))
     return allGolPos
 
+def initializeGroupSync(packetHandler:PacketHandler, portHandler: PortHandler, ADDR:int, LEN_ADDER: int) -> tuple:
+    
+    return group_sync_read, group_sync_write
+
 def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:int, ADDr: int, command: int, com_len: int):
     if com_len == 1:
         dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDr, command)
@@ -96,14 +100,14 @@ def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:in
         print("No data lenght")
         quit()
     if dxl_comm_result != COMM_SUCCESS:
-        print("%d:%s" % ID,packetHandler.getTxRxResult(dxl_comm_result))
+        print("%d:%s" % (ID,packetHandler.getTxRxResult(dxl_comm_result)))
     elif dxl_error != 0:
-        print("%d:%s" % ID,packetHandler.getRxPacketError(dxl_error))
+        print("%d:%s" % (ID,packetHandler.getRxPacketError(dxl_error)))
     else:
         print("Dynamixel ID:%d has been successfully connected" % ID)
 
 
-def setTorque(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, command: int):
+def setTorqueMode(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, command: int):
     for i in IDs:
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_TORQUE_ENABLE, command, 1)
 
@@ -115,6 +119,58 @@ def setMaxMinPosLimitDegre(packetHandler:PacketHandler, portHandler: PortHandler
         minLimit, maxLimit = vServo.getMinMaxPosValue() 
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MAXIMUM_POSITION_VALUE, maxLimit, 4)
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MINIMUM_POSITION_VALUE, minLimit, 4)
+
+def setupGroupRead(groupSyncRead : GroupSyncRead, IDs:list) -> bool:
+    for i in IDs:
+        # Add parameter storage for Dynamixel#1 present position value
+        dxl_addparam_result = groupSyncRead.addParam(i)
+        if dxl_addparam_result != True:
+            print("[ID:%03d] groupSyncRead addparam failed" % i)
+            quit()
+
+def sendGroupWrite(packetHandler:PacketHandler, groupSyncWrite:GroupSyncWrite, IDs: list[int], dxl_goal_position: list[int]):
+    if len(IDs) != len(dxl_goal_position):
+        raise Exception("ID-listen og Goal-listen er ikke like lange! ID:", len(IDs), "Goal:", len(dxl_goal_position))
+    # Allocate goal position value into byte array
+    for index, id in enumerate(IDs):
+        param_goal_position = [DXL_LOBYTE(DXL_LOWORD(dxl_goal_position[index])), DXL_HIBYTE(DXL_LOWORD(dxl_goal_position[index])), DXL_LOBYTE(DXL_HIWORD(dxl_goal_position[index])), DXL_HIBYTE(DXL_HIWORD(dxl_goal_position[index]))]
+
+        # Add Dynamixel#1 goal position value to the Syncwrite parameter storage
+        dxl_addparam_result = groupSyncWrite.addParam(id, param_goal_position)
+        if dxl_addparam_result != True:
+            print("[ID:%03d] groupSyncWrite addparam failed" % id)
+            quit()
+
+    # Syncwrite goal position
+    dxl_comm_result = groupSyncWrite.txPacket()
+    if dxl_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
+    # Clear syncwrite parameter storage
+    groupSyncWrite.clearParam()
+
+def readGroupUntilDone(packetHandler:PacketHandler, groupSyncRead: GroupSyncRead, ADDR_POS: int, Len_ADDR: int, IDs: list):
+    while 1:
+        # Syncread present position
+        dxl_comm_result = groupSyncRead.txRxPacket()
+        if dxl_comm_result != COMM_SUCCESS:
+            print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
+
+        # Check if groupsyncread data of Dynamixel#i is available
+        for i in IDs:
+            dxl_getdata_result = groupSyncRead.isAvailable(i, ADDR_POS, Len_ADDR)
+            if dxl_getdata_result != True:
+                print("[ID:%03d] groupSyncRead getdata failed" % i)
+                quit()
+
+        # Get Dynamixel#i present position value
+        for i in IDs:
+            dxl1_present_position = groupSyncRead.getData(i, ADDR_POS, Len_ADDR)
+            print("[ID:%03d]  PresPos:%03d\t" % (i, dxl1_present_position))
+
+        #if not ((abs(dxl_goal_position[index] - dxl1_present_position) > DXL_MOVING_STATUS_THRESHOLD) and (abs(dxl_goal_position[index] - dxl2_present_position) > DXL_MOVING_STATUS_THRESHOLD)):
+        #    break
+
+        
 
 if __name__ == "__main__":
     # Initialize PortHandler instance
@@ -146,5 +202,15 @@ if __name__ == "__main__":
         print("Press any key to terminate...")
         getch()
         quit()
-    #setTorque(packetHandler, portHandler, [DXL01_ID], TORQUE_DISABLE)
-    setMaxMinPosLimitDegre(packetHandler, portHandler, [DXL01_ID], 0, 90)
+    # Initialize GroupSyncWrite instance
+    groupSyncWrite = GroupSyncWrite(portHandler, packetHandler, ADDR_GOAL_POSITION, LEN_GOAL_POSITION)
+    # Initialize GroupSyncRead instace for Present Position
+    groupSyncRead = GroupSyncRead(portHandler, packetHandler, ADDR_PRESENT_POSITION, LEN_PRESENT_POSITION)
+    setMaxMinPosLimitDegre(packetHandler, portHandler, [DXL01_ID], -45, 45)
+    setTorqueMode(packetHandler, portHandler, [DXL01_ID], TORQUE_ENABLE)
+    sendGroupWrite(packetHandler, groupSyncWrite, [DXL01_ID], [4000])
+    time.sleep(2)
+    sendGroupWrite(packetHandler, groupSyncWrite, [DXL01_ID], [0])
+    time.sleep(2)
+    setTorqueMode(packetHandler, portHandler, [DXL01_ID], TORQUE_DISABLE)
+
