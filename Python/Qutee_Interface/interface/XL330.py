@@ -7,11 +7,23 @@ class XL330:
         self.DXL_MAXIMUM_POSITION_VALUE  = 4095      # Refer to the Maximum Position Limit of product eManual
         self.inputDirection = self._reversedInternal(False)
 
-    def setMinMaxPositionValue(self, min: int, max: int):
-        self.DXL_MINIMUM_POSITION_VALUE = min
-        self.DXL_MAXIMUM_POSITION_VALUE = max
+    def setMinMaxPositionValue(self, minPWM: int, maxPWM: int):
+        self.DXL_MINIMUM_POSITION_VALUE = minPWM
+        self.DXL_MAXIMUM_POSITION_VALUE = maxPWM
 
-    def _reversedInternal(self, reversed: bool):
+    def setMinMaxPositionDegre(self, minDeg: float, maxDeg:float):
+        minPWM = self._degreToPwm(minDeg)
+        maxPWM = self._degreToPwm(maxDeg)
+        self.setMinMaxPositionValue(minPWM, maxPWM)
+
+    def getMinMaxPosValue(self):
+        return self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE
+
+    def _degreToPwm(self, degree: float) -> int:
+        pwm = np.interp(degree, [-180, 180], [self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE])
+        return int(np.clip(pwm, self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE))
+
+    def _reversedInternal(self, reversed: bool) -> int:
         if reversed:
             return -1
         else:

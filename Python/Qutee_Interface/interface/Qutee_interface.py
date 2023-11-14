@@ -3,6 +3,8 @@
 import os
 from dynamixel_sdk import *                    # Uses Dynamixel SDK library
 from XL330 import XL330
+import numpy as np
+
 
 # For å finne ut om  det er windows eller Linux
 if os.name == 'nt':
@@ -100,9 +102,19 @@ def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:in
     else:
         print("Dynamixel ID:%d has been successfully connected" % ID)
 
+
 def setTorque(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, command: int):
     for i in IDs:
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_TORQUE_ENABLE, command, 1)
+
+        
+def setMaxMinPosLimitDegre(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, minLimitDegre: float, maxLimitDegre: float):
+    for i in IDs:
+        vServo = DXL_ALL_DICT[i]
+        vServo.setMinMaxPositionDegre(minLimitDegre, maxLimitDegre)
+        minLimit, maxLimit = vServo.getMinMaxPosValue() 
+        _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MAXIMUM_POSITION_VALUE, maxLimit, 4)
+        _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MINIMUM_POSITION_VALUE, minLimit, 4)
 
 if __name__ == "__main__":
     # Initialize PortHandler instance
@@ -134,4 +146,5 @@ if __name__ == "__main__":
         print("Press any key to terminate...")
         getch()
         quit()
-    setTorque(packetHandler, portHandler, [DXL02_ID, DXL03_ID], TORQUE_DISABLE)
+    #setTorque(packetHandler, portHandler, [DXL01_ID], TORQUE_DISABLE)
+    setMaxMinPosLimitDegre(packetHandler, portHandler, [DXL01_ID], 0, 90)
