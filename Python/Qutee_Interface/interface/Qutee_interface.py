@@ -70,6 +70,15 @@ DXL_LOWERLEG_ID =   [DXL03_ID, DXL06_ID, DXL09_ID, DXL12_ID]
 DXL_ALL_LIST =      []
 DXL_ALL_DICT =      {}
 
+# TODO DISSE MÅ SJEKKES
+BASE_MIN_DEGRE = -45
+BASE_MAX_DEGRE = 45
+UPPERLEG_MIN_DEGRE = -60
+UPPERLEG_MAX_DEGRE = 0
+LOWERLEG_MIN_DEGRE = 0
+LOWERLEG_MAX_DEGRE = 45
+
+
 for i in DXL_ALL_ID:
     servo = XL330(i)
     DXL_ALL_LIST.append(servo)
@@ -79,7 +88,7 @@ def setMinMaxValue(Dict:dict, IDs:list, min:int, max:int):
     for i in IDs:
         Dict[i].setMinMaxPositionValue(min, max)
 
-def getAllGoalPos(Dict:dict, IDs: list, input: list):
+def getAllGoalPos(Dict:dict, IDs: list, input: list[float]) -> list[int]:
     allGolPos = []
     for i, ID in enumerate(IDs):
         allGolPos.append(Dict[ID].getGoalPos(input[i]))
@@ -107,7 +116,7 @@ def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:in
         print("Dynamixel ID:%d has been successfully connected" % ID)
 
 
-def setTorqueMode(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, command: int):
+def setTorqueMode(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list[int], command: int):
     for i in IDs:
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_TORQUE_ENABLE, command, 1)
 
@@ -206,11 +215,19 @@ if __name__ == "__main__":
     groupSyncWrite = GroupSyncWrite(portHandler, packetHandler, ADDR_GOAL_POSITION, LEN_GOAL_POSITION)
     # Initialize GroupSyncRead instace for Present Position
     groupSyncRead = GroupSyncRead(portHandler, packetHandler, ADDR_PRESENT_POSITION, LEN_PRESENT_POSITION)
-    setMaxMinPosLimitDegre(packetHandler, portHandler, [DXL01_ID], -45, 45)
-    setTorqueMode(packetHandler, portHandler, [DXL01_ID], TORQUE_ENABLE)
-    sendGroupWrite(packetHandler, groupSyncWrite, [DXL01_ID], [4000])
-    time.sleep(2)
-    sendGroupWrite(packetHandler, groupSyncWrite, [DXL01_ID], [0])
-    time.sleep(2)
-    setTorqueMode(packetHandler, portHandler, [DXL01_ID], TORQUE_DISABLE)
-
+    setMaxMinPosLimitDegre(packetHandler, portHandler, DXL_BASE_ID, BASE_MIN_DEGRE, BASE_MAX_DEGRE)
+    setMaxMinPosLimitDegre(packetHandler, portHandler, DXL_UPPERLEG_ID, UPPERLEG_MIN_DEGRE, UPPERLEG_MAX_DEGRE)
+    setMaxMinPosLimitDegre(packetHandler, portHandler, DXL_LOWERLEG_ID, LOWERLEG_MIN_DEGRE, LOWERLEG_MAX_DEGRE)
+    setTorqueMode(packetHandler, portHandler, DXL_ALL_ID, TORQUE_ENABLE)
+    for i in range(3):
+        l = [0,-1,-1,0,1,1,0,-1,-1,0,1,1]
+        l = getAllGoalPos(DXL_ALL_DICT, DXL_ALL_ID, l)
+        print("Går til", l)
+        sendGroupWrite(packetHandler, groupSyncWrite, DXL_ALL_ID, l)
+        time.sleep(2)
+        l = [0,1,1,0,-1,-1,0,1,1,0,-1,-1]
+        l = getAllGoalPos(DXL_ALL_DICT, DXL_ALL_ID, l)
+        sendGroupWrite(packetHandler, groupSyncWrite, DXL_ALL_ID, l)
+        time.sleep(2)
+    setTorqueMode(packetHandler, portHandler, DXL_ALL_ID, TORQUE_DISABLE)
+    quit()
