@@ -5,3 +5,4 @@ protobuf==3.20.0
 numpy==1.21.2
 mlagents==0.30.0
 patool==1.12
+serial
