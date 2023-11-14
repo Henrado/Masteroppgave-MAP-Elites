@@ -37,12 +37,12 @@ BAUDRATE                    = 57600
 PROTOCOL_VERSION            = 2.0
 
 # Make sure that each DYNAMIXEL ID should have unique ID.
-DXL1_ID                     = 1                 # Dynamixel#1 ID : 1
+DXL1_ID                     = 3                 # Dynamixel#1 ID : 1
 DXL2_ID                     = 2                 # Dynamixel#1 ID : 2
 
 # Use the actual port assigned to the U2D2.
 # ex) Windows: "COM*", Linux: "/dev/ttyUSB*", Mac: "/dev/tty.usbserial-*"
-DEVICENAME                  = '/dev/ttyUSB0'
+DEVICENAME                  = 'COM3'
 
 TORQUE_ENABLE               = 1                 # Value for enabling the torque
 TORQUE_DISABLE              = 0                 # Value for disabling the torque
