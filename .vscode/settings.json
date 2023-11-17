@@ -54,5 +54,6 @@
     "dotnet.defaultSolution": "Figur2.sln",
     "python.analysis.extraPaths": [
         "./Python/Qutee_Interface/src"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }

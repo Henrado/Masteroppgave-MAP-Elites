@@ -70,7 +70,6 @@ DXL_LOWERLEG_ID =   [DXL03_ID, DXL06_ID, DXL09_ID, DXL12_ID]
 DXL_ALL_LIST =      []
 DXL_ALL_DICT =      {}
 
-# TODO DISSE MÅ SJEKKES
 BASE_MIN_DEGRE = -45
 BASE_MAX_DEGRE = 45
 UPPERLEG_MIN_DEGRE = -60
@@ -84,21 +83,32 @@ for i in DXL_ALL_ID:
     DXL_ALL_LIST.append(servo)
     DXL_ALL_DICT[i] = servo
 
-def setMinMaxValue(Dict:dict, IDs:list, min:int, max:int):
+def setMaxMinValue(Dict:dict[int,XL330], IDs:list[int], max:int, min:int) -> None:
+    """Tar inn ordbok med alle servoene og liste med hvilke servoer som skal 
+    settes med maximum og minimum pwm"""
     for i in IDs:
         Dict[i].setMinMaxPositionValue(min, max)
 
-def getAllGoalPos(Dict:dict, IDs: list, input: list[float]) -> list[int]:
+def getAllGoalPos(Dict:dict[int, XL330], IDs: list[int], input: list[float]) -> list[int]:
+    """
+    Går gjennom valgt ordbok og henter ut servoens pwm basert på input mellom -1, 1
+    input: list[float] er liste med input fra -1 til 1
+    return: list[int] med pwm sinaler 0-4090
+    """
     allGolPos = []
     for i, ID in enumerate(IDs):
         allGolPos.append(Dict[ID].getGoalPos(input[i]))
     return allGolPos
 
-def initializeGroupSync(packetHandler:PacketHandler, portHandler: PortHandler, ADDR:int, LEN_ADDER: int) -> tuple:
-    
-    return group_sync_read, group_sync_write
 
-def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:int, ADDr: int, command: int, com_len: int):
+def _sendPacketTxRx(packetHandler:Protocol2PacketHandler, portHandler: PortHandler, ID:int, ADDr: int, command: int, com_len: int) -> None:
+    """
+    Send en enslig pakke til en valgt servo med ID
+    ID[int]: ID til servoen som skal modta commandoen 
+    ADDr[int]: Adressen til kommandoen 
+    command[int]: Kommandoen som skal sendes
+    com_len[int]: Lengden på kommandoen som skal sendes 
+    """
     if com_len == 1:
         dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDr, command)
     elif com_len == 2:
@@ -106,22 +116,31 @@ def _sendPacketTxRx(packetHandler:PacketHandler, portHandler: PortHandler, ID:in
     elif com_len == 4:
         dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(portHandler, ID, ADDr, command)
     else:
-        print("No data lenght")
+        print("Wrong data lenght")
         quit()
     if dxl_comm_result != COMM_SUCCESS:
         print("%d:%s" % (ID,packetHandler.getTxRxResult(dxl_comm_result)))
     elif dxl_error != 0:
         print("%d:%s" % (ID,packetHandler.getRxPacketError(dxl_error)))
-    else:
-        print("Dynamixel ID:%d has been successfully connected" % ID)
 
 
-def setTorqueMode(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list[int], command: int):
+def setTorqueMode(packetHandler:Protocol2PacketHandler, portHandler: PortHandler, IDs:list[int], command: int) -> None:
+    """
+    Skal sette torque moden til en liste med servoer
+    IDs:list[int]: Liste med IDer som skal settes mode 
+    command: int: Moden som skal settes: 1=Enable, 0=Disable
+    """
     for i in IDs:
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_TORQUE_ENABLE, command, 1)
 
         
-def setMaxMinPosLimitDegre(packetHandler:PacketHandler, portHandler: PortHandler, IDs:list, minLimitDegre: float, maxLimitDegre: float):
+def setMaxMinPosLimitDegre(packetHandler:Protocol2PacketHandler, portHandler: PortHandler, IDs:list[int], minLimitDegre: float, maxLimitDegre: float):
+    """
+    Skal sette min og max vinkel til servoer i IDs
+    IDs: Liste med valgte servoer
+    minLimitDegre:[float] Minimum vinkel den skal kunne gå
+    maxLimitDegre:[float] Maximum vinkel den skal kunne gå
+    """
     for i in IDs:
         vServo = DXL_ALL_DICT[i]
         vServo.setMinMaxPositionDegre(minLimitDegre, maxLimitDegre)
@@ -129,7 +148,11 @@ def setMaxMinPosLimitDegre(packetHandler:PacketHandler, portHandler: PortHandler
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MAXIMUM_POSITION_VALUE, maxLimit, 4)
         _sendPacketTxRx(packetHandler, portHandler, i, ADDR_MINIMUM_POSITION_VALUE, minLimit, 4)
 
-def setupGroupRead(groupSyncRead : GroupSyncRead, IDs:list) -> bool:
+
+def setupGroupRead(groupSyncRead : GroupSyncRead, IDs:list[int]):
+    """
+    Setter opp hvilke servoer man skal hente data fra
+    """
     for i in IDs:
         # Add parameter storage for Dynamixel#1 present position value
         dxl_addparam_result = groupSyncRead.addParam(i)
@@ -137,7 +160,13 @@ def setupGroupRead(groupSyncRead : GroupSyncRead, IDs:list) -> bool:
             print("[ID:%03d] groupSyncRead addparam failed" % i)
             quit()
 
-def sendGroupWrite(packetHandler:PacketHandler, groupSyncWrite:GroupSyncWrite, IDs: list[int], dxl_goal_position: list[int]):
+
+def sendGroupWrite(packetHandler:Protocol2PacketHandler, groupSyncWrite:GroupSyncWrite, IDs: list[int], dxl_goal_position: list[int]):
+    """
+    Skal sende en bolk med samme type data (goal_position) til servoene i listen IDs
+    IDs list[int]: Liste med servoer 
+    dxl_goal_position list[int]: Liste med pwm signaler som skal sendes til servoene 
+    """
     if len(IDs) != len(dxl_goal_position):
         raise Exception("ID-listen og Goal-listen er ikke like lange! ID:", len(IDs), "Goal:", len(dxl_goal_position))
     # Allocate goal position value into byte array
@@ -157,7 +186,8 @@ def sendGroupWrite(packetHandler:PacketHandler, groupSyncWrite:GroupSyncWrite, I
     # Clear syncwrite parameter storage
     groupSyncWrite.clearParam()
 
-def readGroupUntilDone(packetHandler:PacketHandler, groupSyncRead: GroupSyncRead, ADDR_POS: int, Len_ADDR: int, IDs: list):
+
+def readGroupUntilDone(packetHandler:Protocol2PacketHandler, groupSyncRead: GroupSyncRead, ADDR_POS: int, Len_ADDR: int, IDs: list):
     while 1:
         # Syncread present position
         dxl_comm_result = groupSyncRead.txRxPacket()

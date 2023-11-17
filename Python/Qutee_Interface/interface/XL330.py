@@ -7,19 +7,35 @@ class XL330:
         self.DXL_MAXIMUM_POSITION_VALUE  = 4095      # Refer to the Maximum Position Limit of product eManual
         self.inputDirection = self._reversedInternal(False)
 
-    def setMinMaxPositionValue(self, minPWM: int, maxPWM: int):
+    def setMinMaxPositionValue(self, minPWM: int, maxPWM: int) -> None:
+        """
+        For å sette min og max PWM til servo objekt 
+        minPWM[int]: Minimum orginal 0
+        maxPWM[int]: Maximum orginal 4095 
+        """
         self.DXL_MINIMUM_POSITION_VALUE = minPWM
         self.DXL_MAXIMUM_POSITION_VALUE = maxPWM
 
-    def setMinMaxPositionDegre(self, minDeg: float, maxDeg:float):
+    def setMinMaxPositionDegre(self, minDeg: float, maxDeg:float) -> None:
+        """
+        For å sette min og max i forhold til grader i intervallet -180 til 180
+        minDeg[float]: minimum servoen skal gå i grader. Orginal -180
+        maxDeg[float]: maximum servoen skal gå i grader. Orginal 180
+        """
         minPWM = self._degreToPwm(minDeg)
         maxPWM = self._degreToPwm(maxDeg)
         self.setMinMaxPositionValue(minPWM, maxPWM)
 
-    def getMinMaxPosValue(self):
+    def getMinMaxPosValue(self) -> tuple:
+        """
+        Returnerer minimum og maximum servoen skal kunne bevege seg i PWM
+        """
         return self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE
 
     def _degreToPwm(self, degree: float) -> int:
+        """
+        
+        """
         pwm = np.interp(degree, [-180, 180], [self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE])
         return int(np.clip(pwm, self.DXL_MINIMUM_POSITION_VALUE, self.DXL_MAXIMUM_POSITION_VALUE))
 
