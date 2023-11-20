@@ -250,7 +250,7 @@ if __name__ == "__main__":
     setMaxMinPosLimitDegre(packetHandler, portHandler, DXL_LOWERLEG_ID, LOWERLEG_MIN_DEGRE, LOWERLEG_MAX_DEGRE)
     setTorqueMode(packetHandler, portHandler, DXL_ALL_ID, TORQUE_ENABLE)
     for i in range(3):
-        l = [0,-1,-1,0,1,1,0,-1,-1,0,1,1]
+        l = [0.0,-1.0,-1.0,0.0,1.0,1.0,0.0,-1.0,-1.0,0.0,1.0,1.0]
         l = getAllGoalPos(DXL_ALL_DICT, DXL_ALL_ID, l)
         print("Går til", l)
         sendGroupWrite(packetHandler, groupSyncWrite, DXL_ALL_ID, l)
