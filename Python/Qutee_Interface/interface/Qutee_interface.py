@@ -88,6 +88,7 @@ for i in DXL_ALL_ID:
 class Qutee_interface:
     def __init__(self):
         self.setUpPort()
+        self.firstTimeSetUp()
         # Initialize GroupSyncWrite instance
         self.groupSyncWrite = GroupSyncWrite(self.portHandler, self.packetHandler, ADDR_GOAL_POSITION, LEN_GOAL_POSITION)
         # Initialize GroupSyncRead instace for Present Position
@@ -276,9 +277,9 @@ if __name__ == "__main__":
     for i in range(3):
         l = [0,-1,-1,0,1,1,0,-1,-1,0,1,1]
         Q.setAction(l)
-        time.sleep(10)
+        time.sleep(2)
         l = [0,1,1,0,-1,-1,0,1,1,0,-1,-1]
         Q.setAction(l)
-        time.sleep(10)
+        time.sleep(2)
     Q.DisableTorqueALL()
     Q.quit()
