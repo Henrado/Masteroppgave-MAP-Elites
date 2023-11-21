@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import os
-from dynamixel_sdk import *                    # Uses Dynamixel SDK library
-from XL330 import XL330
+from Qutee_Interface.interface.dynamixel_sdk  import *                    # Uses Dynamixel SDK library
+from Qutee_Interface.interface.XL330 import XL330
 import numpy as np
 
 
@@ -89,6 +89,7 @@ class Qutee_interface:
     def __init__(self):
         self.setUpPort()
         self.firstTimeSetUp()
+        self.setReversed(DXL_ALL_DICT, DXL_UPPERLEG_ID, True)
         # Initialize GroupSyncWrite instance
         self.groupSyncWrite = GroupSyncWrite(self.portHandler, self.packetHandler, ADDR_GOAL_POSITION, LEN_GOAL_POSITION)
         # Initialize GroupSyncRead instace for Present Position
@@ -146,6 +147,12 @@ class Qutee_interface:
         settes med maximum og minimum pwm"""
         for i in IDs:
             Dict[i].setMinMaxPositionValue(min, max)
+
+    def setReversed(self,Dict:dict[int,XL330], IDs:list[int], reversed:bool) -> None:
+        """Tar inn ordbok med alle servoene og liste med hvilke servoer som skal 
+        reversere input"""
+        for i in IDs:
+            Dict[i].setReverseInputDirection(reversed)
 
     def getAllGoalPos(self, Dict:dict[int, XL330], IDs: list[int], input: list[float]) -> list[int]:
         """
