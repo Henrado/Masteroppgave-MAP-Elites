@@ -24,7 +24,7 @@ dimension_shape = (count_leg, actuators_leg, params_actuators)
 
 try:
     # Lager evaluator:
-    env = UnityEvaluator(500, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=SineController, genom_shape=dimension_shape)
+    env = UnityEvaluator(500, editor_mode=True, headless=False, worker_id=0, individ=individ, controller=SineController, genom_shape=dimension_shape)
         
     env.evaluate(ind)
 
