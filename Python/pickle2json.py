@@ -1,6 +1,8 @@
 """
 Pickle2JSON is a simple Python Command Line program for converting Pickle file to JSON file.
 
+https://gist.github.com/romgapuz/c7a4cedb85f090ac1b55383a58fa572c
+
 Arguments: Only one (1) argument is expected which is the pickle file.
 Usage: python pickle2json.py myfile.pkl
 Output: The output is a JSON file bearing the same filename containing the JSON document of the converted Pickle file.
