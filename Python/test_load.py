@@ -3,7 +3,10 @@ from qdpy import algorithms, containers, plots
 
     # You may want to import your own packages if the pickle file contains custom objects
 
-with open("result/10.11.23/final.p", "rb") as f:
+with open("result/22.11.2023/final.p", "rb") as f:
     data = pickle.load(f)
 grid = data['container']
-print(grid.solutions[(4, 9)])
+for i in range(10):
+    for j in range(10):
+        print("i:", i, "j:", j, grid.solutions[(i,j)])
+print(grid.solutions[(5, 1)])
