@@ -12,7 +12,7 @@ import platform
 
 
 class UnityEvaluator:
-    def __init__(self, evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=None, controller=None, genom_shape=None):
+    def __init__(self, evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=None, controller=None):
         self.MAX_N_STEPS_PER_EVALUATION = evaluation_steps
         self.BUILD_PATH = self._getBuild_Path()
         if editor_mode:
@@ -24,7 +24,6 @@ class UnityEvaluator:
 
         self.individ = individ
         self.controller = controller
-        self.genom_shape = genom_shape
 
     def _getBuild_Path(self) -> str:
         plt = platform.system()
@@ -52,8 +51,7 @@ class UnityEvaluator:
         if realRobot:
             Q = Qutee_interface.Qutee_interface()
             Q.EnableTorqueALL()
-        genom = np.array(ind[:]).reshape(self.genom_shape)
-        individ = self.individ(genom, self.controller)
+        individ = self.individ(ind[:], self.controller)
         self.env.reset()
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         end_position = np.zeros((1,3))

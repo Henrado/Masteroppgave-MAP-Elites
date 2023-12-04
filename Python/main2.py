@@ -1,6 +1,5 @@
 from Unity.Unity_evaluator import UnityEvaluator
-from EA.MapElites import MapElites
-from EA.Individual import Individual_48
+from EA.Individual import Individual_48, Individual_30
 from EA.Sine_controller import SineController
 import numpy as np
 import argparse
@@ -19,12 +18,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     
-    individ = Individual_48 # Type individ, finnes bare en til nå
+    individ = Individual_30 # Type individ, finnes bare en til nå
     controller = SineController # Type kontroller til individ, finnes bare 
 
     # Variabel dimensjoner:
     dimension_count = individ.get_dimension_count()
-    dimension_shape = individ.get_dimension_shape()
 
     # MAP-ELITES variabler: 
     ind_domain = (-1., 1.) # Min og MAX for hver variabel i genomet 
@@ -51,7 +49,7 @@ if __name__ == "__main__":
     
     try:
         # Lager evaluator:
-        env = UnityEvaluator(args.evaluation_steps, editor_mode=False, headless=True, worker_id=0, individ=individ, controller=SineController, genom_shape=dimension_shape)
+        env = UnityEvaluator(args.evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=SineController)
         
         with ParallelismManager("none") as pMgr:
             best = algo.optimise(env.evaluate, executor = pMgr.executor, batch_mode=False) # Disable batch_mode (steady-state mode) to ask/tell new individuals without waiting the completion of each batch
