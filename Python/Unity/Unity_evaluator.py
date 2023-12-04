@@ -1,13 +1,8 @@
-from EA.Individual import Individual_48
 from Qutee_Interface.interface import Qutee_interface
 from Unity.fitness_funtions import basicFitness
-from Unity.RobotParameterChannel import RobotParameterChannel
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
-import time
 import numpy as np
-import os
-import struct
 import platform 
 
 
