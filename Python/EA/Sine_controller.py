@@ -8,7 +8,7 @@ class SineController:
 
         self.frequence = f
 
-        self.phi = phi
+        self.phi = phi*np.pi
         self.theta = theta
 
     def get_action(self, time, observation=None):
