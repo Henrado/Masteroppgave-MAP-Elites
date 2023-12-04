@@ -1,4 +1,4 @@
-from EA.Individual import Individual
+from EA.Individual import Individual_48
 from Qutee_Interface.interface import Qutee_interface
 from Unity.fitness_funtions import basicFitness
 from Unity.RobotParameterChannel import RobotParameterChannel
