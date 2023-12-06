@@ -29,7 +29,7 @@ if __name__ == "__main__":
     grid_shape = (args.map_resolution, args.map_resolution, args.map_resolution) # default: (5,5,5)
     fitnes_min = -0
     fitnes_max = 1
-    feature_shape_pos = (-5, 5)
+    feature_shape_pos = (-20, 20)
     feature_shape_rot = (-20, 20)
 
 
