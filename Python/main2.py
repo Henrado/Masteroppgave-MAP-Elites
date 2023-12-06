@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # MAP-ELITES variabler: 
     ind_domain = (-1., 1.) # Min og MAX for hver variabel i genomet 
     grid_shape = (args.map_resolution, args.map_resolution, args.map_resolution) # default: (5,5,5)
-    fitnes_min = -0
+    fitnes_min = -1
     fitnes_max = 1
     feature_shape_pos = (-20, 20)
     feature_shape_rot = (-20, 20)
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     # grid = containers.Grid(shape=grid_shape, max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_rot, feature_shape_pos, feature_shape_pos))
     grid = containers.Grid(shape=(args.map_resolution, args.map_resolution), max_items_per_bin=1, fitness_domain=((fitnes_min, fitnes_max),), features_domain=(feature_shape_pos, feature_shape_pos))
     algo = algorithms.RandomSearchMutPolyBounded(grid, budget=10000, batch_size=500,
-                                                    dimension=dimension_count, optimisation_task="minimisation", ind_domain=ind_domain)
+                                                    dimension=dimension_count, optimisation_task="maximisation", ind_domain=ind_domain)
     # Create a logger to pretty-print everything and generate output data files
     logger = algorithms.TQDMAlgorithmLogger(algo, save_period=20, log_base_path=output)
     

@@ -17,14 +17,14 @@ def basicFitness(x_cur: float,y_cur: float,yaw_cur: float, count_collide=None):
         count_collide (int) Antall ganger den har kollidert med bakken 
 
     Return: 
-        fitness (float) Hvor langt unna den var [0-1], minimering er bedre
+        fitness (float) Hvor langt unna den var [0-1], større er bedre
     """
     #wanted_yaw = np.arctan2(x_cur, y_cur)
     wanted_yaw = 0 # Vil ha samme rotasjon som den startet med
     wanted_yaw = np.rad2deg(wanted_yaw)%360
     yaw_cur = yaw_cur%360
     a=abs(shortestAngleFloat(yaw_cur, wanted_yaw))
-    return np.interp(a, [0, 180], [0, 1])
+    return -np.interp(a, [0, 180], [0, 1])
 
 
 if __name__ == "__main__":
