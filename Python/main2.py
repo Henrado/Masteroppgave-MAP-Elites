@@ -1,4 +1,5 @@
 from Unity.Unity_evaluator import UnityEvaluator
+from Unity.fitness_funtions import basicFitness, circleFitness
 from EA.Individual import Individual_48, Individual_30
 from EA.Sine_controller import SineController
 import numpy as np
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     
     individ = Individual_30 # Type individ, finnes bare en til nå
     controller = SineController # Type kontroller til individ, finnes bare 
+    fitnessfunction = basicFitness
 
     # Variabel dimensjoner:
     dimension_count = individ.get_dimension_count()
@@ -49,7 +51,7 @@ if __name__ == "__main__":
     
     try:
         # Lager evaluator:
-        env = UnityEvaluator(args.evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=SineController)
+        env = UnityEvaluator(args.evaluation_steps, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
         
         with ParallelismManager("none") as pMgr:
             best = algo.optimise(env.evaluate, executor = pMgr.executor, batch_mode=False) # Disable batch_mode (steady-state mode) to ask/tell new individuals without waiting the completion of each batch
@@ -61,7 +63,7 @@ if __name__ == "__main__":
 
         print("\nAll results are available in the '%s' pickle file." % logger.final_filename)
     finally:
-        env.close()
+        env.close() 
     
         
 

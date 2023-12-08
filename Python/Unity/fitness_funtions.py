@@ -176,12 +176,3 @@ def circleFitness(x_cur: float,y_cur: float,yaw_cur: float, count_collide:int=0)
     wanted_yaw = rotateAngle(angle_between_degree, x_cur, y_cur)
     a=abs(shortestAngleFloat(yaw_cur, wanted_yaw))
     return -np.interp(a, [0, 180], [0, 1])+1 # type: ignore
-
- 
-
-
-if __name__ == "__main__":
-    #circleFitness(3.5,2,3)
-    print(circleFitness(0.001,0,0))
-    #circleFitness(0.2,-4,40.1)
-    #circleFitness(10,-6,6.8,0)
