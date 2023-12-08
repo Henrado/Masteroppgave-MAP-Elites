@@ -80,7 +80,7 @@ class UnityEvaluator:
         end_x = end_position[0]
         end_z = end_position[2]
         end_yrot = end_rotation[1] # type: ignore
-        fitness = basicFitness(end_x, end_z, end_yrot)
+        fitness = self.fitnessfunction(end_x, end_z, end_yrot) # type: ignore
         # print(fitness, end_yrot, end_x, end_z)
         if realRobot:
             Q.DisableTorqueALL()
