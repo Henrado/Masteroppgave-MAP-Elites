@@ -1,4 +1,5 @@
 from Unity.Unity_evaluator import UnityEvaluator
+from Unity.fitness_funtions import basicFitness
 from EA.Individual import Individual_30, Individual_48
 from EA.Sine_controller import SineController
 import numpy as np
@@ -54,6 +55,7 @@ ind = np.array([0.7657368816499277, -0.543151664535305, -0.01326708765179263, 0.
 
 individ = Individual_48 # Type individ, finnes bare en til nå
 controller = SineController # Type kontroller til individ, finnes bare 
+funk = basicFitness
 
 count_leg = 4
 actuators_leg = 3
@@ -63,11 +65,11 @@ dimension_shape = (count_leg, actuators_leg, params_actuators)
 
 try:
     # Lager evaluator:
-    env = UnityEvaluator(500, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=SineController)
+    env = UnityEvaluator(500, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=SineController, fitnessfunction=funk)
         
-    env.evaluate(ind, False)
+    env.evaluate(ind, True)
     pass
 
 finally:
-    env.close()
+    env.close() 
     pass

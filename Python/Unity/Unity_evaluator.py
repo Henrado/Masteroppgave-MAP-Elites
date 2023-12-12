@@ -7,7 +7,7 @@ import platform
 
 
 class UnityEvaluator:
-    def __init__(self, evaluation_steps:int, editor_mode:bool=False, headless:bool=False, worker_id:int=0, individ:object=None, controller:object=None, fitnessfunction:function=None):
+    def __init__(self, evaluation_steps:int, editor_mode:bool=False, headless:bool=False, worker_id:int=0, individ:object=None, controller:object=None, fitnessfunction=None):
         self.MAX_N_STEPS_PER_EVALUATION = evaluation_steps
         self.BUILD_PATH = self._getBuild_Path()
         if editor_mode:
