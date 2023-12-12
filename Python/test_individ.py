@@ -71,5 +71,5 @@ try:
     pass
 
 finally:
-    env.close() 
+    env.close() # type: ignore
     pass

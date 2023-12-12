@@ -38,8 +38,8 @@ class UnityEvaluator:
 
     def shortestAngle(self, from_deg: float, to_deg: float) -> float:
         diff = from_deg - to_deg
-        while ((diff >  180).any()): diff[diff >  180] -= 2*180
-        while ((diff < -180).any()): diff[diff < -180] += 2*180
+        while ((diff >  180).any()): diff[diff >  180] -= 2*180 # type: ignore
+        while ((diff < -180).any()): diff[diff < -180] += 2*180 # type: ignore
         return diff
 
     def evaluate(self, ind, realRobot=False):
@@ -70,7 +70,7 @@ class UnityEvaluator:
                 last_rotation = obs[0].obs[0][3:6]
                 #print(obs[0].reward) # Henter rewarden til agent 0
                 if realRobot:
-                    Q.setAction(action[0])
+                    Q.setAction(action[0]) # type: ignore
 
                 for id in obs.agent_id: # Går gjennom alle agenter og setter dems actions 
                     self.env.set_action_for_agent(individual_name,id,ActionTuple(action))
@@ -83,7 +83,7 @@ class UnityEvaluator:
         fitness = self.fitnessfunction(end_x, end_z, end_yrot) # type: ignore
         # print(fitness, end_yrot, end_x, end_z)
         if realRobot:
-            Q.DisableTorqueALL()
-            Q.quit()
+            Q.DisableTorqueALL() # type: ignore
+            Q.quit() # type: ignore
         return (fitness,), (end_x, end_z)
     
