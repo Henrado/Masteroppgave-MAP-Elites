@@ -5,12 +5,12 @@ class Controller(ABC):
   
     @abstractmethod
     def get_action(self, time:float, observation=None) -> float:
-        return
+        return 0
     
     @classmethod
     @abstractmethod
     def get_count_variables(cls) -> int:
-        return 4
+        return 0
 
 
 class SineController(Controller):
