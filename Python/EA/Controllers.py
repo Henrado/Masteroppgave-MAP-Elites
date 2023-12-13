@@ -11,6 +11,11 @@ class Controller(ABC):
     @abstractmethod
     def get_count_variables(cls) -> int:
         return 0
+    
+    @classmethod
+    @abstractmethod
+    def get_count_possibleLoc(cls) -> int:
+        return 0
 
 
 class SineController(Controller):
@@ -32,6 +37,10 @@ class SineController(Controller):
     def get_count_variables(cls) -> int:
         return 4
     
+    @classmethod
+    def get_count_possibleLoc(cls) -> int:
+        return 2
+    
 class TanhController(Controller):
     def __init__(self, A : float, theta : float):
         # Setup initial controller values
@@ -47,3 +56,7 @@ class TanhController(Controller):
     @classmethod
     def get_count_variables(cls) -> int:
         return 2
+    
+    @classmethod
+    def get_count_possibleLoc(cls) -> int:
+        return 1
