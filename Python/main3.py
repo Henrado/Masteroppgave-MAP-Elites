@@ -1,7 +1,7 @@
 from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
-from EA.Individual import Individual_48, Individual_30
-from EA.Sine_controller import SineController
+from EA.Individual import Individual_zeroLocked, Individual_twoLock
+from EA.Controllers import SineController, TanhController
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -39,11 +39,31 @@ if __name__ == "__main__":
         seed = config["seed"]
     else:
         seed = np.random.randint(1000000)
-
     # Update and print seed
     np.random.seed(seed)
     random.seed(seed)
     print("Seed: %i" % seed)
+
+
+    # Loads type of individ and controller 
+    assert "individ" in config, f"Please specify configuration entry 'individ'."
+    conf_individ = config["Unity"]["individ"]
+    if conf_individ == "Individual_twoLock":
+        individ = Individual_twoLock
+    elif conf_individ == "Individual_zeroLocked":
+        individ = Individual_zeroLocked
+    else:
+        individ = None
+    
+    conf_individ = config["Unity"]["controller"]
+    if conf_individ == "SineController":
+        controller = SineController
+    elif conf_individ == "TanhController":
+        controller = TanhController
+    else:
+        controller = None
+        raise NotImplemented(...)
+
 
     config['algorithms']['dimension'] = 10000
 
@@ -54,7 +74,6 @@ if __name__ == "__main__":
     
 
     
-    individ = Individual_30 # Type individ, finnes bare en til nå
     controller = SineController # Type kontroller til individ, finnes bare 
     fitnessfunction = basicFitness
 

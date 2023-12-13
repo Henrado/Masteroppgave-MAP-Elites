@@ -121,7 +121,7 @@ class Individual_twoLock:
 if __name__ == "__main__":
     s = SineController
     ind = Individual_zeroLocked
-    count = ind.get_dimension_count(s)
+    count = ind.get_dimension_count(s) # type: ignore
     genom = np.arange(count)
     print(genom)
     a = ind(genom, s)
