@@ -1,7 +1,7 @@
 from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
-from EA.Individual import Individual_48, Individual_30
-from EA.Sine_controller import SineController
+from EA.Individual import Individual_zeroLocked, Individual_twoLock
+from EA.Controllers import SineController, TanhController
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -19,12 +19,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     
-    individ = Individual_30 # Type individ, finnes bare en til nå
+    individ = Individual_twoLock # Type individ, finnes bare en til nå
     controller = SineController # Type kontroller til individ, finnes bare 
     fitnessfunction = basicFitness
 
     # Variabel dimensjoner:
-    dimension_count = individ.get_dimension_count()
+    dimension_count = individ.get_dimension_count(controller)
 
     # MAP-ELITES variabler: 
     ind_domain = (-1., 1.) # Min og MAX for hver variabel i genomet 

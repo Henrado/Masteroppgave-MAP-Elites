@@ -1,6 +1,20 @@
 import numpy as np
+from abc import ABC, abstractmethod 
+from EA.Controllers import *
 
-class Individual_48:
+class Individ(ABC): 
+  
+    @abstractmethod
+    def get_actions(self, time:float, observation=None) -> float:
+        return
+    
+    @classmethod
+    @abstractmethod
+    def get_count_variables(cls) -> int:
+        return 4
+
+
+class Individual_zeroLocked:
     COUNT_LEG = 4
     ACTUATOR_LEG = 3
     PARAMS_ACTUATORS = 4
@@ -10,7 +24,7 @@ class Individual_48:
         self.controllers = self._initControllers(controller, genom)
 
     def _initControllers(self, controller, genom):
-        genom = np.array(genom).reshape(self.get_dimension_shape())
+        genom = np.array(genom).reshape(self.get_dimension_shape(controller))
         # genom er lagt opp slik:
         # [[A_con1, f_con1, phi_con1, theta_con1]
         #  [A_con2, f_con2, phi_con2, theta_con2]
@@ -28,15 +42,17 @@ class Individual_48:
         return action_angels
     
     @classmethod
-    def get_dimension_count(cls):
+    def get_dimension_count(cls, con:Controller):
+        cls.PARAMS_ACTUATORS = con.get_count_variables()
         return cls.COUNT_LEG * cls.ACTUATOR_LEG * cls.PARAMS_ACTUATORS
     
     @classmethod
-    def get_dimension_shape(cls):
+    def get_dimension_shape(cls, con:Controller):
+        cls.PARAMS_ACTUATORS = con.get_count_variables()
         return (cls.COUNT_LEG, cls.ACTUATOR_LEG, cls.PARAMS_ACTUATORS)
     
 
-class Individual_30:
+class Individual_twoLock:
     COUNT_A = 3
     COUNT_F = 3
 
@@ -58,19 +74,29 @@ class Individual_30:
         # [[A_body, f_body, phi_con1, theta_con1]
         #  [A_upperleg, f_upperleg, phi_con2, theta_con2]
         #  ...]
+        if issubclass(controller, SineController):
+            A = np.array(genom_raw[0:3])
+            F = np.array(genom_raw[3:6])
+            rest = np.array(genom_raw[6:]).reshape((self.COUNT_LEG*self.ACTUATOR_LEG, controller.get_count_possibleLoc()))
 
-        A = np.array(genom_raw[0:3])
-        F = np.array(genom_raw[3:6])
-        rest = np.array(genom_raw[6:]).reshape((self.COUNT_LEG*self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
+            A_all = np.concatenate([A for _ in range(self.COUNT_LEG)])[:, np.newaxis]
+            F_all = np.concatenate([F for _ in range(self.COUNT_LEG)])[:, np.newaxis]
+            genom = np.concatenate([A_all, F_all, rest], axis=1).reshape((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
+        elif issubclass(controller, TanhController):
+            A = np.array(genom_raw[0:3])
+            rest = np.array(genom_raw[3:]).reshape((self.COUNT_LEG*self.ACTUATOR_LEG, controller.get_count_possibleLoc()))
 
-        A_all = np.concatenate([A for _ in range(self.COUNT_LEG)])[:, np.newaxis]
-        F_all = np.concatenate([F for _ in range(self.COUNT_LEG)])[:, np.newaxis]
-        genom = np.concatenate([A_all, F_all, rest], axis=1).reshape((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS+2))
+            A_all = np.concatenate([A for _ in range(self.COUNT_LEG)])[:, np.newaxis]
+            genom = np.concatenate([A_all, rest], axis=1).reshape((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
+        else:
+            genom = np.zeros((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
 
+
+        print(genom)
         controllers = []
         for leg in range(len(genom)):
             for actuator in range(len(genom[leg])):
-                controllers.append(controller(*genom[leg, actuator].T))
+                controllers.append(controller(*genom[leg, actuator].T)) # type: ignore
         return controllers
 
     def get_actions(self, time : float):
@@ -80,9 +106,21 @@ class Individual_30:
         return action_angels
     
     @classmethod
-    def get_dimension_count(cls):
-        return cls.COUNT_A+cls.COUNT_F+cls.COUNT_FI_TH
+    def get_dimension_count(cls, con:Controller):
+        cls.PARAMS_ACTUATORS = con.get_count_variables()
+        return (con.get_count_possibleLoc()+cls.COUNT_LEG*(con.get_count_variables()-con.get_count_possibleLoc()))*cls.ACTUATOR_LEG
+        #return cls.COUNT_A+cls.COUNT_F+cls.COUNT_LEG*cls.ACTUATOR_LEG*cls.PARAMS_ACTUATORS
     
     @classmethod
-    def get_dimension_shape(cls):
+    def get_dimension_shape(cls, con:Controller):
+        cls.PARAMS_ACTUATORS = con.get_count_variables()
         return (cls.COUNT_LEG, cls.ACTUATOR_LEG, cls.PARAMS_ACTUATORS)
+
+
+if __name__ == "__main__":
+    s = SineController
+    ind = Individual_zeroLocked
+    count = ind.get_dimension_count(s) # type: ignore
+    genom = np.arange(count)
+    print(genom)
+    a = ind(genom, s)

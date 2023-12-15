@@ -1,5 +1,5 @@
 from Qutee_Interface.interface import Qutee_interface
-from Unity.fitness_funtions import basicFitness
+from Unity.fitness_funtions import *
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
 import numpy as np
