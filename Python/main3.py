@@ -113,12 +113,32 @@ if __name__ == "__main__":
 
 
     # Lager Unity variabler fra config eller terminalen 
-    evaluation_steps = config["Unity"]["evaluation_steps"] if args.evaluation_steps is None else args.evaluation_steps
-    editor_mode = config["Unity"]["editor_mode"] if args.editor_mode is None else args.editor_mode
-    headless = config["Unity"]["headless"] if args.headless is None else args.headless
-    parallelismType = config["ParallelismManager"]["parallelismType"] if args.parallelismType is None else args.parallelismType
+    if args.evaluation_steps is None:
+        evaluation_steps = config["Unity"]["evaluation_steps"] 
+    else:
+        evaluation_steps = args.evaluation_steps
+        config["Unity"]["evaluation_steps"] = evaluation_steps
+    
+    if args.editor_mode is None:
+        editor_mode = config["Unity"]["editor_mode"] 
+    else:
+        editor_mode = args.editor_mode
+        config["Unity"]["editor_mode"] = editor_mode
+    
+    if args.headless is None:
+        headless = config["Unity"]["headless"] 
+    else:
+        headless = args.headless
+        config["Unity"]["headless"] = headless
 
+    if args.parallelismType is None:
+        parallelismType = config["ParallelismManager"]["parallelismType"] 
+    else:
+        parallelismType = args.parallelismType
+        config["ParallelismManager"]["parallelismType"]= parallelismType
 
+    with open(os.path.join(output, args.configFile), 'w') as file:
+        yaml.dump(config, file)
 
     try:
         # Lager evaluator:
