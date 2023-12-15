@@ -1,6 +1,6 @@
 import numpy as np
 from abc import ABC, abstractmethod 
-from Controllers import *
+from EA.Controllers import *
 
 class Individ(ABC): 
   
@@ -29,7 +29,6 @@ class Individual_zeroLocked:
         # [[A_con1, f_con1, phi_con1, theta_con1]
         #  [A_con2, f_con2, phi_con2, theta_con2]
         #  ...]
-        print(genom)
         controllers = []
         for leg in range(len(genom)):
             for actuator in range(len(genom[leg])):

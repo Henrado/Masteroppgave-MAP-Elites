@@ -24,7 +24,7 @@ if __name__ == "__main__":
     fitnessfunction = basicFitness
 
     # Variabel dimensjoner:
-    dimension_count = individ.get_dimension_count()
+    dimension_count = individ.get_dimension_count(controller)
 
     # MAP-ELITES variabler: 
     ind_domain = (-1., 1.) # Min og MAX for hver variabel i genomet 
