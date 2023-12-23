@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PATH="/opt/ifi/anaconda3/bin:$PATH"
+source ~/.bashrc
+conda activate env39
