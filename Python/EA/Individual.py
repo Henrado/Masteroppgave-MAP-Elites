@@ -92,7 +92,6 @@ class Individual_twoLock:
             genom = np.zeros((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
 
 
-        print(genom)
         controllers = []
         for leg in range(len(genom)):
             for actuator in range(len(genom[leg])):
