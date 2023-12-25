@@ -60,6 +60,6 @@ Unity:
     #fitnessfunction: circleFitness
     evaluation_steps: 200
     editor_mode: False
-    headless: False
+    headless: True
 
 
