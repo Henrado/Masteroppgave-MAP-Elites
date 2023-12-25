@@ -8,7 +8,7 @@ seed: 1234567890
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: 25.12.23_zerolock_sin
+log_base_path: 25.12.23_twolock_sin
 
 # The list of all container.
 containers:
@@ -52,8 +52,8 @@ ParallelismManager:
     batch_mode: False
 
 Unity:
-    individ: Individual_zeroLocked
-    #individ: Individual_twoLock
+    #individ: Individual_zeroLocked
+    individ: Individual_twoLock
     controller: SineController
     #controller: TanhController
     fitnessfunction: basicFitness
