@@ -9,6 +9,7 @@ from qdpy import algorithms, containers, plots
 from qdpy.base import ParallelismManager
 import math
 import os
+import sys
 import yaml
 import random
 from qdpy.base import Factory
@@ -154,6 +155,10 @@ if __name__ == "__main__":
 
         # Viser info 
         print("\n" + algo.summary())
+
+        with open(os.path.join(output, "./algo.summary.txt"), 'w') as f:
+            f.write(algo.summary(max_entry_length=sys.maxsize)
+)
         # Plot the results
         min_plots_grid(logger, output_dir=output)
 

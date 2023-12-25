@@ -49,6 +49,30 @@ def min_plots_grid(logger, output_dir=None, to_grid_parameters={}, fitness_domai
     with open(os.path.join(output_dir, "./grid.quality_array.json"), 'w') as f:
         json.dump(d.to_dict(), f)
 
+    d = pd.DataFrame(grid.quality)
+    with open(os.path.join(output_dir, "./grid.quality.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
+    d = pd.DataFrame(grid.items)
+    with open(os.path.join(output_dir, "./grid.items.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
+    d = pd.DataFrame(grid.nb_items_per_bin)
+    with open(os.path.join(output_dir, "./grid.nb_items_per_bin.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
     d = pd.DataFrame(grid.activity_per_bin)
     with open(os.path.join(output_dir, "./grid.activity_per_bin.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
+    d = pd.DataFrame(grid.features)
+    with open(os.path.join(output_dir, "./grid.features.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
+    d = pd.DataFrame(grid.recentness)
+    with open(os.path.join(output_dir, "./grid.recentness.json"), 'w') as f:
+        json.dump(d.to_dict(), f)
+
+    d = pd.DataFrame(grid.solutions)
+    with open(os.path.join(output_dir, "./grid.solutions.json"), 'w') as f:
         json.dump(d.to_dict(), f)
