@@ -2,7 +2,7 @@ from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
 from EA.Individual import Individual_zeroLocked, Individual_twoLock
 from EA.Controllers import SineController, TanhController
-from Plot.plots import min_plots_grid
+from Plot.plots import min_plots_grid, min_summary
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -157,8 +157,7 @@ if __name__ == "__main__":
         print("\n" + algo.summary())
 
         with open(os.path.join(output, "./algo.summary.txt"), 'w') as f:
-            f.write(algo.summary(max_entry_length=sys.maxsize)
-)
+            f.write(min_summary(algo))
         # Plot the results
         min_plots_grid(logger, output_dir=output)
 
