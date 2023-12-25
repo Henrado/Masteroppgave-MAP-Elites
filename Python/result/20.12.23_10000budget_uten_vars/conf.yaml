@@ -44,4 +44,4 @@ log_base_path: 20.12.23_10000budget_uten_vars
 logger:
   save_period: 20
 main_algorithm_name: algoTotal
-seed: 49968
+seed: 245452
