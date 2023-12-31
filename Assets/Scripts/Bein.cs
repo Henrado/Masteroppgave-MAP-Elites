@@ -26,8 +26,8 @@ public class Bein : Agent
         m_JdController = GetComponent<JointDriveController>();
 
         //Setup each body part
-        m_JdController.SetupBodyPart(body);
-        m_JdController.SetupBodyPart(leg0Upper);
+        m_JdController.SetupBodyPart(body, new List<float>());
+        m_JdController.SetupBodyPart(leg0Upper, new List<float>());
     }
 
     public override void OnEpisodeBegin()

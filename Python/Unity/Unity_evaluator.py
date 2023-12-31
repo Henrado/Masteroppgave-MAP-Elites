@@ -1,5 +1,6 @@
 from Qutee_Interface.interface import Qutee_interface
 from Unity.fitness_funtions import *
+from Unity.ConfigSideChannel import ConfigSideChannel
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
 import numpy as np
@@ -7,19 +8,28 @@ import platform
 
 
 class UnityEvaluator:
-    def __init__(self, evaluation_steps:int, editor_mode:bool=False, headless:bool=False, worker_id:int=0, individ:object=None, controller:object=None, fitnessfunction=None):
+    def __init__(self, evaluation_steps:int,  qutee_config = None, editor_mode:bool=False, headless:bool=False, worker_id:int=0, individ:object=None, controller:object=None, fitnessfunction=None): # type: ignore
         self.MAX_N_STEPS_PER_EVALUATION = evaluation_steps
+        config_sideChannel = ConfigSideChannel()
+        if qutee_config == None:
+            side_channels = []
+        else:
+            side_channels = []
+            side_channels.append(config_sideChannel)
         self.BUILD_PATH = self._getBuild_Path()
         if editor_mode:
-            self.env = UnityEnvironment(file_name=None, seed=1)
+            self.env = UnityEnvironment(file_name=None, side_channels=side_channels, seed=1)
         elif headless:
-            self.env = UnityEnvironment(file_name=self.BUILD_PATH, seed=1, no_graphics=True, worker_id=worker_id)
+            self.env = UnityEnvironment(file_name=self.BUILD_PATH, side_channels=side_channels, seed=1, no_graphics=True, worker_id=worker_id)
         else:
-            self.env = UnityEnvironment(file_name=self.BUILD_PATH, seed=1, no_graphics=False, worker_id=worker_id)
+            self.env = UnityEnvironment(file_name=self.BUILD_PATH, side_channels=side_channels, seed=1, no_graphics=False, worker_id=worker_id)
 
         self.individ = individ
         self.controller = controller
         self.fitnessfunction = fitnessfunction
+
+        if qutee_config != None:
+            config_sideChannel.send_config(qutee_config)
 
     def _getBuild_Path(self) -> str:
         plt = platform.system()
