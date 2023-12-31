@@ -8,7 +8,7 @@ seed: 1234567890
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: 25.12.23_zerolock_sin
+log_base_path: test
 
 # The list of all container.
 containers:
@@ -61,5 +61,11 @@ Unity:
     evaluation_steps: 200
     editor_mode: False
     headless: True
+
+#Qutee:
+    #jointDriveSettings: [1,2,3] # Trenger 3 inputs i liste [MaxJointSpring, JointDampen, MaxJointForceLimit]
+    #legAngularLimits: [4,5,6,7,8] # Trenger 5: [led0 i y, upperlegMIN, upperlegMAX, forlegMIN, forlegMAX]
+    #robotMassPart: [9,10,11,12] # Trenger 4: [center masse, leg masse, upperleg masse, forleg masse]
+    #groundContactPenaltyPart: 1 # Et tall, gjerne negativt for å straffe å treffe center meg ground
 
 

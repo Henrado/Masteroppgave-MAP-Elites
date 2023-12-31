@@ -16,6 +16,8 @@ from qdpy.base import Factory
 import pprint
 
 
+
+
 if __name__ == "__main__":
     # Parser argumenter og conf
     parser = argparse.ArgumentParser()
@@ -142,10 +144,14 @@ if __name__ == "__main__":
         yaml.dump(config, file)
 
     try:
+        # Create the channel
+        if "Qutee" in config["Qutee"]:
+            qutee_config = config["Qutee"]
+        else
+            qutee_config = None
         # Lager evaluator:
         # Starter Unity 
-        env = UnityEvaluator(evaluation_steps, editor_mode=editor_mode, headless=headless, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
-        
+        env = UnityEvaluator(evaluation_steps, qutee_config=qutee_config, editor_mode=editor_mode, headless=headless, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
 
         # Kjører opptimaliseering 
         with ParallelismManager(parallelismType) as pMgr:

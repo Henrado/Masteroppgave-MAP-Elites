@@ -85,7 +85,7 @@ public class Robot : Agent
         }
 
         if (parameterChannel.groundContactPenaltyPart != 0){
-            GC.groundContactPenalty = 10;
+            GC.groundContactPenalty = parameterChannel.groundContactPenaltyPart;
             GC.penalizeGroundContact = true;
         }
     }
@@ -147,7 +147,7 @@ public class Robot : Agent
     private void SetPartMass(Transform part, IList<float> masses, int dept){
         foreach (Transform child in part)
         {
-            if (child.TryGetComponent<Rigidbody>(out var rb) & masses.Count < dept)
+            if (child.TryGetComponent<Rigidbody>(out var rb) & masses.Count >= dept)
             {
                 rb.mass = masses[dept];
                 SetPartMass(child, masses, dept+1);
