@@ -5,6 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgentsExamples;
+using Unity.MLAgents.SideChannels;
 using Random = UnityEngine.Random;
 using System;
 
@@ -38,7 +39,18 @@ public class Robot : Agent
     private Transform Center;
     public AnimationCurve forceCurve;
     public AnimationCurve torqueCurve;
+    private ConfigSideChannel parameterChannel;
+
+    public GroundContact GC;
     
+    public void Awake()
+    {
+        // We create the Side Channel
+        parameterChannel = new ConfigSideChannel();
+
+        // The channel must be registered with the SideChannelManager class
+        SideChannelManager.RegisterSideChannel(parameterChannel);
+    }
     public override void Initialize()
     {
         m_JdController = GetComponent<JointDriveController>();
@@ -48,23 +60,41 @@ public class Robot : Agent
         leg3List = new Transform[]{leg3, leg3Upper, leg3Lower};
         allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
 
+        IList<float> jointDriveSettings = parameterChannel.jointDriveSettings;
+        if (jointDriveSettings != null){
+            m_JdController.maxJointSpring = jointDriveSettings[0];
+            m_JdController.jointDampen = jointDriveSettings[1];
+            m_JdController.maxJointForceLimit = jointDriveSettings[2];
+        }
+
+        IList<float> legAngularLimits = parameterChannel.legAngularLimits;
+        List<List<float>> limitsArray = MakeAngularLimitsArray(legAngularLimits);
         //Setup each body part
-        m_JdController.SetupBodyPart(body);
-        SetupBodyPartList(m_JdController, leg0List);
-        SetupBodyPartList(m_JdController, leg1List);
-        SetupBodyPartList(m_JdController, leg2List);
-        SetupBodyPartList(m_JdController, leg3List);
+        m_JdController.SetupBodyPart(body, new List<float>());
+        SetupBodyPartList(m_JdController, leg0List, limitsArray);
+        SetupBodyPartList(m_JdController, leg1List, limitsArray);
+        SetupBodyPartList(m_JdController, leg2List, limitsArray);
+        SetupBodyPartList(m_JdController, leg3List, limitsArray);
 
         Center = transform.Find("Center");
         startPosition = Center.localPosition;
         startRotation = Center.localRotation;
+
+        if (parameterChannel.robotMassPart != null){
+            SetPartMass(this.transform, parameterChannel.robotMassPart, 0);
+        }
+
+        if (parameterChannel.groundContactPenaltyPart != 0){
+            GC.groundContactPenalty = 10;
+            GC.penalizeGroundContact = true;
+        }
     }
     
-    private void SetupBodyPartList(JointDriveController con, Transform[] list)
+    private void SetupBodyPartList(JointDriveController con, Transform[] list, List<List<float>> limits)
     {
-        foreach (Transform i in list)
+        for (int i = 0; i < list.Length; i++)
         {
-            con.SetupBodyPart(i);
+            con.SetupBodyPart(list[i], limits[i]);
         }
     }
 
@@ -96,6 +126,35 @@ public class Robot : Agent
         torqueCurve = bpDict[leg0Upper].jointTorqueCurve;
     }
 
+    private List<List<float>> MakeAngularLimitsArray(IList<float> list){
+        if (list == null){
+            return new List<List<float>>
+            {
+                new(),
+                new(),
+                new()
+            };
+        }
+        List<List<float>> myList = new()
+        {
+            new List<float> { list[0] },
+            new List<float> { list[1], list[2] },
+            new List<float> { list[3], list[4] }
+        };
+        return myList;
+    } 
+
+    private void SetPartMass(Transform part, IList<float> masses, int dept){
+        foreach (Transform child in part)
+        {
+            if (child.TryGetComponent<Rigidbody>(out var rb) & masses.Count < dept)
+            {
+                rb.mass = masses[dept];
+                SetPartMass(child, masses, dept+1);
+            }
+        }
+    }
+
     public override void CollectObservations(VectorSensor sensor){
         // Observe the agent's local rotation (3 observations)
         // sensor.AddObservation(Center.localRotation.eulerAngles);
@@ -122,5 +181,11 @@ public class Robot : Agent
         sensor.AddObservation(1);
 
         // 7 total observations
+    }
+    public void OnDestroy()
+    {
+        if (Academy.IsInitialized){
+            SideChannelManager.UnregisterSideChannel(parameterChannel);
+        }
     }
 }

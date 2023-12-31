@@ -118,7 +118,7 @@ namespace Unity.MLAgentsExamples
         /// <summary>
         /// Create BodyPart object and add it to dictionary.
         /// </summary>
-        public void SetupBodyPart(Transform t)
+        public void SetupBodyPart(Transform t, List<float> limits)
         {
             var bp = new BodyPart
             {
@@ -152,6 +152,27 @@ namespace Unity.MLAgentsExamples
                 bp.joint.angularXDrive = jd;
                 bp.joint.angularYZDrive = jd;
             }
+            if (bp.joint & limits.Count == 1){
+                bp.joint.angularYLimit = new SoftJointLimit
+                {
+                    limit = limits[0],
+                    bounciness = 0,
+                    contactDistance = 0
+                };
+            } else if (bp.joint & limits.Count == 2){
+                bp.joint.lowAngularXLimit = new SoftJointLimit
+                {
+                    limit = limits[0],
+                    bounciness = 0,
+                    contactDistance = 0
+                };
+                bp.joint.highAngularXLimit = new SoftJointLimit
+                {
+                    limit = limits[1],
+                    bounciness = 0,
+                    contactDistance = 0
+                };
+            };
 
             bp.thisJdController = this;
             bodyPartsDict.Add(t, bp);
