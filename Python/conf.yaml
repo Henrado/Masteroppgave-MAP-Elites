@@ -8,7 +8,7 @@ seed: 1234567890
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: test
+log_base_path: 25.12.23_zerolock_tanhWoff
 
 # The list of all container.
 containers:
@@ -54,8 +54,9 @@ ParallelismManager:
 Unity:
     individ: Individual_zeroLocked
     #individ: Individual_twoLock
-    controller: SineController
+    #controller: SineController
     #controller: TanhController
+    controller: TanhControllerWOff
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
     evaluation_steps: 200
