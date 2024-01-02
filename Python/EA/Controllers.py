@@ -60,3 +60,24 @@ class TanhController(Controller):
     @classmethod
     def get_count_possibleLoc(cls) -> int:
         return 1
+
+class TanhControllerWOff(Controller):
+    def __init__(self, A : float, theta : float, offset : float):
+        # Setup initial controller values
+        self.amplitude = A
+        self.offset = offset
+        self.amplitude_scale = 1.0
+
+        self.theta = theta
+
+    def get_action(self, time, observation=None) -> float:
+        controller_value = self.amplitude * np.tanh(4*np.sin(2*np.pi*(time + self.theta))) + self.offset
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+    
+    @classmethod
+    def get_count_variables(cls) -> int:
+        return 3
+    
+    @classmethod
+    def get_count_possibleLoc(cls) -> int:
+        return 1

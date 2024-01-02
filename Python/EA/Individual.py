@@ -88,6 +88,12 @@ class Individual_twoLock:
 
             A_all = np.concatenate([A for _ in range(self.COUNT_LEG)])[:, np.newaxis]
             genom = np.concatenate([A_all, rest], axis=1).reshape((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
+        elif issubclass(controller, TanhControllerWOff):
+            A = np.array(genom_raw[0:3])
+            rest = np.array(genom_raw[3:]).reshape((self.COUNT_LEG*self.ACTUATOR_LEG, 2))
+
+            A_all = np.concatenate([A for _ in range(self.COUNT_LEG)])[:, np.newaxis]
+            genom = np.concatenate([A_all, rest], axis=1).reshape((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
         else:
             genom = np.zeros((self.COUNT_LEG, self.ACTUATOR_LEG, self.PARAMS_ACTUATORS))
 

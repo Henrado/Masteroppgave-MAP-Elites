@@ -1,7 +1,7 @@
 from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
 from EA.Individual import Individual_zeroLocked, Individual_twoLock
-from EA.Controllers import SineController, TanhController
+from EA.Controllers import SineController, TanhController, TanhControllerWOff
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -61,6 +61,8 @@ if conf_controller == "SineController":
     controller = SineController
 elif conf_controller == "TanhController":
     controller = TanhController
+elif conf_controller == "TanhControllerWOff":
+    controller = TanhControllerWOff
 else:
     controller = None
     raise NotImplementedError
