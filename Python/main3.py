@@ -147,7 +147,7 @@ if __name__ == "__main__":
 
     try:
         # Create the channel
-        if "Qutee" in config["Qutee"]:
+        if "Qutee" in config:
             qutee_config = config["Qutee"]
         else:
             qutee_config = None
