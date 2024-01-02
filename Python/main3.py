@@ -149,7 +149,7 @@ if __name__ == "__main__":
         # Create the channel
         if "Qutee" in config["Qutee"]:
             qutee_config = config["Qutee"]
-        else
+        else:
             qutee_config = None
         # Lager evaluator:
         # Starter Unity 
