@@ -34,11 +34,12 @@ def str_to_2Darr(shape, string):
     return arr
 
 
+directory = "result/25.12.23/25.12.23_twolock_tanh"
 # Retrieve configuration from configFile
-config = yaml.safe_load(open("result/25.12.23_twolock_sin/conf2.yaml"))
+config = yaml.safe_load(open(os.path.join(directory, "conf.yaml")))
 
 #open JSON file
-with open("result/25.12.23_twolock_sin/grid.solutions.json", 'r', encoding='utf-8') as infile:
+with open(os.path.join(directory, "grid.solutions.json"), 'r', encoding='utf-8') as infile:
    json_str = infile.read()
 
 shape = find_value_from_key(config["containers"], "shape")
@@ -77,16 +78,23 @@ else:
     fitnessfunction = None
     raise NotImplementedError
 
-ind = json_obj[9][2][0]
-print(controller, individ)
+x = 17
+y = 17
+ind = json_obj[x][y][0]
 individ.get_dimension_count(controller) # type: ignore
 print(ind)
 
 try:
+    # Create the channel
+    if "Qutee" in config:
+        qutee_config = config["Qutee"]
+    else:
+        qutee_config = None
     # Lager evaluator:
-    env = UnityEvaluator(200, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
+    env = UnityEvaluator(80, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
         
-    env.evaluate(ind, False)
+    svar = env.evaluate(ind, True)
+    print("HER:",svar)
     pass
 
 finally:
