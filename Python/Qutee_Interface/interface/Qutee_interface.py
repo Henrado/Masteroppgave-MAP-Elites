@@ -138,7 +138,7 @@ class Qutee_interface:
 
     def setAction(self, action:list[float]):
         l = self.getAllGoalPos(DXL_ALL_DICT, DXL_ALL_ID, action)
-        print("Går til", l)
+        #print("Går til", l)
         self.sendGroupWrite(self.packetHandler, self.groupSyncWrite, DXL_ALL_ID, l)
 
 

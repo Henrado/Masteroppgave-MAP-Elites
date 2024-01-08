@@ -94,6 +94,6 @@ class UnityEvaluator:
         # print(fitness, end_yrot, end_x, end_z)
         if realRobot:
             Q.DisableTorqueALL() # type: ignore
-            Q.quit() # type: ignore
+            #Q.quit() # type: ignore
         return (fitness,), (end_x, end_z)
     
