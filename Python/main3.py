@@ -151,9 +151,14 @@ if __name__ == "__main__":
             qutee_config = config["Qutee"]
         else:
             qutee_config = None
+
+        if "worker_id" in config["Unity"]:
+            worker_id = config["Unity"]["worker_id"]
+        else:
+            worker_id = 0
         # Lager evaluator:
         # Starter Unity 
-        env = UnityEvaluator(evaluation_steps, qutee_config=qutee_config, editor_mode=editor_mode, headless=headless, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
+        env = UnityEvaluator(evaluation_steps, qutee_config=qutee_config, editor_mode=editor_mode, headless=headless, worker_id=worker_id, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
 
         # Kjører opptimaliseering 
         with ParallelismManager(parallelismType) as pMgr:
