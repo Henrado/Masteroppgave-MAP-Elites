@@ -8,7 +8,7 @@ seed: 1234567890
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: 10.01.24_Z_T_nyVinkel
+log_base_path: 10.01.24_Z_TWO_nyVinkel
 
 # The list of all container.
 containers:
@@ -55,8 +55,8 @@ Unity:
     individ: Individual_zeroLocked
     #individ: Individual_twoLock
     #controller: SineController
-    controller: TanhController
-    #controller: TanhControllerWOff
+    #controller: TanhController
+    controller: TanhControllerWOff
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
     evaluation_steps: 200

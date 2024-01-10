@@ -8,7 +8,7 @@ seed: 1234567890
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: test
+log_base_path: 10.01.24_Z_S_nyVinkel
 
 # The list of all container.
 containers:
@@ -54,19 +54,19 @@ ParallelismManager:
 Unity:
     individ: Individual_zeroLocked
     #individ: Individual_twoLock
-    #controller: SineController
+    controller: SineController
     #controller: TanhController
-    controller: TanhControllerWOff
+    #controller: TanhControllerWOff
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
     evaluation_steps: 200
-    editor_mode: True
+    editor_mode: False
     headless: True
 
 Qutee:
     #jointDriveSettings: [1,2,3] # Trenger 3 inputs i liste [MaxJointSpring, JointDampen, MaxJointForceLimit]
     legAngularLimits: [45,-20,60,-20,50] # Trenger 5: [led0 i y, upperlegMIN, upperlegMAX, forlegMIN, forlegMAX]
     #robotMassPart: [9,10,11,12] # Trenger 4: [center masse, leg masse, upperleg masse, forleg masse]
-    groundContactPenaltyPart: -1 # Et tall, gjerne negativt for å straffe å treffe center meg ground
+    #groundContactPenaltyPart: -1 # Et tall, gjerne negativt for å straffe å treffe center meg ground
 
 
