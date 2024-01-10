@@ -63,6 +63,8 @@ class UnityEvaluator:
         end_position = np.zeros((1,3))
         end_rotation = 0
         last_rotation = 0 # Denne kan ikke være np.zeros((1,3)) siden da vil last_rotation bli = [[x,y,z]] ikke [x,y,z]
+        reward = 0 # Reward for denne epoken, resettes etter neste
+        cumulativeReward = 0 # Dette er så mye negativ reward den har samlet i løpet av alle epoker og alt til nå
         for t in range(self.MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
             obs,other = self.env.get_steps(individual_name)
             if (len(obs.agent_id)>0):
@@ -78,7 +80,8 @@ class UnityEvaluator:
                 end_position = obs[0].obs[0][:3] # Henter observasjonene til agent 0 
                 end_rotation += self.shortestAngle(obs[0].obs[0][3:6],last_rotation)
                 last_rotation = obs[0].obs[0][3:6]
-                #print(obs[0].reward) # Henter rewarden til agent 0
+                reward += obs[0].reward
+                cumulativeReward = obs[0].obs[0][6]
                 if realRobot:
                     Q.setAction(action[0]) # type: ignore
 

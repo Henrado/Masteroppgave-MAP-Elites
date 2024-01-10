@@ -178,7 +178,7 @@ public class Robot : Agent
         //sensor.AddObservation(Vector3.Dot(beakTip.forward.normalized, -nearestFlower.FlowerUpVector.normalized));
 
         // Observe the relative distance from the beak tip to the flower (1 observation)
-        sensor.AddObservation(1);
+        sensor.AddObservation(GetCumulativeReward());
 
         // 7 total observations
     }
