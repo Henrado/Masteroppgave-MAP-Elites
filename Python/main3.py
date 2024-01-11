@@ -156,9 +156,14 @@ if __name__ == "__main__":
             worker_id = config["Unity"]["worker_id"]
         else:
             worker_id = 0
+
+        if "time_scale" in config["Unity"]:
+            time_scale = config["Unity"]["time_scale"]
+        else:
+            time_scale = 1
         # Lager evaluator:
         # Starter Unity 
-        env = UnityEvaluator(evaluation_steps, qutee_config=qutee_config, editor_mode=editor_mode, headless=headless, worker_id=worker_id, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
+        env = UnityEvaluator(evaluation_steps, qutee_config=qutee_config, editor_mode=editor_mode, headless=headless, worker_id=worker_id, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=time_scale)
 
         # Kjører opptimaliseering 
         with ParallelismManager(parallelismType) as pMgr:

@@ -62,6 +62,8 @@ Unity:
     evaluation_steps: 200
     editor_mode: False
     headless: True
+    worker_id: 1
+    time_scale: 100
 
 Qutee:
     #jointDriveSettings: [1,2,3] # Trenger 3 inputs i liste [MaxJointSpring, JointDampen, MaxJointForceLimit]
