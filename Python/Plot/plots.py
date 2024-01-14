@@ -60,11 +60,11 @@ def min_plots_grid(logger, output_dir=None, to_grid_parameters={}, fitness_domai
         output_dir = logger.log_base_path
 
 
-    plots.plot_evals(logger, os.path.join(output_dir, "./evals_fitnessmax0.pdf"), "max0", ylabel="Fitness")
-    plots.plot_iterations(logger, os.path.join(output_dir, "./qd_score.pdf"), "qd_score", ylabel="Qd_score_norm")
+    plots.plot_evals(logger, os.path.join(output_dir, "./evals_fitnessmax0.svg"), "max0", ylabel="Fitness")
+    plots.plot_iterations(logger, os.path.join(output_dir, "./qd_score.svg"), "qd_score", ylabel="Qd_score_norm")
     ylim_contsize = (0, len(container)) if np.isinf(container.capacity) else (0, container.capacity)
-    plots.plot_evals(logger, os.path.join(output_dir, "./evals_contsize.pdf"), "cont_size", ylim=ylim_contsize, ylabel="Container size")
-    plots.plot_iterations(logger, os.path.join(output_dir, "./iterations_nbupdated.pdf"), "nb_updated", ylabel="Number of updated bins")
+    plots.plot_evals(logger, os.path.join(output_dir, "./evals_contsize.svg"), "cont_size", ylim=ylim_contsize, ylabel="Container size")
+    plots.plot_iterations(logger, os.path.join(output_dir, "./iterations_nbupdated.svg"), "nb_updated", ylabel="Number of updated bins")
 
     if isinstance(container, containers.Grid):
         grid = container
