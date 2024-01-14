@@ -73,12 +73,12 @@ def min_plots_grid(logger, output_dir=None, to_grid_parameters={}, fitness_domai
             to_grid_parameters['shape'] = (32,) * len(container.features_domain)
         grid = container.to_grid(**to_grid_parameters)
 
-    plot_path = os.path.join(output_dir, "performancesGrid.pdf")
+    plot_path = os.path.join(output_dir, "performancesGrid.svg")
     cmap_perf = "inferno" if logger.algorithms[0].optimisation_task == "maximisation" else "inferno_r"
     fitness_domain = grid.fitness_domain if fitness_domain is None else fitness_domain
     plots.plotGridSubplots(grid.quality_array[... ,0], plot_path, plt.get_cmap(cmap_perf), grid.features_domain, fitness_domain[0], nbTicks=None) # type: ignore
 
-    plot_path = os.path.join(output_dir, "activityGrid.pdf")
+    plot_path = os.path.join(output_dir, "activityGrid.svg")
     max_activity = np.max(grid.activity_per_bin)
     plots.plotGridSubplots(grid.activity_per_bin, plot_path, plt.get_cmap("Reds", max_activity), grid.features_domain, [0, max_activity], nbTicks=None) # type: ignore
 
