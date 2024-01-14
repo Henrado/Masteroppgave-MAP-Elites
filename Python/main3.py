@@ -14,7 +14,24 @@ import yaml
 import random
 from qdpy.base import Factory
 import pprint
+import pickle
+import json
 
+def pickle2json(path):
+    # open pickle file
+    with open(path, 'rb') as infile:
+        obj = pickle.load(infile)
+
+    # convert pickle object to json object
+    json_obj = json.loads(json.dumps(obj, default=str))
+
+    # write the json file
+    with open(
+            os.path.splitext(path)[0] + '.json',
+            'w',
+            encoding='utf-8'
+        ) as outfile:
+        json.dump(json_obj, outfile, ensure_ascii=False, indent=4)
 
 
 
@@ -28,6 +45,7 @@ if __name__ == "__main__":
     parser.add_argument('-hl', '--headless', type=bool, default=None)
     parser.add_argument('-c', '--configFile', type=str, default='conf.yaml', help = "Path of the configuration file")
     parser.add_argument('-o', '--outputDir', type=str, default=None, help = "Path of the output log files")
+    parser.add_argument('-w', '--worker_id', type=int, default=0, help = "The worker id, change for parallel")
     args = parser.parse_args()
     
     # Retrieve configuration from configFile
@@ -155,7 +173,7 @@ if __name__ == "__main__":
         if "worker_id" in config["Unity"]:
             worker_id = config["Unity"]["worker_id"]
         else:
-            worker_id = 0
+            worker_id = args.worker_id
 
         if "time_scale" in config["Unity"]:
             time_scale = config["Unity"]["time_scale"]
@@ -180,6 +198,8 @@ if __name__ == "__main__":
         min_plots_grid(logger, output_dir=output)
 
         print("\nAll results are available in the '%s' pickle file." % logger.final_filename)
+
+        pickle2json(os.path.join(output, logger.final_filename))
     finally:
         env.close() 
     
