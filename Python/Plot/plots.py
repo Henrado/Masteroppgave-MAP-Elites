@@ -130,8 +130,6 @@ def min_plots_grid(logger, output_dir=None, to_grid_parameters={}, fitness_domai
 
     d = pd.DataFrame(grid.recentness) # Liste til hva??
     d.to_csv(os.path.join(output_dir, "./grid.recentness.csv"))
-    print(grid.solutions)
-    print(type(grid.solutions)) 
 
     d = pd.DataFrame(dict_to_2Darray(grid.solutions, shape=grid.shape, individ=True)) # Dict -> 2d numpy array
     d.to_csv(os.path.join(output_dir, "./grid.solutions.csv"))
