@@ -18,6 +18,26 @@ def json_loads_tuple_keys(string):
     mapping = json.loads(string)
     return {tuple(json.loads(k)): v for k, v in mapping.items()}
 
+def dict_to_2Darray(dict:dict, shape:tuple, feature:bool=False, individ:bool=False):
+    arr = np.empty(shape, dtype=object)
+    for key, value in dict.items():
+        #print(key[0])
+        if feature:
+            value = [i.getValues() for i in value]
+        elif individ:
+            indi = []
+            for i in value:
+                dic = {
+                    "name": i.name,
+                    "genom": list(i),
+                    "fitness": i.fitness.getValues(),
+                    "features": i.features.getValues()
+                    }
+                indi.append(dic)
+            value = indi
+        arr[key[0]][key[1]] = value
+    return arr
+
 def min_summary(algo, max_depth = None, max_entry_length = None) -> str:
         """Return a summary description of the class.
         The summarised information is provided by the `self.__get_summary_state__` method.
@@ -83,39 +103,35 @@ def min_plots_grid(logger, output_dir=None, to_grid_parameters={}, fitness_domai
     plots.plotGridSubplots(grid.activity_per_bin, plot_path, plt.get_cmap("Reds", max_activity), grid.features_domain, [0, max_activity], nbTicks=None) # type: ignore
 
     # For å sikkerhetskopiere all data til senere plots
-    d = pd.DataFrame(logger.evals)
-    with open(os.path.join(output_dir, "./evals.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(logger.evals) # Er dataframe
+    d.to_csv(os.path.join(output_dir, "./evals.csv"))
 
-    d = pd.DataFrame(logger.iterations)
-    with open(os.path.join(output_dir, "./iterations.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(logger.iterations) # Er dataframe 
+    d.to_csv(os.path.join(output_dir, "./iterations.csv"))
 
-    d = pd.DataFrame(grid.quality_array[... ,0])
-    with open(os.path.join(output_dir, "./grid.quality_array.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(grid.quality_array[... ,0]) # Er array 
+    d.to_csv(os.path.join(output_dir, "./grid.quality_array.csv"))
 
-    d = pd.DataFrame(grid.quality)
-    with open(os.path.join(output_dir, "./grid.quality.json"), 'w') as f:
-        json.dump(d.to_json(), f)
 
-    d = pd.DataFrame(grid.items)
-    with open(os.path.join(output_dir, "./grid.items.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(dict_to_2Darray(grid.quality, shape=grid.shape)) # Dict -> 2d numpy array
+    d.to_csv(os.path.join(output_dir, "./grid.quality.csv"))
 
-    d = pd.DataFrame(grid.nb_items_per_bin) # ok
-    with open(os.path.join(output_dir, "./grid.nb_items_per_bin.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(grid.items) # Liste med løsninger
+    d.to_csv(os.path.join(output_dir, "./grid.items.csv"))
 
-    d = pd.DataFrame(grid.activity_per_bin) #ok 
-    with open(os.path.join(output_dir, "./grid.activity_per_bin.json"), 'w') as f:
-        json.dump(d.to_dict(), f)
+    d = pd.DataFrame(grid.nb_items_per_bin) #Er Np array
+    d.to_csv(os.path.join(output_dir, "./grid.nb_items_per_bin.csv"))
 
-    with open(os.path.join(output_dir, "./grid.features.json"), 'w') as f:
-        json.dump(str(grid.features), f)
+    d = pd.DataFrame(grid.activity_per_bin) # Er nparray
+    d.to_csv(os.path.join(output_dir, "./grid.activity_per_bin.csv"))
 
-    with open(os.path.join(output_dir, "./grid.recentness.json"), 'w') as f:
-        json.dump(str(grid.recentness), f)
+    d = pd.DataFrame(dict_to_2Darray(grid.features, shape=grid.shape, feature=True)) # Dict -> 2d numpy array
+    d.to_csv(os.path.join(output_dir, "./grid.features.csv"))
 
-    with open(os.path.join(output_dir, "./grid.solutions.json"), 'w') as f:
-        json.dump(json_dumps_tuple_keys(grid.solutions), f)
+    d = pd.DataFrame(grid.recentness) # Liste til hva??
+    d.to_csv(os.path.join(output_dir, "./grid.recentness.csv"))
+    print(grid.solutions)
+    print(type(grid.solutions)) 
+
+    d = pd.DataFrame(dict_to_2Darray(grid.solutions, shape=grid.shape, individ=True)) # Dict -> 2d numpy array
+    d.to_csv(os.path.join(output_dir, "./grid.solutions.csv"))
