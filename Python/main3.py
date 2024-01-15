@@ -50,9 +50,6 @@ if __name__ == "__main__":
     
     # Retrieve configuration from configFile
     config = yaml.safe_load(open(args.configFile))
-    print("Retrieved configuration:")
-    print(config)
-    print("\n------------------------\n")
 
 
 
@@ -61,7 +58,7 @@ if __name__ == "__main__":
     log_base_path = config.get("log_base_path", ".") if args.outputDir is None else args.outputDir
     output = os.path.join("result", log_base_path)
     try: 
-        os.mkdir(output)
+        os.makedirs(output)
     except OSError as error: 
         print(error) 
 
@@ -162,6 +159,10 @@ if __name__ == "__main__":
 
     with open(os.path.join(output, args.configFile), 'w') as file:
         yaml.dump(config, file)
+    
+    print("Retrieved configuration:")
+    print(config)
+    print("\n------------------------\n")
 
     try:
         # Create the channel
