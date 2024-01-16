@@ -1,8 +1,8 @@
 #!/usr/bin/bash
-#SBATCH --job-name=parallell
+#SBATCH --job-name=testslurm
 #SBATCH --array=1-5      # Creates 4 jobs, with `${SLURM_ARRAY_TASK_ID}` values from 1 to 4
 #SBATCH --mem 2G
-#SBATCH --output=parallell/%a/output.txt
+#SBATCH --output=testslurm/%a/output.txt
 
 # load modules
 source ~/.bashrc
