@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
         pickle2json(os.path.join(output, logger.final_filename))
     finally:
-        env.close() 
+        env.close() #type: ignore
     
         
 
