@@ -14,8 +14,10 @@ if os.name == 'nt':
     def getch():
         return msvcrt.getch().decode()
 else:
+    def getch():
+        return None
     # ex) Windows: "COM*", Linux: "/dev/ttyUSB*", Mac: "/dev/tty.usbserial-*"
-    DEVICENAME          = '/dev/ttyUSB0'
+    """DEVICENAME          = '/dev/ttyUSB0'
     import sys, tty, termios
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -26,6 +28,7 @@ else:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
+        """
     
 
 #********* DYNAMIXEL Model definition *********
