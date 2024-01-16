@@ -1,0 +1,55 @@
+ParallelismManager:
+  batch_mode: false
+  parallelismType: none
+Qutee:
+  legAngularLimits:
+  - 45
+  - -20
+  - 60
+  - -20
+  - 50
+Unity:
+  controller: SineController
+  editor_mode: false
+  evaluation_steps: 200
+  fitnessfunction: basicFitness
+  headless: true
+  individ: Individual_zeroLocked
+  time_scale: 100
+algorithms:
+  algoQD:
+    batch_size: 10
+    budget: 1000
+    type: RandomSearchMutPolyBounded
+  algoTotal:
+    algorithms:
+    - algoQD
+    tell_container_when_switching: only_best
+    type: Sq
+  container: cont0
+  dimension: 48
+  ind_domain:
+  - -1.0
+  - 1.0
+  optimisation_task: maximisation
+containers:
+  cont0:
+    features_domain:
+    - - -10.0
+      - 10.0
+    - - -10.0
+      - 10.0
+    fitness_domain:
+    - - 0.0
+      - 1.0
+    max_items_per_bin: 1
+    name: cont0
+    shape:
+    - 20
+    - 20
+    type: Grid
+log_base_path: t2
+logger:
+  save_period: 20
+main_algorithm_name: algoTotal
+seed: 246885
