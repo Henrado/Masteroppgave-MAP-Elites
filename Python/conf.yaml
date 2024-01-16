@@ -2,13 +2,13 @@
 
 
 # The random seed
-seed: 1234567890
+#seed: 1234567890
 
 # The name of the main algorithm (see below the description of 'algoTotal')
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: 10.01.24_Z_S_nyVinkel
+log_base_path: t2
 
 # The list of all container.
 containers:

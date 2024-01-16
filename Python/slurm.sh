@@ -1,22 +1,11 @@
-#!/bin/bash
-jobname=$1
-output_dir=$2
-n_jobs=$3
-
-#SBATCH --job-name $jobname
-#SBATCH --output $output_dir/%j/output.txt
-#SBATCH --ntasks=10
-#SBATCH --cpus-per-task=2
-#SBATCH --mem-per-cpu=500M
+#!/usr/bin/bash
+#SBATCH --job-name=parallell
+#SBATCH --array=1-5      # Creates 4 jobs, with `${SLURM_ARRAY_TASK_ID}` values from 1 to 4
+#SBATCH --mem 2G
+#SBATCH --output=parallell/%a/output.txt
 
 # load modules
 source ~/.bashrc
 conda activate env39
 
-for i in {1..$n_jobs}; do
-    while [ "$(jobs -p | wc -l)" -ge "$SLURM_NTASKS" ]; do
-        sleep 30
-    done
-    srun --ntasks=1 --cpus-per-task=$SLURM_CPUS_PER_TASK bash -c 'echo hello "$i"' &
-done
-wait
+srun python main3.py -c conf.yaml -w ${SLURM_ARRAY_TASK_ID} -o testslurm/${SLURM_ARRAY_TASK_ID} &
