@@ -1,7 +1,7 @@
 from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
-from EA.Individual import Individual_zeroLocked, Individual_twoLock
-from EA.Controllers import SineController, TanhController, TanhControllerWOff
+from EA.Individual import *
+from EA.Controllers import *
 from Plot.plots import min_plots_grid, min_summary
 import numpy as np
 import argparse
@@ -86,6 +86,8 @@ if __name__ == "__main__":
         individ = Individual_twoLock
     elif conf_individ == "Individual_zeroLocked":
         individ = Individual_zeroLocked
+    elif conf_individ == "Individual_globalLock":
+        individ = Individual_globalLock
     else:
         individ = None
         raise NotImplementedError
@@ -94,10 +96,14 @@ if __name__ == "__main__":
     conf_controller = config["Unity"]["controller"]
     if conf_controller == "SineController":
         controller = SineController
+    elif conf_controller == "SineControllerUfq":
+        controller = SineControllerUfq
     elif conf_controller == "TanhController":
         controller = TanhController
     elif conf_controller == "TanhControllerWOff":
         controller = TanhControllerWOff
+    elif conf_controller == "TanhControllerWOffFq":
+        controller = TanhControllerWOffFq
     else:
         controller = None
         raise NotImplementedError
@@ -157,7 +163,7 @@ if __name__ == "__main__":
         parallelismType = args.parallelismType
         config["ParallelismManager"]["parallelismType"]= parallelismType
 
-    with open(os.path.join(output, args.configFile), 'w') as file:
+    with open(os.path.join(output, "conf.yaml"), 'w') as file:
         yaml.dump(config, file)
     
     print("Retrieved configuration:")
