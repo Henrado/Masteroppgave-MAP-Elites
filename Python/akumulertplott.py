@@ -33,13 +33,13 @@ path = "test/grid.recentness.csv"
 path = "test/grid.solutions.csv"
 
 def get_all_dataframes(path:str, filename:str):
-    dir_list = os.listdir(path)
-    config = yaml.safe_load(open(os.path.join(path, dir_list[0], "conf.yaml")))
+    dir_list = [f.path for f in os.scandir(path) if f.is_dir()]
+    config = yaml.safe_load(open(os.path.join(dir_list[0], "conf.yaml")))
 
     arrDataframes = np.empty(shape=(len(dir_list)), dtype=pd.DataFrame)
 
     for i, v in enumerate(dir_list):
-        lest = pd.read_csv(os.path.join(path, v, filename), index_col=0)
+        lest = pd.read_csv(os.path.join(v, filename), index_col=0)
         arrDataframes[i] = lest
     print("Kolonnene man kan velge er:", list(arrDataframes[0].columns))
     return arrDataframes, config
@@ -96,5 +96,47 @@ ex_lost_dict = [
     {"path": "result/testslurm", "label": "forsøk1", "color": "blue"},
     {"path": "result/testslurm2", "label": "forsøk2", "color": "red"}
 ]
-do_it_all_stdline(ex_lost_dict, "iterations.csv", "max", scale=True)
+#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", scale=True)
 #do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size")
+def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bool, type_operation:str, scale:float=1):
+    d, config = get_all_dataframes(path, filename=filename)
+    arr2 = np.empty(shape=(len(d),d[0].shape[0], d[0].shape[1]))
+    for i, dataframe in enumerate(d):
+        arr2[i] = dataframe.to_numpy()
+
+    if type_operation == "max":
+        data = np.nanmax(arr2, axis=0)
+    elif type_operation == "mean":
+        data = np.nanmean(arr2, axis=0)
+    elif type_operation == "median":
+        data = np.nanmedian(arr2, axis=0)
+    elif type_operation == "min":
+        data = np.nanmin(arr2, axis=0)
+    elif type_operation == "sum":
+        data = np.nansum(arr2, axis=0)
+    elif type_operation == "std":
+        data = np.nanstd(arr2, axis=0)
+    else:
+        raise ValueError("Invalid type_operation type. Expected one of: [max, min, mean, median, sum, std]")
+    
+    if not quality_array:
+        data = data*scale
+        data = data.astype(int)
+    max_activity = np.max(data)
+    features_domain = config["containers"][config["algorithms"]["container"]]["features_domain"]
+    fitness_domain = config["containers"][config["algorithms"]["container"]]["fitness_domain"]
+    cmap_perf = "inferno"
+    if quality_array:
+        plots.plotGridSubplots(data, os.path.join(path, output_filename), plt.get_cmap(cmap_perf), features_domain, fitness_domain[0], nbTicks=None) # type: ignore
+    else:
+        plots.plotGridSubplots(data, os.path.join(path, output_filename), plt.get_cmap("Reds", max_activity), features_domain, [0, max_activity], nbTicks=None) # type: ignore
+
+
+path = "result/testslurm2/"
+filname = "grid.quality_array.csv"
+output_filename = "performancesGrid.svg"
+do_it_all_grid(path, filname, output_filename, True, "max")
+
+filname = "grid.activity_per_bin.csv"
+output_filename = "grid.activity_per_bin.svg"
+do_it_all_grid(path, filname, output_filename, False, "sum")
