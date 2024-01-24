@@ -18,6 +18,7 @@ from functools import reduce
 import xarray as xr
 import seaborn as sns
 import yaml
+from ast import literal_eval
 
 
 
@@ -32,22 +33,33 @@ path = "test/grid.features.csv"
 path = "test/grid.recentness.csv"
 path = "test/grid.solutions.csv"
 
-def get_all_dataframes(path:str, filename:str):
+def get_all_dataframes(path:str, filename:str, parse:bool=False):
     dir_list = [f.path for f in os.scandir(path) if f.is_dir()]
     config = yaml.safe_load(open(os.path.join(dir_list[0], "conf.yaml")))
 
     arrDataframes = np.empty(shape=(len(dir_list)), dtype=pd.DataFrame)
+    columns = pd.read_csv(os.path.join(dir_list[0], filename), index_col=0).columns
 
-    for i, v in enumerate(dir_list):
-        lest = pd.read_csv(os.path.join(v, filename), index_col=0)
-        arrDataframes[i] = lest
+    if parse:
+        for i, v in enumerate(dir_list):
+            lest = pd.read_csv(os.path.join(v, filename), index_col=0, converters={col:literal_eval for col in columns})
+            arrDataframes[i] = lest
+    else:
+        for i, v in enumerate(dir_list):
+            lest = pd.read_csv(os.path.join(v, filename), index_col=0)
+            arrDataframes[i] = lest
     print("Kolonnene man kan velge er:", list(arrDataframes[0].columns))
     return arrDataframes, config
 
-def dataframe2numpy(dataframes:np.ndarray, key:str):
-    arr2 = np.empty(shape=(dataframes.shape[0], dataframes[0].shape[0]))
-    for i, v in enumerate(dataframes):
-        arr2[i] = v[key]
+def dataframe2numpy(dataframes:np.ndarray, key:str="", dtype=None):
+    if key == "":
+        arr2 = np.empty(shape=(len(dataframes),dataframes[0].shape[0], dataframes[0].shape[1]), dtype=dtype)
+        for i, dataframe in enumerate(dataframes):
+            arr2[i] = dataframe.to_numpy()
+    else:
+        arr2 = np.empty(shape=(dataframes.shape[0], dataframes[0].shape[0]))
+        for i, v in enumerate(dataframes):
+            arr2[i] = v[key]
     return arr2
 
 def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="", xlabel="Evaluations", ylabel=""):
@@ -90,6 +102,8 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, output_filename=N
         plot_std_line(experiments, output_filename=output_filename)
     pass
 
+def do_it_all_varShow():
+    pass
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
 ex_lost_dict = [
@@ -100,9 +114,7 @@ ex_lost_dict = [
 #do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size")
 def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bool, type_operation:str, scale:float=1):
     d, config = get_all_dataframes(path, filename=filename)
-    arr2 = np.empty(shape=(len(d),d[0].shape[0], d[0].shape[1]))
-    for i, dataframe in enumerate(d):
-        arr2[i] = dataframe.to_numpy()
+    arr2 = dataframe2numpy(d)
 
     if type_operation == "max":
         data = np.nanmax(arr2, axis=0)
@@ -135,8 +147,22 @@ def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bo
 path = "result/testslurm2/"
 filname = "grid.quality_array.csv"
 output_filename = "performancesGrid.svg"
-do_it_all_grid(path, filname, output_filename, True, "max")
+#do_it_all_grid(path, filname, output_filename, True, "max")
 
 filname = "grid.activity_per_bin.csv"
 output_filename = "grid.activity_per_bin.svg"
-do_it_all_grid(path, filname, output_filename, False, "sum")
+#do_it_all_grid(path, filname, output_filename, False, "sum")
+
+""" d, conf = get_all_dataframes(path, "grid.solutions.csv", parse=True)
+arr2 = dataframe2numpy(d, dtype=object)
+
+a = np.empty(shape=arr2.shape)
+for i in range(arr2.shape[0]):
+    for j in range(arr2.shape[1]):
+        for k in range(arr2.shape[2]):
+            svar = []
+            for liste in (arr2[i][j][k]):
+                svar.append(liste["genom"][0])
+            if len(svar)>0:
+                a[i][j][k] = np.nanmax(svar)
+b = a[:][9][:] """
