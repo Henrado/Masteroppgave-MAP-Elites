@@ -8,7 +8,7 @@
 main_algorithm_name: algoTotal
 
 # The uotput directory 
-log_base_path: t2
+log_base_path: t2 # Blir overskrevet i slurm 
 
 # The list of all container.
 containers:
@@ -54,15 +54,18 @@ ParallelismManager:
 Unity:
     individ: Individual_zeroLocked
     #individ: Individual_twoLock
+    #individ: Individual_globalLock
     controller: SineController
+    controller: SineControllerUfq
     #controller: TanhController
     #controller: TanhControllerWOff
+    #controller: TanhControllerWOffFq
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
     evaluation_steps: 200
     editor_mode: False
     headless: True
-    worker_id: 1
+    #worker_id: 1
     time_scale: 100
 
 Qutee:

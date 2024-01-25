@@ -3,3 +3,35 @@
 export PATH="/opt/ifi/anaconda3/bin:$PATH"
 source ~/.bashrc
 conda activate env39
+
+echo "Job done at $HOSTNAME"
+echo "Twolock, TanhWOff, basic, Nye vinkler med at samtidig?"
+
+
+#!/usr/bin/bash
+
+#SBATCH --job-name=Zero_TanhWoff
+#SBATCH --output=log_ZeroTanhWoff.txt
+#SBATCH --array=1-10      # Creates 4 jobs, with `${SLURM_ARRAY_TASK_ID}` values from 1 to 4
+#SBATCH --ntasks=10
+#SBATCH --mem 2G
+
+# load anaconda and your environment
+source ~/.bashrc
+conda activate env39
+
+# Run your program with "srun your_command"
+srun bash -c "echo hello ${SLURM_ARRAY_TASK_ID}" &
+
+squeue
+scontrol show node
+sacct -j 3947 --format=JobID,Start,End,Elapsed,REQCPUS,ALLOCTRES%30
+
+# Til ifi maskinen
+# KJøres på HPC  
+rsync --progress result/* henrme@login.ifi.uio.no:~/resultater/
+rsync --progress -a result/G_SUfq_B_exLimit/* henrme@login.ifi.uio.no:~/resultater/G_SUfq_B_exLimit/
+
+# Fra ifi til min data:
+# Kjøres på min
+rsync -chavzP --stats henrme@login.ifi.uio.no:~/resultater /mnt/c/Users/henri/Documents/GitHub/

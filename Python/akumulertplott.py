@@ -21,18 +21,6 @@ import yaml
 from ast import literal_eval
 
 
-
-path = "test/evals.csv"
-path = "test/iterations.csv"
-path = "test/grid.quality.csv"
-path = "test/grid.quality_array.csv"
-path = "test/grid.items.csv"
-path = "test/grid.nb_items_per_bin.csv"
-path = "test/grid.activity_per_bin.csv"
-path = "test/grid.features.csv"
-path = "test/grid.recentness.csv"
-path = "test/grid.solutions.csv"
-
 def get_all_dataframes(path:str, filename:str, parse:bool=False):
     dir_list = [f.path for f in os.scandir(path) if f.is_dir()]
     config = yaml.safe_load(open(os.path.join(dir_list[0], "conf.yaml")))
@@ -87,7 +75,7 @@ def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="
     else:
         plt.show()
 
-def do_it_all_stdline(experiments: list,filename:str, key:str, output_filename=None, scale=False):
+def do_it_all_stdline(experiments: list,filename:str, key:str, title:str="", output_filename=None, scale=False):
     config = {}
     for dic in experiments:
         path = dic["path"]
@@ -97,9 +85,9 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, output_filename=N
     if scale:
         algo_config = config["algorithms"][config["algorithms"]["algoTotal"]["algorithms"][0]]
         algo_iterations = int(np.rint(algo_config["budget"]/algo_config["batch_size"]))
-        plot_std_line(experiments, scale=algo_iterations, output_filename=output_filename)
+        plot_std_line(experiments, scale=algo_iterations,title=title, output_filename=output_filename)
     else:
-        plot_std_line(experiments, output_filename=output_filename)
+        plot_std_line(experiments, title=title, output_filename=output_filename)
     pass
 
 def do_it_all_varShow():
@@ -107,11 +95,25 @@ def do_it_all_varShow():
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
 ex_lost_dict = [
-    {"path": "result/testslurm", "label": "forsøk1", "color": "blue"},
-    {"path": "result/testslurm2", "label": "forsøk2", "color": "red"}
+    {"path": "../../resultater/T_S_B_exLimit2", "label": "T_S_B_exLimit", "color": "black"},
+    {"path": "../../resultater/Z_S_B_exLimit", "label": "Z_S_B_exLimit", "color": "grey"},
+    {"path": "../../resultater/G_S_B_exLimit", "label": "G_S_B_exLimit", "color": "magenta"},
+
+    {"path": "../../resultater/T_SUfq_B_exLimit", "label": "T_SUfq_B_exLimit", "color": "red"},
+    {"path": "../../resultater/Z_SUfq_B_exLimit", "label": "Z_SUfq_B_exLimit", "color": "lightcoral"},
+    {"path": "../../resultater/G_SUfq_B_exLimit", "label": "G_SUfq_B_exLimit", "color": "peru"},
+
+    {"path": "../../resultater/T_T_B_exLimit", "label": "T_T_B_exLimit", "color": "royalblue"},
+    {"path": "../../resultater/Z_T_B_exLimit", "label": "Z_T_B_exLimit", "color": "navy"},
+
+    {"path": "../../resultater/T_TWoff_B_exLimit", "label": "T_TWoff_B_exLimit", "color": "gold"},
+    {"path": "../../resultater/Z_TWoff_B_exLimit", "label": "Z_TWoff_B_exLimit", "color": "orange"},
+
+    {"path": "../../resultater/T_TWoffFq_B_exLimit", "label": "T_TWoffFq_B_exLimit", "color": "forestgreen"},
+    {"path": "../../resultater/Z_TWoffFq_B_exLimit", "label": "Z_TWoffFq_B_exLimit", "color": "lime"}
 ]
-#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", scale=True)
-#do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size")
+do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
+do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bool, type_operation:str, scale:float=1):
     d, config = get_all_dataframes(path, filename=filename)
     arr2 = dataframe2numpy(d)
@@ -144,14 +146,15 @@ def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bo
         plots.plotGridSubplots(data, os.path.join(path, output_filename), plt.get_cmap("Reds", max_activity), features_domain, [0, max_activity], nbTicks=None) # type: ignore
 
 
-path = "result/testslurm2/"
+path = "../../resultater/G_S_B_exLimit"
+path = "../../resultater/Z_S_B_exLimit"
 filname = "grid.quality_array.csv"
 output_filename = "performancesGrid.svg"
-#do_it_all_grid(path, filname, output_filename, True, "max")
+#do_it_all_grid(path, filname, output_filename, True, "mean")
 
 filname = "grid.activity_per_bin.csv"
 output_filename = "grid.activity_per_bin.svg"
-#do_it_all_grid(path, filname, output_filename, False, "sum")
+#do_it_all_grid(path, filname, output_filename, False, "max")
 
 """ d, conf = get_all_dataframes(path, "grid.solutions.csv", parse=True)
 arr2 = dataframe2numpy(d, dtype=object)
