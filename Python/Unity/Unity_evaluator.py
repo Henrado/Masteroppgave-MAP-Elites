@@ -6,7 +6,7 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 import numpy as np
 import platform 
-import matplotlib.pyplot as plt
+import pandas as pd
 
 
 
@@ -16,6 +16,7 @@ class UnityEvaluator:
         config_sideChannel = ConfigSideChannel()
         EngineChannel = EngineConfigurationChannel()
         side_channels = []
+        self.index = 0
         if qutee_config != None:
             side_channels.append(config_sideChannel)
         if time_scale > 1:
@@ -104,7 +105,9 @@ class UnityEvaluator:
         end_yrot = end_rotation[1] # type: ignore
         fitness = self.fitnessfunction(end_x, end_z, end_yrot) # type: ignore
         # print(fitness, end_yrot, end_x, end_z)
-        print(svar)
+        d = pd.DataFrame(svar) # Liste med løsninger
+        d.to_csv("./index_"+str(self.index)+".csv")
+        self.index += 1
         if realRobot:
             Q.DisableTorqueALL() # type: ignore
             #Q.quit() # type: ignore
