@@ -16,7 +16,6 @@ class UnityEvaluator:
         config_sideChannel = ConfigSideChannel()
         EngineChannel = EngineConfigurationChannel()
         side_channels = []
-        self.index = 0
         if qutee_config != None:
             side_channels.append(config_sideChannel)
         if time_scale > 1:
@@ -73,7 +72,6 @@ class UnityEvaluator:
         last_rotation = 0 # Denne kan ikke være np.zeros((1,3)) siden da vil last_rotation bli = [[x,y,z]] ikke [x,y,z]
         reward = 0 # Reward for denne epoken, resettes etter neste
         cumulativeReward = 0 # Dette er så mye negativ reward den har samlet i løpet av alle epoker og alt til nå
-        svar = []
         for t in range(self.MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
             obs,other = self.env.get_steps(individual_name)
             if (len(obs.agent_id)>0):
@@ -85,7 +83,6 @@ class UnityEvaluator:
                                             # Der verdien skal være mellom -1 til 1
                                             # Faktisk max vinkel kan settes i unity 
                 #action = np.zeros((1,12))
-                svar.append(action[0])
                 #print(obs.agent_id) # Henter agentenes id
                 end_position = obs[0].obs[0][:3] # Henter observasjonene til agent 0 
                 end_rotation += self.shortestAngle(obs[0].obs[0][3:6],last_rotation)
@@ -105,9 +102,6 @@ class UnityEvaluator:
         end_yrot = end_rotation[1] # type: ignore
         fitness = self.fitnessfunction(end_x, end_z, end_yrot) # type: ignore
         # print(fitness, end_yrot, end_x, end_z)
-        d = pd.DataFrame(svar) # Liste med løsninger
-        d.to_csv("./index_"+str(self.index)+".csv")
-        self.index += 1
         if realRobot:
             Q.DisableTorqueALL() # type: ignore
             #Q.quit() # type: ignore
