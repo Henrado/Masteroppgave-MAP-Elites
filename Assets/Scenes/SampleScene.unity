@@ -3479,6 +3479,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6612090276983492996, guid: ef7725775c9dcdf4f9a308235288b43a,
+        type: 3}
+      propertyPath: DecisionPeriod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6627333526798307475, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}
       propertyPath: jointDampen

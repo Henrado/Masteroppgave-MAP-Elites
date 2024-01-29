@@ -13,7 +13,7 @@ import sys
 import re
 import yaml
 
-def find_value_from_key(data, key):
+""" def find_value_from_key(data, key):
     for k, v in data.items():
         if key in data[k]:
             return data[k][key]
@@ -76,24 +76,29 @@ elif conf_individ == "circleFitness":
     fitnessfunction = circleFitness
 else:
     fitnessfunction = None
-    raise NotImplementedError
+    raise NotImplementedError """
 
 x = 17
 y = 17
-ind = json_obj[x][y][0]
+#ind = json_obj[x][y][0]
+individ = Individual_zeroLocked
+controller = SineController
+fitnessfunction = basicFitness
 individ.get_dimension_count(controller) # type: ignore
+ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
 print(ind)
 
 try:
     # Create the channel
-    if "Qutee" in config:
+    """ if "Qutee" in config:
         qutee_config = config["Qutee"]
     else:
-        qutee_config = None
+        qutee_config = None """
+    qutee_config = None
     # Lager evaluator:
-    env = UnityEvaluator(80, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
+    env = UnityEvaluator(200, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
         
-    svar = env.evaluate(ind, True)
+    svar = env.evaluate(ind, False)
     print("HER:",svar)
     pass
 

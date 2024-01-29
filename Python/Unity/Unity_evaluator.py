@@ -6,6 +6,8 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 import numpy as np
 import platform 
+import pandas as pd
+
 
 
 class UnityEvaluator:
@@ -58,7 +60,7 @@ class UnityEvaluator:
         return diff
 
     def evaluate(self, ind, realRobot=False):
-        DELTA_TIME = 0.2
+        DELTA_TIME = 0.01
         if realRobot:
             Q = Qutee_interface.Qutee_interface()
             Q.EnableTorqueALL()
