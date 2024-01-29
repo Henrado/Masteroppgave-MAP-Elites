@@ -82,10 +82,11 @@ x = 17
 y = 17
 #ind = json_obj[x][y][0]
 individ = Individual_zeroLocked
-controller = SineController
+controller = TanhController
 fitnessfunction = basicFitness
 individ.get_dimension_count(controller) # type: ignore
 ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
+ind = np.array([1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0])
 print(ind)
 
 try:
