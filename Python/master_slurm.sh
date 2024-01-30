@@ -7,9 +7,9 @@ for i in "${array[@]}";
 do
         if [[ $i == $array ]]
         then
-                jobstr=$(sbatch slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}')
+                jobstr=$(bash slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}')
         else
-                jobstr=$(sbatch slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}' "SBATCH --dependency=aftercorr:${jobstr##* }")
+                jobstr=$(bash slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}' "SBATCH --dependency=aftercorr:${jobstr##* }")
         fi
         echo $jobstr
 done
