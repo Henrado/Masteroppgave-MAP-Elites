@@ -233,3 +233,4 @@ cython_debug/
 #.idea/
 Build/Windows/Figur2_Data/ML-Agents/Timers/SampleScene_timers.json
 Python/result/*
+Python/result_old/*
