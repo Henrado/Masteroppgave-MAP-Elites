@@ -62,7 +62,7 @@ Unity:
     controller: TanhControllerWOffFq
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
-    evaluation_steps: 200
+    evaluation_steps: 10000
     editor_mode: False
     headless: True
     #worker_id: 1

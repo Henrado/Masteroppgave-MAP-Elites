@@ -11,7 +11,7 @@ Qutee:
 Unity:
   controller: TanhController
   editor_mode: false
-  evaluation_steps: 200
+  evaluation_steps: 10000
   fitnessfunction: basicFitness
   headless: true
   individ: Individual_zeroLocked
