@@ -1,14 +1,15 @@
 #!/usr/bin/bash
 # Array med alle configfilene 
 array=( Z_S_B_exLimit Z_SUfq_B_exLimit Z_T_B_exLimit T_TWoff_B_exLimit Z_TWoffFq_B_exLimit )
+count_ex=100
 echo ${array[0]}
 for i in "${array[@]}";
 do
         if [[ $i == $array ]]
         then
-                jobstr=$(sbatch slurm.sh $i --job-name=$i --output=result/$i/%a/output.txt)
+                jobstr=$(sbatch slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}')
         else
-                jobstr=$(sbatch slurm.sh $i --job-name=$i --output=result/$i/%a/output.txt --dependency=aftercorr:${jobstr##* })
+                jobstr=$(sbatch slurm.sh $i $count_ex '${SLURM_ARRAY_TASK_ID}' "SBATCH --dependency=aftercorr:${jobstr##* }")
         fi
         echo $jobstr
 done
