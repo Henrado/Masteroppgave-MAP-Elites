@@ -1,7 +1,7 @@
 from Unity.Unity_evaluator import UnityEvaluator
 from Unity.fitness_funtions import basicFitness, circleFitness
-from EA.Individual import Individual_zeroLocked, Individual_twoLock
-from EA.Controllers import SineController, TanhController, TanhControllerWOff
+from EA.Individual import *
+from EA.Controllers import *
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -12,8 +12,11 @@ import json
 import sys
 import re
 import yaml
+import pandas as pd
+from ast import literal_eval
 
-""" def find_value_from_key(data, key):
+
+def find_value_from_key(data, key):
     for k, v in data.items():
         if key in data[k]:
             return data[k][key]
@@ -33,25 +36,36 @@ def str_to_2Darr(shape, string):
         arr[a[0]][a[1]] = b
     return arr
 
+def get_all_dataframes(path:str, filename:str, parse:bool=False):
+    config = yaml.safe_load(open(os.path.join(path, "conf.yaml")))
 
-directory = "result/25.12.23/25.12.23_twolock_tanh"
-# Retrieve configuration from configFile
-config = yaml.safe_load(open(os.path.join(directory, "conf.yaml")))
+    arrDataframes = None
+    columns = pd.read_csv(os.path.join(path, filename), index_col=0).columns
 
-#open JSON file
-with open(os.path.join(directory, "grid.solutions.json"), 'r', encoding='utf-8') as infile:
-   json_str = infile.read()
+    if parse:
+        arrDataframes = pd.read_csv(os.path.join(path, filename), index_col=0, converters={col:literal_eval for col in columns})
+    else:
+        arrDataframes = pd.read_csv(os.path.join(path, filename), index_col=0)
+    print("Kolonnene man kan velge er:", list(arrDataframes.columns))
+    return arrDataframes, config
+
+directory = "../../resultater/G_S_B_exLimit/1"
+
+d, config = get_all_dataframes(directory, "grid.solutions.csv", parse=True)
+
+arr2 = d.to_numpy()
 
 shape = find_value_from_key(config["containers"], "shape")
-json_obj = str_to_2Darr((shape[0],shape[1]), json_str) #type: ignore
 
-    # Loads type of individ, controller and fitnessfunction from config
+# Loads type of individ, controller and fitnessfunction from config
 assert "individ" in config["Unity"], f"Please specify configuration entry 'individ'."
 conf_individ = config["Unity"]["individ"]
 if conf_individ == "Individual_twoLock":
     individ = Individual_twoLock
 elif conf_individ == "Individual_zeroLocked":
     individ = Individual_zeroLocked
+elif conf_individ == "Individual_globalLock":
+    individ = Individual_globalLock
 else:
     individ = None
     raise NotImplementedError
@@ -60,10 +74,14 @@ assert "controller" in config["Unity"], f"Please specify configuration entry 'co
 conf_controller = config["Unity"]["controller"]
 if conf_controller == "SineController":
     controller = SineController
+elif conf_controller == "SineControllerUfq":
+    controller = SineControllerUfq
 elif conf_controller == "TanhController":
     controller = TanhController
 elif conf_controller == "TanhControllerWOff":
     controller = TanhControllerWOff
+elif conf_controller == "TanhControllerWOffFq":
+    controller = TanhControllerWOffFq
 else:
     controller = None
     raise NotImplementedError
@@ -76,27 +94,27 @@ elif conf_individ == "circleFitness":
     fitnessfunction = circleFitness
 else:
     fitnessfunction = None
-    raise NotImplementedError """
+    raise NotImplementedError
 
-x = 17
+x = 9
 y = 17
-#ind = json_obj[x][y][0]
-individ = Individual_zeroLocked
-controller = SineController
+print(arr2.shape)
+ind = arr2[x][y]
+ind = ind[0]["genom"]
 fitnessfunction = basicFitness
 individ.get_dimension_count(controller) # type: ignore
-ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
+#ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
 print(ind)
 
 try:
     # Create the channel
-    """ if "Qutee" in config:
+    if "Qutee" in config:
         qutee_config = config["Qutee"]
     else:
-        qutee_config = None """
-    qutee_config = None
+        qutee_config = None 
+    #qutee_config = None
     # Lager evaluator:
-    env = UnityEvaluator(200, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
+    env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
         
     svar = env.evaluate(ind, False)
     print("HER:",svar)
