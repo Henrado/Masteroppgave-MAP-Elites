@@ -95,22 +95,25 @@ def do_it_all_varShow():
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
 ex_lost_dict = [
-    {"path": "../../resultater/T_S_B_exLimit2", "label": "T_S_B_exLimit", "color": "black"},
-    {"path": "../../resultater/Z_S_B_exLimit", "label": "Z_S_B_exLimit", "color": "grey"},
-    {"path": "../../resultater/G_S_B_exLimit", "label": "G_S_B_exLimit", "color": "magenta"},
+    {"path": "../../resultater2/T_S_B_exLimit", "label": "T_S_B_exLimit", "color": "black"},
+    {"path": "../../resultater2/Z_S_B_exLimit", "label": "Z_S_B_exLimit", "color": "grey"},
+    {"path": "../../resultater2/G_S_B_exLimit", "label": "G_S_B_exLimit", "color": "magenta"},
 
-    {"path": "../../resultater/T_SUfq_B_exLimit", "label": "T_SUfq_B_exLimit", "color": "red"},
-    {"path": "../../resultater/Z_SUfq_B_exLimit", "label": "Z_SUfq_B_exLimit", "color": "lightcoral"},
-    {"path": "../../resultater/G_SUfq_B_exLimit", "label": "G_SUfq_B_exLimit", "color": "peru"},
+    {"path": "../../resultater2/T_SUfq_B_exLimit", "label": "T_SUfq_B_exLimit", "color": "red"},
+    {"path": "../../resultater2/Z_SUfq_B_exLimit", "label": "Z_SUfq_B_exLimit", "color": "lightcoral"},
+    {"path": "../../resultater2/G_SUfq_B_exLimit", "label": "G_SUfq_B_exLimit", "color": "peru"},
 
-    {"path": "../../resultater/T_T_B_exLimit", "label": "T_T_B_exLimit", "color": "royalblue"},
-    {"path": "../../resultater/Z_T_B_exLimit", "label": "Z_T_B_exLimit", "color": "navy"},
+    {"path": "../../resultater2/T_T_B_exLimit", "label": "T_T_B_exLimit", "color": "royalblue"},
+    {"path": "../../resultater2/Z_T_B_exLimit", "label": "Z_T_B_exLimit", "color": "navy"},
+    {"path": "../../resultater2/G_T_B_exLimit", "label": "G_T_B_exLimit", "color": "indigo"},
 
-    {"path": "../../resultater/T_TWoff_B_exLimit", "label": "T_TWoff_B_exLimit", "color": "gold"},
-    {"path": "../../resultater/Z_TWoff_B_exLimit", "label": "Z_TWoff_B_exLimit", "color": "orange"},
+    {"path": "../../resultater2/T_TWoff_B_exLimit", "label": "T_TWoff_B_exLimit", "color": "gold"},
+    {"path": "../../resultater2/Z_TWoff_B_exLimit", "label": "Z_TWoff_B_exLimit", "color": "orange"},
+    {"path": "../../resultater2/G_TWoff_B_exLimit", "label": "G_TWoff_B_exLimit", "color": "tan"},
 
-    {"path": "../../resultater/T_TWoffFq_B_exLimit", "label": "T_TWoffFq_B_exLimit", "color": "forestgreen"},
-    {"path": "../../resultater/Z_TWoffFq_B_exLimit", "label": "Z_TWoffFq_B_exLimit", "color": "lime"}
+    {"path": "../../resultater2/T_TWoffFq_B_exLimit", "label": "T_TWoffFq_B_exLimit", "color": "forestgreen"},
+    {"path": "../../resultater2/Z_TWoffFq_B_exLimit", "label": "Z_TWoffFq_B_exLimit", "color": "lime"},
+    {"path": "../../resultater2/G_TWoffFq_B_exLimit", "label": "G_TWoffFq_B_exLimit", "color": "palegreen"}
 ]
 do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
@@ -146,8 +149,8 @@ def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bo
         plots.plotGridSubplots(data, os.path.join(path, output_filename), plt.get_cmap("Reds", max_activity), features_domain, [0, max_activity], nbTicks=None) # type: ignore
 
 
-path = "../../resultater/G_S_B_exLimit"
-path = "../../resultater/Z_S_B_exLimit"
+path = "../../resultater2/G_S_B_exLimit"
+path = "../../resultater2/Z_S_B_exLimit"
 filname = "grid.quality_array.csv"
 output_filename = "performancesGrid.svg"
 #do_it_all_grid(path, filname, output_filename, True, "mean")
