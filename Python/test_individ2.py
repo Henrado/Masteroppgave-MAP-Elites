@@ -46,7 +46,6 @@ def get_all_dataframes(path:str, filename:str, parse:bool=False):
         arrDataframes = pd.read_csv(os.path.join(path, filename), index_col=0, converters={col:literal_eval for col in columns})
     else:
         arrDataframes = pd.read_csv(os.path.join(path, filename), index_col=0)
-    print("Kolonnene man kan velge er:", list(arrDataframes.columns))
     return arrDataframes, config
 
 directory = "../../resultater2/G_S_B_exLimit/1"
@@ -96,16 +95,21 @@ else:
     fitnessfunction = None
     raise NotImplementedError
 
+
+print("\n"*10)
 test = (10, 18)
+test = (9, 17) #Ikke veldig bra med G_S_B
 x = test[0]
 y = test[1]
-print(arr2.shape)
 ind = arr2[x][y]
 genom = ind[0]["genom"]
 fitnessfunction = basicFitness
 individ.get_dimension_count(controller) # type: ignore
 #ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
-print(genom)
+print("Directory:", directory)
+print("X:", x, "Y:", y)
+print("Genom", genom)
+print("\n")
 
 try:
     # Create the channel
