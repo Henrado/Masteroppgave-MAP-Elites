@@ -49,7 +49,7 @@ def get_all_dataframes(path:str, filename:str, parse:bool=False):
     print("Kolonnene man kan velge er:", list(arrDataframes.columns))
     return arrDataframes, config
 
-directory = "../../resultater/G_S_B_exLimit/1"
+directory = "../../resultater2/G_S_B_exLimit/1"
 
 d, config = get_all_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -96,15 +96,16 @@ else:
     fitnessfunction = None
     raise NotImplementedError
 
-x = 9
-y = 17
+test = (10, 18)
+x = test[0]
+y = test[1]
 print(arr2.shape)
 ind = arr2[x][y]
-ind = ind[0]["genom"]
+genom = ind[0]["genom"]
 fitnessfunction = basicFitness
 individ.get_dimension_count(controller) # type: ignore
 #ind = np.array([1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0])
-print(ind)
+print(genom)
 
 try:
     # Create the channel
@@ -116,8 +117,10 @@ try:
     # Lager evaluator:
     env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
         
-    svar = env.evaluate(ind, False)
-    print("HER:",svar)
+    svar = env.evaluate(genom, False)
+    print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
+    print("Endte :",svar)
+    print("Diff:", ind[0]["fitness"]-svar[0][0], (ind[0]["features"][0]-svar[1][0], ind[0]["features"][1]-svar[1][1]))
     pass
 
 finally:
