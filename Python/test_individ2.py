@@ -97,7 +97,7 @@ else:
 
 
 print("\n"*10)
-test = (10, 18)
+test = (18, 10)
 test = (9, 17) #Ikke veldig bra med G_S_B
 x = test[0]
 y = test[1]
@@ -117,14 +117,16 @@ try:
         qutee_config = config["Qutee"]
     else:
         qutee_config = None 
+    print(qutee_config)
     #qutee_config = None
     # Lager evaluator:
-    env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction)
-        
-    svar = env.evaluate(genom, False)
-    print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
-    print("Endte :",svar)
-    print("Diff:", ind[0]["fitness"]-svar[0][0], (ind[0]["features"][0]-svar[1][0], ind[0]["features"][1]-svar[1][1]))
+    env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=True, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
+    
+    for i in range(10):
+        svar = env.evaluate(genom, False)
+        print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
+        print("Endte :",svar)
+        print("Diff:", ind[0]["fitness"]-svar[0][0], (ind[0]["features"][0]-svar[1][0], ind[0]["features"][1]-svar[1][1]))
     pass
 
 finally:
