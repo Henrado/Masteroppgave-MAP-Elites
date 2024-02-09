@@ -11,10 +11,11 @@ namespace Unity.MLAgentsExamples
     [System.Serializable]
     public class BodyPart
     {
-        [Header("Body Part Info")][Space(10)] public ConfigurableJoint joint;
+        [Header("Body Part Info")][Space(10)] 
+        public ConfigurableJoint joint;
         public Rigidbody rb;
-        [HideInInspector] public Vector3 startingPos;
-        [HideInInspector] public Quaternion startingRot;
+        public Vector3 startingPos;
+        public Quaternion startingRot;
 
         [Header("Ground & Target Contact")]
         [Space(10)]
@@ -23,13 +24,13 @@ namespace Unity.MLAgentsExamples
         //public TargetContact targetContact;
 
         [FormerlySerializedAs("thisJDController")]
-        [HideInInspector] public JointDriveController thisJdController;
+        public JointDriveController thisJdController;
 
         [Header("Current Joint Settings")]
         [Space(10)]
         public Vector3 currentEularJointRotation;
 
-        [HideInInspector] public float currentStrength;
+        public float currentStrength;
         public float currentXNormalizedRot;
         public float currentYNormalizedRot;
         public float currentZNormalizedRot;
@@ -73,6 +74,7 @@ namespace Unity.MLAgentsExamples
             y = (y + 1f) * 0.5f;
             z = (z + 1f) * 0.5f;
 
+            Debug.Log(joint);
             var xRot = Mathf.Lerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, x);
             var yRot = Mathf.Lerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, y);
             var zRot = Mathf.Lerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, z);
@@ -110,9 +112,9 @@ namespace Unity.MLAgentsExamples
         public float jointDampen;
         public float maxJointForceLimit;
 
-        [HideInInspector] public Dictionary<Transform, BodyPart> bodyPartsDict = new Dictionary<Transform, BodyPart>();
+        public Dictionary<Transform, BodyPart> bodyPartsDict = new Dictionary<Transform, BodyPart>();
 
-        [HideInInspector] public List<BodyPart> bodyPartsList = new List<BodyPart>();
+        public List<BodyPart> bodyPartsList = new List<BodyPart>();
         const float k_MaxAngularVelocity = 10.47f; // 100 RPM = 10.471976 rad/s
 
         /// <summary>
@@ -120,6 +122,7 @@ namespace Unity.MLAgentsExamples
         /// </summary>
         public void SetupBodyPart(Transform t, List<float> limits)
         {
+            Debug.Log("Lager body part");
             var bp = new BodyPart
             {
                 rb = t.GetComponent<Rigidbody>(),

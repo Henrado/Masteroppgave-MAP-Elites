@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 using System;
 
 [RequireComponent(typeof(JointDriveController))] // Required to set joint forces
-public class Robot : Agent
+public class Robot : MonoBehaviour
 {
 
     JointDriveController m_JdController;
@@ -45,29 +45,27 @@ public class Robot : Agent
     
     public void Awake()
     {
-        // We create the Side Channel
-        parameterChannel = new ConfigSideChannel();
-
-        // The channel must be registered with the SideChannelManager class
-        SideChannelManager.RegisterSideChannel(parameterChannel);
+        Initialize();
     }
-    public override void Initialize()
+    public void Initialize()
     {
         m_JdController = GetComponent<JointDriveController>();
+        m_JdController.bodyPartsDict = new Dictionary<Transform, BodyPart>();
+        m_JdController.bodyPartsList = new List<BodyPart>();
         leg0List = new Transform[]{leg0, leg0Upper, leg0Lower};
         leg1List = new Transform[]{leg1, leg1Upper, leg1Lower};
         leg2List = new Transform[]{leg2, leg2Upper, leg2Lower};
         leg3List = new Transform[]{leg3, leg3Upper, leg3Lower};
         allLegList = new Transform[][]{leg0List, leg1List, leg2List, leg3List};
 
-        IList<float> jointDriveSettings = parameterChannel.jointDriveSettings;
+        IList<float> jointDriveSettings = null;
         if (jointDriveSettings != null){
             m_JdController.maxJointSpring = jointDriveSettings[0];
             m_JdController.jointDampen = jointDriveSettings[1];
             m_JdController.maxJointForceLimit = jointDriveSettings[2];
         }
 
-        IList<float> legAngularLimits = parameterChannel.legAngularLimits;
+        IList<float> legAngularLimits = null;
         List<List<float>> limitsArray = MakeAngularLimitsArray(legAngularLimits);
         //Setup each body part
         m_JdController.SetupBodyPart(body, new List<float>());
@@ -80,13 +78,13 @@ public class Robot : Agent
         startPosition = Center.localPosition;
         startRotation = Center.localRotation;
 
-        if (parameterChannel.robotMassPart != null){
+        if (null != null){
             SetPartMass(this.transform, parameterChannel.robotMassPart, 0);
         }
 
-        if (parameterChannel.groundContactPenaltyPart != 0){
-            GC.groundContactPenalty = parameterChannel.groundContactPenaltyPart;
-            GC.penalizeGroundContact = true;
+        if (null != 0){
+            //GC.groundContactPenalty = parameterChannel.groundContactPenaltyPart;
+            //GC.penalizeGroundContact = true;
         }
     }
     
@@ -98,7 +96,7 @@ public class Robot : Agent
         }
     }
 
-    public override void OnEpisodeBegin()
+    public void OnEpisodeBegin()
     {
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
         {
@@ -106,7 +104,7 @@ public class Robot : Agent
         }
     }
 
-    public override void OnActionReceived(ActionBuffers actions)
+    public void OnActionReceived(ActionBuffers actions)
     {
         var bpDict = m_JdController.bodyPartsDict;
 
@@ -152,40 +150,6 @@ public class Robot : Agent
                 rb.mass = masses[dept];
                 SetPartMass(child, masses, dept+1);
             }
-        }
-    }
-
-    public override void CollectObservations(VectorSensor sensor){
-        // Observe the agent's local rotation (3 observations)
-        // sensor.AddObservation(Center.localRotation.eulerAngles);
-
-        // Observe the agent local position (3 observations)
-        sensor.AddObservation(Center.localPosition);
-
-        // Observe the agent local rotation in eulerangels (3 observations)
-        sensor.AddObservation(Center.localRotation.eulerAngles);
-        // Get a vector from the startposition to the currentposition
-        // Vector3 distanceWalked = Center.localPosition - startPosition;
-        // Observe a vector pointing from start position to where it is (3 observations)
-        // sensor.AddObservation(distanceWalked);
-
-        // Observe a dot product that indicates whether the beak tip is in front of the flower (1 observation)
-        // (+1 means that the beak tip is directly in front of the flower, -1 means directly behind)
-        //sensor.AddObservation(Vector3.Dot(toFlower.normalized, -nearestFlower.FlowerUpVector.normalized));
-
-        // Observe a dot product that indicates whether the beak is pointing toward the flower (1 observation)
-        // (+1 means that the beak is pointing directly at the flower, -1 means directly away)
-        //sensor.AddObservation(Vector3.Dot(beakTip.forward.normalized, -nearestFlower.FlowerUpVector.normalized));
-
-        // Observe the relative distance from the beak tip to the flower (1 observation)
-        sensor.AddObservation(GetCumulativeReward());
-
-        // 7 total observations
-    }
-    public void OnDestroy()
-    {
-        if (Academy.IsInitialized){
-            SideChannelManager.UnregisterSideChannel(parameterChannel);
         }
     }
 }

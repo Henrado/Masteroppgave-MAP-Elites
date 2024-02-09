@@ -1824,9 +1824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7702773630007217877}
   - component: {fileID: 6627333526798307475}
-  - component: {fileID: 3457615160033346746}
   - component: {fileID: 8598257925396387721}
-  - component: {fileID: 6612090276983492996}
   m_Layer: 0
   m_Name: Qutee
   m_TagString: Qutee
@@ -1862,40 +1860,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c35464bc2f4f794f85fec3ced374076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJointSpring: 40000
-  jointDampen: 5000
+  maxJointSpring: 500
+  jointDampen: 50
   maxJointForceLimit: 52
   bodyPartsList: []
---- !u!114 &3457615160033346746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844517171994416897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BrainParameters:
-    VectorObservationSize: 7
-    NumStackedVectorObservations: 1
-    m_ActionSpec:
-      m_NumContinuousActions: 12
-      BranchSizes: 
-    VectorActionSize: 0c000000
-    VectorActionDescriptions: []
-    VectorActionSpaceType: 1
-    hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: Qutee_behavior
-  TeamId: 0
-  m_UseChildSensors: 1
-  m_UseChildActuators: 1
-  m_ObservableAttributeHandling: 0
 --- !u!114 &8598257925396387721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,10 +1876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514a697a7c2ca0840b2a7538583dcd07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
   body: {fileID: 5226021884457143244}
   leg0: {fileID: 6716047736114381386}
   leg0Upper: {fileID: 8638505855619406424}
@@ -1937,20 +1901,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6612090276983492996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844517171994416897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DecisionPeriod: 5
-  TakeActionsBetweenDecisions: 1
+  GC: {fileID: 0}
 --- !u!1 &3875444308877049551
 GameObject:
   m_ObjectHideFlags: 0
