@@ -73,5 +73,5 @@ Qutee:
     legAngularLimits: [45,-20,60,-20,50] # Trenger 5: [led0 i y, upperlegMIN, upperlegMAX, forlegMIN, forlegMAX]
     #robotMassPart: [9,10,11,12] # Trenger 4: [center masse, leg masse, upperleg masse, forleg masse]
     #groundContactPenaltyPart: -1 # Et tall, gjerne negativt for å straffe å treffe center meg ground
-
+    CubeCount: 10000
 
