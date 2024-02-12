@@ -17,21 +17,34 @@ class Controller(ABC):
     def get_count_possibleLoc(cls) -> int:
         return 0
 
+GENOM_MIN = 0
+GENOM_MAX = 1
+A_MIN = 0.0
+A_MAX = 1.0
+F_MIN = 0.5
+F_MAX = 2.0
+PHI_SIN_MIN = -np.pi
+PHI_SIN_MAX = np.pi
+PHI_TANH_MIN = 0
+PHI_TANH_MAX = 1
+THETA_MIN = -0.7
+THETA_MAX = 0.7
+
 
 class SineController(Controller):
     def __init__(self, A : float, f : float, phi : float, theta : float):
         # Setup initial controller values
-        self.amplitude = A
+        self.amplitude = np.interp(A, [GENOM_MIN,GENOM_MAX], [A_MIN, A_MAX])
         self.amplitude_scale = 1.0
 
-        self.frequence = f
+        self.frequence = np.interp(f, [GENOM_MIN,GENOM_MAX], [F_MIN, F_MAX])
 
-        self.phi = phi*np.pi
-        self.theta = theta
+        self.phi = np.interp(phi, [GENOM_MIN,GENOM_MAX], [PHI_SIN_MIN, PHI_SIN_MAX])
+        self.theta = np.interp(theta, [GENOM_MIN, GENOM_MAX], [THETA_MIN, THETA_MAX])
 
     def get_action(self, time, observation=None) -> float:
         controller_value = self.amplitude * np.sin(2*np.pi*time*self.frequence + self.phi) + self.theta
-        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale, dtype=float)
     
     @classmethod
     def get_count_variables(cls) -> int:
@@ -44,15 +57,15 @@ class SineController(Controller):
 class SineControllerUfq(Controller):
     def __init__(self, A : float, phi : float, theta : float):
         # Setup initial controller values
-        self.amplitude = A
+        self.amplitude = np.interp(A, [GENOM_MIN,GENOM_MAX], [A_MIN, A_MAX])
         self.amplitude_scale = 1.0
 
-        self.phi = phi*np.pi
-        self.theta = theta
+        self.phi = np.interp(phi, [GENOM_MIN,GENOM_MAX], [PHI_SIN_MIN, PHI_SIN_MAX])
+        self.theta = np.interp(theta, [GENOM_MIN, GENOM_MAX], [THETA_MIN, THETA_MAX])
 
     def get_action(self, time, observation=None) -> float:
         controller_value = self.amplitude * np.sin(2*np.pi*time + self.phi) + self.theta
-        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale, dtype=float)
     
     @classmethod
     def get_count_variables(cls) -> int:
@@ -63,16 +76,16 @@ class SineControllerUfq(Controller):
         return 1
     
 class TanhController(Controller):
-    def __init__(self, A : float, theta : float):
+    def __init__(self, A : float, phi : float):
         # Setup initial controller values
-        self.amplitude = A
+        self.amplitude = np.interp(A, [GENOM_MIN,GENOM_MAX], [A_MIN, A_MAX])
         self.amplitude_scale = 1.0
 
-        self.theta = theta
+        self.phi = np.interp(phi, [GENOM_MIN,GENOM_MAX], [PHI_TANH_MIN, PHI_TANH_MAX])
 
     def get_action(self, time, observation=None) -> float:
-        controller_value = self.amplitude * np.tanh(4*np.sin(2*np.pi*(time + self.theta)))
-        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+        controller_value = self.amplitude * np.tanh(4*np.sin(2*np.pi*(time + self.phi)))
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale, dtype=float)
     
     @classmethod
     def get_count_variables(cls) -> int:
@@ -85,15 +98,15 @@ class TanhController(Controller):
 class TanhControllerWOff(Controller):
     def __init__(self, A : float, phi : float, theta : float):
         # Setup initial controller values
-        self.amplitude = A
-        self.theta = theta
+        self.amplitude = np.interp(A, [GENOM_MIN,GENOM_MAX], [A_MIN, A_MAX])
+        self.theta = np.interp(theta, [GENOM_MIN, GENOM_MAX], [THETA_MIN, THETA_MAX])
         self.amplitude_scale = 1.0
 
-        self.phi = phi
+        self.phi = self.phi = np.interp(phi, [GENOM_MIN,GENOM_MAX], [PHI_TANH_MIN, PHI_TANH_MAX])
 
     def get_action(self, time, observation=None) -> float:
         controller_value = self.amplitude * np.tanh(4*np.sin(2*np.pi*(time + self.phi))) + self.theta
-        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale, dtype=float)
     
     @classmethod
     def get_count_variables(cls) -> int:
@@ -106,16 +119,16 @@ class TanhControllerWOff(Controller):
 class TanhControllerWOffFq(Controller):
     def __init__(self, A : float, f : float, phi : float, theta : float):
         # Setup initial controller values
-        self.amplitude = A
-        self.theta = theta
-        self.f = f
+        self.amplitude = np.interp(A, [GENOM_MIN,GENOM_MAX], [A_MIN, A_MAX])
+        self.theta = np.interp(theta, [GENOM_MIN, GENOM_MAX], [THETA_MIN, THETA_MAX])
+        self.f = np.interp(f, [GENOM_MIN,GENOM_MAX], [F_MIN, F_MAX])
         self.amplitude_scale = 1.0
 
-        self.phi = phi
+        self.phi = self.phi = np.interp(phi, [GENOM_MIN,GENOM_MAX], [PHI_TANH_MIN, PHI_TANH_MAX])
 
     def get_action(self, time, observation=None) -> float:
         controller_value = self.amplitude * np.tanh(4*np.sin(2*np.pi*(time*self.f + self.phi))) + self.theta
-        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale)
+        return np.clip(controller_value, -self.amplitude_scale, self.amplitude_scale, dtype=float)
     
     @classmethod
     def get_count_variables(cls) -> int:
