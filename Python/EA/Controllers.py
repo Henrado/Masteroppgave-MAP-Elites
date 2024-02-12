@@ -17,7 +17,7 @@ class Controller(ABC):
     def get_count_possibleLoc(cls) -> int:
         return 0
 
-GENOM_MIN = 0
+GENOM_MIN = -1
 GENOM_MAX = 1
 A_MIN = 0.0
 A_MAX = 1.0
