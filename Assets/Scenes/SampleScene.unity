@@ -880,7 +880,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -3580,10 +3580,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DecisionPeriod
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7702773630007217877, guid: ef7725775c9dcdf4f9a308235288b43a,
         type: 3}

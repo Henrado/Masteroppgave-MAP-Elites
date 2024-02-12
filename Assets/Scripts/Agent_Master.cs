@@ -37,15 +37,15 @@ public class Agent_Master : Agent
         SceneManager.UnloadSceneAsync("SampleScene");
         
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Additive);
+        GameObject[] respawns = GameObject.FindGameObjectsWithTag("Qutee");
+        robot = respawns[0];
         Debug.Log("Ny scene");
-        robot = GameObject.Find("Qutee");   // single
         robot_script = robot.GetComponent<Robot>();
-        robot_script.Initialize();
+        //robot_script.Initialize_NY();
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Debug.Log("Sender action");
         robot_script.OnActionReceived(actions);
     }
 

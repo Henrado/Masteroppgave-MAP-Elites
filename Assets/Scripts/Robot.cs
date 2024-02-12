@@ -13,7 +13,7 @@ using System;
 public class Robot : MonoBehaviour
 {
 
-    JointDriveController m_JdController;
+    public JointDriveController m_JdController;
 
     [Header("Body Parts")][Space(10)] 
     public Transform body;
@@ -45,13 +45,12 @@ public class Robot : MonoBehaviour
     
     public void Awake()
     {
-        Initialize();
+        Initialize_NY();
     }
-    public void Initialize()
+    public void Initialize_NY()
     {
         m_JdController = GetComponent<JointDriveController>();
-        m_JdController.bodyPartsDict = new Dictionary<Transform, BodyPart>();
-        m_JdController.bodyPartsList = new List<BodyPart>();
+        Debug.Log("Leg 0:" + leg0.GetHashCode());
         leg0List = new Transform[]{leg0, leg0Upper, leg0Lower};
         leg1List = new Transform[]{leg1, leg1Upper, leg1Lower};
         leg2List = new Transform[]{leg2, leg2Upper, leg2Lower};
@@ -107,6 +106,7 @@ public class Robot : MonoBehaviour
     public void OnActionReceived(ActionBuffers actions)
     {
         var bpDict = m_JdController.bodyPartsDict;
+        Debug.Log(leg0.GetHashCode() + " " + bpDict[leg0].joint.GetHashCode());
 
         for (int leg_i = 0; leg_i < allLegList.Length; leg_i++)
         {

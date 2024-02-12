@@ -7,6 +7,7 @@ from mlagents_envs.side_channel.engine_configuration_channel import EngineConfig
 import numpy as np
 import platform 
 import pandas as pd
+import time
 
 
 
@@ -66,12 +67,14 @@ class UnityEvaluator:
             Q.EnableTorqueALL()
         individ = self.individ(ind[:], self.controller)
         self.env.reset()
+        time.sleep(2);
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         end_position = np.zeros((1,3))
         end_rotation = 0
         last_rotation = 0 # Denne kan ikke være np.zeros((1,3)) siden da vil last_rotation bli = [[x,y,z]] ikke [x,y,z]
         reward = 0 # Reward for denne epoken, resettes etter neste
         cumulativeReward = 0 # Dette er så mye negativ reward den har samlet i løpet av alle epoker og alt til nå
+        time.sleep(1)
         for t in range(self.MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
             obs,other = self.env.get_steps(individual_name)
             if (len(obs.agent_id)>0):

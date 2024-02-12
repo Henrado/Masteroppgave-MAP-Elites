@@ -74,7 +74,8 @@ namespace Unity.MLAgentsExamples
             y = (y + 1f) * 0.5f;
             z = (z + 1f) * 0.5f;
 
-            Debug.Log(joint);
+            Debug.Log("Prøver:" + joint.GetHashCode() + " " + joint);
+
             var xRot = Mathf.Lerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, x);
             var yRot = Mathf.Lerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, y);
             var zRot = Mathf.Lerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, z);
@@ -122,7 +123,6 @@ namespace Unity.MLAgentsExamples
         /// </summary>
         public void SetupBodyPart(Transform t, List<float> limits)
         {
-            Debug.Log("Lager body part");
             var bp = new BodyPart
             {
                 rb = t.GetComponent<Rigidbody>(),

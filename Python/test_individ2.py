@@ -120,7 +120,7 @@ try:
     print(qutee_config)
     #qutee_config = None
     # Lager evaluator:
-    env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=True, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
+    env = UnityEvaluator(50, qutee_config=qutee_config, editor_mode=True, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
     
     for i in range(10):
         svar = env.evaluate(genom, False)
