@@ -115,7 +115,6 @@ try:
     # Create the channel
     if "Qutee" in config:
         qutee_config = config["Qutee"]
-        qutee_config["CubeCount"] = 0
     else:
         qutee_config = None 
     print(qutee_config)
