@@ -45,14 +45,10 @@ public class Robot : Agent
     
     public void Awake()
     {
-        // We create the Side Channel
-        parameterChannel = new ConfigSideChannel();
-
-        // The channel must be registered with the SideChannelManager class
-        SideChannelManager.RegisterSideChannel(parameterChannel);
     }
     public override void Initialize()
     {
+        parameterChannel = FindObjectOfType<RobotManager>().rc;
         m_JdController = GetComponent<JointDriveController>();
         leg0List = new Transform[]{leg0, leg0Upper, leg0Lower};
         leg1List = new Transform[]{leg1, leg1Upper, leg1Lower};
@@ -100,10 +96,11 @@ public class Robot : Agent
 
     public override void OnEpisodeBegin()
     {
-        foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
-        {
-            bodyPart.Reset(bodyPart);
-        }
+        return;
+        //foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
+        //{
+        //    bodyPart.Reset(bodyPart);
+        //}
     }
 
     public override void OnActionReceived(ActionBuffers actions)
