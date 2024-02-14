@@ -29,7 +29,9 @@ class ConfigSideChannel(SideChannel):
             msg.write_string(key)
             if type(value) == list: 
                 msg.write_float32_list(value)
-            elif type(value) == float or type(value) == int:
+            elif type(value) == float:
                 msg.write_float32(value)
+            elif type(value) == int:
+                msg.write_int32(value)
             # We call this method to queue the data we want to send
             super().queue_message_to_send(msg)

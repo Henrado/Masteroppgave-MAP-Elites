@@ -11,6 +11,7 @@ public class ConfigSideChannel : SideChannel
     public IList<float> legAngularLimits;
     public IList<float> robotMassPart;
     public float groundContactPenaltyPart = 0;
+    public int CubeCount = 0;
     public ConfigSideChannel()
     {
         ChannelId = new Guid("621f0a70-4f87-11ea-a6bf-784f4387d1f8");
@@ -32,6 +33,9 @@ public class ConfigSideChannel : SideChannel
                 break;
             case "groundContactPenaltyPart":
                 groundContactPenaltyPart = msg.ReadFloat32(); // read_float23()
+                break;
+            case "CubeCount":
+                CubeCount = msg.ReadInt32(); // read_float23()
                 break;
             default:
                 Debug.Log("Vet ikke hva dette er " + type.ToString());

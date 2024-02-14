@@ -42,6 +42,7 @@ public class Robot : Agent
     private ConfigSideChannel parameterChannel;
 
     public GroundContact GC;
+
     
     public void Awake()
     {

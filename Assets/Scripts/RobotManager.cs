@@ -17,6 +17,9 @@ public class RobotManager : MonoBehaviour
     [Tooltip("Makes sure the physics start after n fixed updates")]
     [SerializeField] int warmupFixedUpdates = 80;
 
+    [Tooltip("Prefab som skal brukes som grus")]
+    public GameObject cubePrefab;
+
     // Side channel
     public ConfigSideChannel rc;
     public void Awake() {
@@ -38,13 +41,34 @@ public class RobotManager : MonoBehaviour
 
     public void ResetScene() {
         SceneManager.LoadScene("SampleScene");
-        StartCoroutine(SpawnRobot());
+        StartCoroutine(SpawnENV());
     }
 
-    IEnumerator SpawnRobot() {
+    IEnumerator SpawnENV() {
         // Wait for scene to load properly
         for (int i = 0; i < warmupFixedUpdates; i++)
             yield return new WaitForFixedUpdate();
+        
+        if (rc.CubeCount > 0)
+        {
+            CreateCubes(rc.CubeCount);
+        } 
+    }
+
+    public void CreateCubes(int n)
+    {
+        GameObject[] old_cubes = GameObject.FindGameObjectsWithTag("Grus");
+        foreach (var item in old_cubes)
+        {
+            Destroy(item);
+        }
+        for (int i = 0; i < n; i++)
+        {
+            Vector3 randomPos = new Vector3(Random.Range(-10.0f, 10.0f), -0.5f, Random.Range(-10.0f, 10.0f));
+            Quaternion randomRot = Quaternion.identity;
+            randomRot.eulerAngles = new Vector3(Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f));
+            Instantiate(cubePrefab, randomPos, randomRot);
+        }
     }
 
     public void OnDestroy(){
