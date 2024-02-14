@@ -1145,6 +1145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   warmupFixedUpdates: 5
+  cubePrefab: {fileID: 6269937095199593192, guid: af8d1ac02bb811749a57a1b32c40fc90,
+    type: 3}
 --- !u!1 &405080810
 GameObject:
   m_ObjectHideFlags: 0
