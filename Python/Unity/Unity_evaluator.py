@@ -37,6 +37,8 @@ class UnityEvaluator:
             config_sideChannel.send_config(qutee_config)
         if time_scale > 1:
             EngineChannel.set_configuration_parameters(time_scale=time_scale)
+        
+        self.env.reset()
 
     def _getBuild_Path(self) -> str:
         plt = platform.system()
@@ -53,7 +55,7 @@ class UnityEvaluator:
     def close(self):
         self.env.close()
 
-    def shortestAngle(self, from_deg: float, to_deg: float) -> float:
+    def shortestAngle(self, from_deg, to_deg):
         diff = from_deg - to_deg
         while ((diff >  180).any()): diff[diff >  180] -= 2*180 # type: ignore
         while ((diff < -180).any()): diff[diff < -180] += 2*180 # type: ignore
@@ -73,8 +75,8 @@ class UnityEvaluator:
         reward = 0 # Reward for denne epoken, resettes etter neste
         cumulativeReward = 0 # Dette er så mye negativ reward den har samlet i løpet av alle epoker og alt til nå
         for t in range(self.MAX_N_STEPS_PER_EVALUATION): # max antall steps per episode
-            obs,other = self.env.get_steps(individual_name)
-            if (len(obs.agent_id)>0):
+            decisionSteps,other = self.env.get_steps(individual_name)
+            if (len(decisionSteps.agent_id)>0):
                 # random actions
                 # action = np.random.rand(1,12) # Lager tilfeldige vinkler den skal treffe
                 action = individ.get_actions(t*DELTA_TIME)
@@ -83,16 +85,16 @@ class UnityEvaluator:
                                             # Der verdien skal være mellom -1 til 1
                                             # Faktisk max vinkel kan settes i unity 
                 #action = np.zeros((1,12))
-                #print(obs.agent_id) # Henter agentenes id
-                end_position = obs[0].obs[0][:3] # Henter observasjonene til agent 0 
-                end_rotation += self.shortestAngle(obs[0].obs[0][3:6],last_rotation)
-                last_rotation = obs[0].obs[0][3:6]
-                reward += obs[0].reward
-                cumulativeReward = obs[0].obs[0][6]
+                obs = decisionSteps.obs
+                end_position = obs[0][0][:3] # Henter observasjonene til agent 0 
+                end_rotation += self.shortestAngle(obs[0][0][3:6],last_rotation)
+                last_rotation = obs[0][0][3:6]
+                reward += decisionSteps.reward
+                cumulativeReward = obs[0][0][6]
                 if realRobot:
                     Q.setAction(action[0]) # type: ignore
 
-                for id in obs.agent_id: # Går gjennom alle agenter og setter dems actions 
+                for id in decisionSteps.agent_id: # Går gjennom alle agenter og setter dems actions 
                     self.env.set_action_for_agent(individual_name,id,ActionTuple(action))
                 self.env.step() #Når all data er satt setter man et setp
             else:
