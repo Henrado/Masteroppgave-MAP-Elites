@@ -31,8 +31,8 @@ algorithms:
 
     algoQD:
         type: RandomSearchMutPolyBounded
-        budget: 10       # The total number of allowed evaluations for this algorithm
-        batch_size: 1     # The number of evaluations in each subsequent batch 
+        budget: 1000       # The total number of allowed evaluations for this algorithm
+        batch_size: 10     # The number of evaluations in each subsequent batch 
         #sel_pb: 0.9         # The probability of performing selection+variation instead of initialising a new genome
         #init_pb: 0.1        # The probability of initiating a new genome instead of performing selection
         #mut_pb: 0.4         # The probability of mutating each value of the genome of a selected individual
@@ -62,7 +62,7 @@ Unity:
     #controller: TanhControllerWOffFq
     fitnessfunction: basicFitness
     #fitnessfunction: circleFitness
-    evaluation_steps: 200
+    evaluation_steps: 1000
     editor_mode: False
     headless: True
     #worker_id: 1
@@ -73,5 +73,5 @@ Qutee:
     legAngularLimits: [45,-20,60,-20,50] # Trenger 5: [led0 i y, upperlegMIN, upperlegMAX, forlegMIN, forlegMAX]
     #robotMassPart: [9,10,11,12] # Trenger 4: [center masse, leg masse, upperleg masse, forleg masse]
     #groundContactPenaltyPart: -1 # Et tall, gjerne negativt for å straffe å treffe center meg ground
-
+    #CubeCount: 10000
 

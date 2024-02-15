@@ -57,11 +57,6 @@ public class RobotManager : MonoBehaviour
 
     public void CreateCubes(int n)
     {
-        GameObject[] old_cubes = GameObject.FindGameObjectsWithTag("Grus");
-        foreach (var item in old_cubes)
-        {
-            Destroy(item);
-        }
         for (int i = 0; i < n; i++)
         {
             Vector3 randomPos = new Vector3(Random.Range(-10.0f, 10.0f), -0.5f, Random.Range(-10.0f, 10.0f));
