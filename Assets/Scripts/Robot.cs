@@ -41,6 +41,8 @@ public class Robot : Agent
     public AnimationCurve torqueCurve;
     private ConfigSideChannel parameterChannel;
 
+    [Tooltip("Prefab som skal brukes som grus")]
+    public GameObject cubePrefab;
     public GroundContact GC;
 
     
@@ -85,6 +87,10 @@ public class Robot : Agent
             GC.groundContactPenalty = parameterChannel.groundContactPenaltyPart;
             GC.penalizeGroundContact = true;
         }
+        if (parameterChannel.CubeCount > 0)
+        {
+            CreateCubes(parameterChannel.CubeCount);
+        } 
     }
     
     private void SetupBodyPartList(JointDriveController con, Transform[] list, List<List<float>> limits)
@@ -150,6 +156,18 @@ public class Robot : Agent
                 rb.mass = masses[dept];
                 SetPartMass(child, masses, dept+1);
             }
+        }
+    }
+
+    public void CreateCubes(int n)
+    {
+        Random.InitState(0);
+        for (int i = 0; i < n; i++)
+        {
+            Vector3 randomPos = new Vector3(Random.Range(-10.0f, 10.0f), -0.5f, Random.Range(-10.0f, 10.0f));
+            Quaternion randomRot = Quaternion.identity;
+            randomRot.eulerAngles = new Vector3(Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f));
+            Instantiate(cubePrefab, randomPos, randomRot);
         }
     }
 
