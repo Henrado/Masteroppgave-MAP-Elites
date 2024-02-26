@@ -60,6 +60,15 @@ class UnityEvaluator:
         while ((diff >  180).any()): diff[diff >  180] -= 2*180 # type: ignore
         while ((diff < -180).any()): diff[diff < -180] += 2*180 # type: ignore
         return diff
+    
+    def send_comand(self, action):
+        individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
+        decisionSteps,other = self.env.get_steps(individual_name)
+        if (len(decisionSteps.agent_id)>0):
+            obs = decisionSteps.obs
+            for id in decisionSteps.agent_id: # Går gjennom alle agenter og setter dems actions 
+                self.env.set_action_for_agent(individual_name,id,ActionTuple(action))
+            self.env.step() #Når all data er satt setter man et setp
 
     def evaluate(self, ind, realRobot=False):
         DELTA_TIME = 0.01
