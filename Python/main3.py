@@ -3,6 +3,7 @@ from Unity.fitness_funtions import basicFitness, circleFitness
 from EA.Individual import *
 from EA.Controllers import *
 from Plot.plots import min_plots_grid, min_summary
+from utils.utils import *
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -16,22 +17,6 @@ from qdpy.base import Factory
 import pprint
 import pickle
 import json
-
-def pickle2json(path):
-    # open pickle file
-    with open(path, 'rb') as infile:
-        obj = pickle.load(infile)
-
-    # convert pickle object to json object
-    json_obj = json.loads(json.dumps(obj, default=str))
-
-    # write the json file
-    with open(
-            os.path.splitext(path)[0] + '.json',
-            'w',
-            encoding='utf-8'
-        ) as outfile:
-        json.dump(json_obj, outfile, ensure_ascii=False, indent=4)
 
 
 
