@@ -64,46 +64,10 @@ if __name__ == "__main__":
 
 
 
-    # Loads type of individ, controller and fitnessfunction from config
-    assert "individ" in config["Unity"], f"Please specify configuration entry 'individ'."
-    conf_individ = config["Unity"]["individ"]
-    if conf_individ == "Individual_twoLock":
-        individ = Individual_twoLock
-    elif conf_individ == "Individual_zeroLocked":
-        individ = Individual_zeroLocked
-    elif conf_individ == "Individual_globalLock":
-        individ = Individual_globalLock
-    else:
-        individ = None
-        raise NotImplementedError
-    
-    assert "controller" in config["Unity"], f"Please specify configuration entry 'controller'."
-    conf_controller = config["Unity"]["controller"]
-    if conf_controller == "SineController":
-        controller = SineController
-    elif conf_controller == "SineControllerUfq":
-        controller = SineControllerUfq
-    elif conf_controller == "TanhController":
-        controller = TanhController
-    elif conf_controller == "TanhControllerWOff":
-        controller = TanhControllerWOff
-    elif conf_controller == "TanhControllerWOffFq":
-        controller = TanhControllerWOffFq
-    else:
-        controller = None
-        raise NotImplementedError
+    individ = get_individ(config=config)
+    controller = get_controller(config=config)
+    fitnessfunction = get_individ(config=config)
     config['algorithms']['dimension'] = individ.get_dimension_count(controller) # type: ignore #Plasserer alt i conf for at qdpy skal ta alt sammen 
-
-    assert "fitnessfunction" in config["Unity"], f"Please specify configuration entry 'fitnessfunction'."
-    conf_individ = config["Unity"]["fitnessfunction"]
-    if conf_individ == "basicFitness":
-        fitnessfunction = basicFitness
-    elif conf_individ == "circleFitness":
-        fitnessfunction = circleFitness
-    else:
-        fitnessfunction = None
-        raise NotImplementedError
-
 
 
     # Create containers and algorithms from configuration 
