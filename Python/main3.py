@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     individ = get_individ(config=config)
     controller = get_controller(config=config)
-    fitnessfunction = get_individ(config=config)
+    fitnessfunction = get_fitnessfunction(config=config)
     config['algorithms']['dimension'] = individ.get_dimension_count(controller) # type: ignore #Plasserer alt i conf for at qdpy skal ta alt sammen 
 
 

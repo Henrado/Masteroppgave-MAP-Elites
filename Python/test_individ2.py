@@ -27,7 +27,7 @@ shape = find_value_from_key(config["containers"], "shape")
 
 individ = get_individ(config=config)
 controller = get_controller(config=config)
-fitnessfunction = get_individ(config=config)
+fitnessfunction = get_fitnessfunction(config=config)
 
 
 print("\n"*10)
