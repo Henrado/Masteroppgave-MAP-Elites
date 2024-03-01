@@ -66,7 +66,7 @@ class UI:
     def __init__(self, shape, solutions) -> None:
         # Configuration
         pygame.init()
-        self.fps = 60
+        self.fps = 100
         rows, cols = (20, 20)
         self.fpsClock = pygame.time.Clock()
         width, height = 30*cols, 30*rows
