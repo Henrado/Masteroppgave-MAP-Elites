@@ -89,7 +89,7 @@ public class Robot : Agent
         }
         if (parameterChannel.CubeCount > 0)
         {
-            CreateCubes(parameterChannel.CubeCount);
+            CreateCubes(parameterChannel.CubeCount, parameterChannel.CubeSize);
         } 
     }
     
@@ -159,7 +159,7 @@ public class Robot : Agent
         }
     }
 
-    public void CreateCubes(int n)
+    public void CreateCubes(int n, float scale)
     {
         Random.InitState(0);
         for (int i = 0; i < n; i++)
@@ -167,7 +167,10 @@ public class Robot : Agent
             Vector3 randomPos = new Vector3(Random.Range(-10.0f, 10.0f), -0.5f, Random.Range(-10.0f, 10.0f));
             Quaternion randomRot = Quaternion.identity;
             randomRot.eulerAngles = new Vector3(Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f),Random.Range(0.0f, 360.0f));
-            Instantiate(cubePrefab, randomPos, randomRot);
+            GameObject go = Instantiate(cubePrefab, randomPos, randomRot);
+            if (scale != 1){
+                go.transform.localScale = new Vector3(scale, scale, scale);
+            }
         }
     }
 

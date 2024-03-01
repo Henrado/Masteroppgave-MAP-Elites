@@ -10,32 +10,51 @@ public class ConfigSideChannel : SideChannel
     public IList<float> jointDriveSettings;
     public IList<float> legAngularLimits;
     public IList<float> robotMassPart;
-    public float groundContactPenaltyPart = 0;
+    public float groundContactPenaltyPart = 0.0f;
     public int CubeCount = 0;
+    public float CubeSize = 1f;
     public ConfigSideChannel()
     {
         ChannelId = new Guid("621f0a70-4f87-11ea-a6bf-784f4387d1f8");
     }
 
+    private object ReadType(IncomingMessage msg, string type){
+        switch (type)
+        {
+            case "int":
+                return msg.ReadInt32();
+            case "float":
+                return msg.ReadFloat32();
+            case "list":
+                return msg.ReadFloatList();
+            default:
+                return null;
+        }
+    }
+
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         string type = msg.ReadString();
+        string castType = msg.ReadString();
         switch (type)
         {
             case "jointDriveSettings":
-                jointDriveSettings = msg.ReadFloatList(); // read_float23()
+                jointDriveSettings = (IList<float>)ReadType(msg, castType);
                 break;
             case "legAngularLimits":
-                legAngularLimits = msg.ReadFloatList(); // read_float23()
+                legAngularLimits = (IList<float>)ReadType(msg, castType); 
                 break;
             case "robotMassPart":
-                robotMassPart = msg.ReadFloatList(); // read_float23()
+                robotMassPart = (IList<float>)ReadType(msg, castType); 
                 break;
             case "groundContactPenaltyPart":
-                groundContactPenaltyPart = msg.ReadFloat32(); // read_float23()
+                groundContactPenaltyPart = float.Parse(ReadType(msg, castType).ToString()); // float 
                 break;
             case "CubeCount":
-                CubeCount = msg.ReadInt32(); // read_float23()
+                CubeCount = (int)ReadType(msg, castType); // int
+                break;
+            case "CubeSize":
+                CubeSize = float.Parse(ReadType(msg, castType).ToString()); // float
                 break;
             default:
                 Debug.Log("Vet ikke hva dette er " + type.ToString());
