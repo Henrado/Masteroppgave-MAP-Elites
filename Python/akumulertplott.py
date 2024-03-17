@@ -94,27 +94,38 @@ def do_it_all_varShow():
     pass
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
-ex_lost_dict = [
+determ = [
     {"path": "../../Determ/T_S_B_exLimit", "label": "T_S_B_exLimit", "color": "black"},
     {"path": "../../Determ/Z_S_B_exLimit", "label": "Z_S_B_exLimit", "color": "grey"},
     {"path": "../../Determ/G_S_B_exLimit", "label": "G_S_B_exLimit", "color": "magenta"},
 
-    #{"path": "../../Determ/T_SUfq_B_exLimit", "label": "T_SUfq_B_exLimit", "color": "red"},
+    {"path": "../../Determ/T_SUfq_B_exLimit", "label": "T_SUfq_B_exLimit", "color": "red"},
     {"path": "../../Determ/Z_SUfq_B_exLimit", "label": "Z_SUfq_B_exLimit", "color": "lightcoral"},
     {"path": "../../Determ/G_SUfq_B_exLimit", "label": "G_SUfq_B_exLimit", "color": "peru"},
 
-    #{"path": "../../Determ/T_T_B_exLimit", "label": "T_T_B_exLimit", "color": "royalblue"},
+    {"path": "../../Determ/T_T_B_exLimit", "label": "T_T_B_exLimit", "color": "royalblue"},
     {"path": "../../Determ/Z_T_B_exLimit", "label": "Z_T_B_exLimit", "color": "navy"},
-    #{"path": "../../Determ/G_T_B_exLimit", "label": "G_T_B_exLimit", "color": "indigo"},
+    {"path": "../../Determ/G_T_B_exLimit", "label": "G_T_B_exLimit", "color": "indigo"},
 
-    #{"path": "../../Determ/T_TWoff_B_exLimit", "label": "T_TWoff_B_exLimit", "color": "gold"},
+    {"path": "../../Determ/T_TWoff_B_exLimit", "label": "T_TWoff_B_exLimit", "color": "gold"},
     {"path": "../../Determ/Z_TWoff_B_exLimit", "label": "Z_TWoff_B_exLimit", "color": "orange"},
-    #{"path": "../../Determ/G_TWoff_B_exLimit", "label": "G_TWoff_B_exLimit", "color": "tan"},
+    {"path": "../../Determ/G_TWoff_B_exLimit", "label": "G_TWoff_B_exLimit", "color": "tan"},
 
-    #{"path": "../../Determ/T_TWoffFq_B_exLimit", "label": "T_TWoffFq_B_exLimit", "color": "forestgreen"},
-    {"path": "../../Determ/Z_TWoffFq_B_exLimit", "label": "Z_TWoffFq_B_exLimit", "color": "lime"}
-    #{"path": "../../Determ/G_TWoffFq_B_exLimit", "label": "G_TWoffFq_B_exLimit", "color": "palegreen"}
+    {"path": "../../Determ/T_TWoffFq_B_exLimit", "label": "T_TWoffFq_B_exLimit", "color": "forestgreen"},
+    {"path": "../../Determ/Z_TWoffFq_B_exLimit", "label": "Z_TWoffFq_B_exLimit", "color": "lime"},
+    {"path": "../../Determ/G_TWoffFq_B_exLimit", "label": "G_TWoffFq_B_exLimit", "color": "palegreen"}
 ]
+
+miljo = [
+    {"path": "../../Miljo/Z_TWoff_B_CS0", "label": "CubeSize=0", "color": "lime"},
+    {"path": "../../Miljo/Z_TWoff_B_CS1", "label": "CubeSize=1", "color": "magenta"},
+    {"path": "../../Miljo/Z_TWoff_B_CS2", "label": "CubeSize=2", "color": "red"},
+    {"path": "../../Miljo/Z_TWoff_B_CS5", "label": "CubeSize=5", "color": "navy"},
+    {"path": "../../Miljo/Z_TWoff_B_HCS1", "label": "CubeSize=1 Half", "color": "gold"},
+    {"path": "../../Miljo/Z_TWoff_B_HCS2", "label": "CubeSize=2 Half", "color": "forestgreen"},
+    {"path": "../../Miljo/Z_TWoff_B_HCS5", "label": "CubeSize=5 Half", "color": "black"}
+]
+ex_lost_dict = miljo
 do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bool, type_operation:str, scale:float=1):
