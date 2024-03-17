@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 # Array med alle configfilene 
-array=( Z_S_B_exLimit T_S_B_exLimit G_S_B_exLimit Z_SUfq_B_exLimit Z_T_B_exLimit Z_TWoff_B_exLimit Z_TWoffFq_B_exLimit G_SUfq_B_exLimit G_T_B_exLimit G_TWoff_B_exLimit G_TWoffFq_B_exLimit T_SUfq_B_exLimit T_T_B_exLimit T_TWoff_B_exLimit T_TWoffFq_B_exLimit )
+array=( Z_S_C_exLimit T_S_C_exLimit G_S_C_exLimit Z_SUfq_C_exLimit Z_T_C_exLimit Z_TWoff_C_exLimit Z_TWoffFq_C_exLimit G_SUfq_C_exLimit G_T_C_exLimit G_TWoff_C_exLimit G_TWoffFq_C_exLimit T_SUfq_C_exLimit T_T_C_exLimit T_TWoff_C_exLimit T_TWoffFq_C_exLimit )
 start=1
-stop=100
-eksperiment_navn="Determ"
+stop=10
+eksperiment_navn="Circle"
 echo ${array[0]}
 for i in "${array[@]}";
 do

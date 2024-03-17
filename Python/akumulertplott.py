@@ -125,7 +125,7 @@ miljo = [
     {"path": "../../Miljo/Z_TWoff_B_HCS2", "label": "CubeSize=2 Half", "color": "forestgreen"},
     {"path": "../../Miljo/Z_TWoff_B_HCS5", "label": "CubeSize=5 Half", "color": "black"}
 ]
-ex_lost_dict = miljo
+ex_lost_dict = determ
 do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bool, type_operation:str, scale:float=1):
