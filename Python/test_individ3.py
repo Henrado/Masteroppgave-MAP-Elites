@@ -4,6 +4,7 @@ from EA.Individual import *
 from EA.Controllers import *
 from utils.utils import *
 from utils.UI import *
+from utils.Plan import *
 import numpy as np
 import argparse
 from qdpy import algorithms, containers, plots
@@ -19,7 +20,7 @@ from ast import literal_eval
 import pygame
 from pygame.locals import *
 
-directory = "../../Determ/Z_T_B_exLimit/1"
+directory = "../../Master_Resultater/Determ/Z_T_B_exLimit/1"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -32,6 +33,20 @@ controller = get_controller(config=config)
 fitnessfunction = get_fitnessfunction(config=config)
 individ.get_dimension_count(controller) # type: ignore
 
+if True:
+    p = [
+        {"tid": 1000, "x": 10, "y":10},
+        {"tid": 1000, "x": 16, "y":10},
+        {"tid": 1000, "x": 3, "y":16},
+        {"tid": 1000, "x": 7, "y":7},
+        {"tid": 1000, "x": 12, "y":14},
+        {"tid": 1000, "x": 13, "y":3},
+        {"tid": 1, "x": 7, "y":7}
+    ]
+    genomGenerator = Plan(p)
+else:
+    genomGenerator = UI(shape=shape, solutions=arr2)
+    genomGenerator.run()
 try:
     # Create the channel
     if "Qutee" in config:
@@ -45,16 +60,35 @@ try:
     env = UnityEvaluator(10000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
     
     DELTA_TIME = 0.01
-    ui = UI(shape=shape, solutions=arr2)
+    end_position = np.zeros((1,3))
+    end_rotation = 0
+    last_rotation = 0 # Denne kan ikke være np.zeros((1,3)) siden da vil last_rotation bli = [[x,y,z]] ikke [x,y,z]
+    last_ind = 0
+    if_pause = True
+
     for t in range(10000):
-        ui.run()
-        x,y = ui.get_solution()
+        x,y,ind = genomGenerator.get_solution(t) # type: ignore
+        if x==None or y==None:
+            break
         genom = arr2[x][y][0]["genom"]
         individ2 = individ(genom, controller) # type: ignore
         action = individ2.get_actions(t*DELTA_TIME)
-        env.send_comand(action)
-    pass
+        obs = env.send_comand(action)
+        
+        end_position = obs[0][0][:3] # Henter observasjonene til agent 0 
+        end_rotation += shortestAngle(obs[0][0][3:6],last_rotation)
+        last_rotation = obs[0][0][3:6]
 
+        if ind != last_ind and if_pause:
+            last_ind = ind
+            end_x = end_position[0]
+            end_z = end_position[2]
+            end_yrot = end_rotation[1] # type: ignore
+            fitness = env.fitnessfunction(end_x, end_z, end_yrot) # type: ignore 
+            fitness = np.interp(fitness, [-1, 1], [-180, 180])
+            print((fitness,), (end_x, end_z))
+            input("Trykk enter for å fortsette")
+    pass
 finally:
     env.close() # type: ignore
     pass

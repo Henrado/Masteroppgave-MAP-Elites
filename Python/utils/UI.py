@@ -67,7 +67,7 @@ class UI:
         # Configuration
         pygame.init()
         self.fps = 100
-        rows, cols = (20, 20)
+        rows, cols = shape
         self.fpsClock = pygame.time.Clock()
         width, height = 30*cols, 30*rows
         self.screen = pygame.display.set_mode((width, height))
@@ -83,7 +83,7 @@ class UI:
         self.x = x
         self.y = y
 
-    def get_solution(self):
+    def get_solution(self, t):
         return self.x, self.y
 
     def run(self):

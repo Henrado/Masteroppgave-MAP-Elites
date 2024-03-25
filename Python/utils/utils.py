@@ -23,6 +23,12 @@ def find_value_from_key(data, key):
             return data[k][key]
     return None
 
+def shortestAngle(from_deg, to_deg):
+    diff = from_deg - to_deg
+    while ((diff >  180).any()): diff[diff >  180] -= 2*180 # type: ignore
+    while ((diff < -180).any()): diff[diff < -180] += 2*180 # type: ignore
+    return diff
+
 def str_to_2Darr(shape, string):
 
     # Se eksempel på regex: https://regex101.com/r/oqnsHa/1
