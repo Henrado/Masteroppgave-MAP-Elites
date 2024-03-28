@@ -97,6 +97,50 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, title:str="", out
 
 def do_it_all_varShow():
     pass
+
+def plot_boxplot(experiments:list, scale:float=1, output_filename=None, title="", xlabel="Evaluations", ylabel=""):
+    t = np.arange(experiments[0]["data"][0].shape[0])*scale
+    all_data = []
+    fig, axs = plt.subplots(figsize=(9, 5))
+
+    for dic in experiments:
+        arr = dic["data"][:,-1]
+        all_data.append(arr)
+        print(arr)
+
+    # generate some random test data
+
+    # plot violin plot
+    axs.violinplot(all_data,
+                    showmeans=True,
+                    showmedians=False)
+    axs.set_title('Violin plot')
+
+    # adding horizontal grid lines
+    axs.yaxis.grid(True)
+    axs.set_xticks([y + 1 for y in range(len(all_data))],
+                labels=[name["label"] for name in experiments], rotation=45, ha='right')
+    axs.set_xlabel('Four separate samples')
+    axs.set_ylabel('Observed values')
+    fig.autofmt_xdate()
+    plt.show()
+    pass
+
+
+def do_it_all_boxsplot(experiments: list,filename:str, key:str, title:str="", output_filename=None, scale=False):
+    config = {}
+    for dic in experiments:
+        path = dic["path"]
+        dataframes, config = get_all_dataframes(path, filename=filename)
+        dic["data"] = dataframe2numpy(dataframes, key)
+
+    if scale:
+        algo_config = config["algorithms"][config["algorithms"]["algoTotal"]["algorithms"][0]]
+        algo_iterations = int(np.rint(algo_config["budget"]/algo_config["batch_size"]))
+        plot_boxplot(experiments, scale=algo_iterations,title=title, output_filename=output_filename)
+    else:
+        plot_boxplot(experiments, title=title, output_filename=output_filename)
+    pass
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
 determ = [
@@ -140,7 +184,8 @@ t       = [determ[6], determ[7], determ[8]]
 tWoff   = [determ[9], determ[10], determ[11]]
 tWoffFq = [determ[12], determ[13], determ[14]]
 
-ex_lost_dict = miljo
+ex_lost_dict = determ
+do_it_all_boxsplot(ex_lost_dict, "iterations.csv", "qd_score", title="QD", scale=True)
 #do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 #do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 
@@ -190,12 +235,12 @@ def do_it_all_grid(path:str, filename:str, output_filename:str, quality_array:bo
 for i in ex_lost_dict:
     filname = "grid.quality_array.csv"
     path = i["path"]
-    output_filename = i["label"] + "_performancesGrid_mean.svg"
-    do_it_all_grid(path, filname, output_filename, True, "mean")
+    output_filename = i["label"] + "_performancesGrid_mean.pdf"
+    #do_it_all_grid(path, filname, output_filename, True, "mean")
 
     filname = "grid.activity_per_bin.csv"
-    output_filename = i["label"] + "_grid.activity_per_bin_mean.svg"
-    do_it_all_grid(path, filname, output_filename, False, "mean")
+    output_filename = i["label"] + "_grid.activity_per_bin_mean.pdf"
+    #do_it_all_grid(path, filname, output_filename, False, "mean")
     plt.close()
 
 """ d, conf = get_all_dataframes(path, "grid.solutions.csv", parse=True)
