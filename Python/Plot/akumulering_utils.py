@@ -54,6 +54,18 @@ def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="
     fig, ax = plt.subplots(1)
     all_means = []
 
+    #df = pd.DataFrame(columns = ['label'], dtype="object")
+    #for dic in experiments:
+        #for tid, d in enumerate(dic["data"]):
+    #    en = pd.DataFrame({dic["data"]}, dtype="object")
+    #    df = pd.concat([df, en], ignore_index = True)
+
+    #print(df)
+
+    #df["tid"]
+
+    #sns.lineplot(data=df,x="tid", y="verdier", hue="label")
+    #plt.show()
     for dic in experiments:
         arr = dic["data"]
         # Nsteps length arrays empirical means and standard deviations of both
@@ -62,8 +74,15 @@ def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="
         sigma1 = arr.std(axis=0)
 
         # plot it!
-        ax.plot(t, mu1, lw=2, label=dic["label"], color=dic["color"])
-        ax.fill_between(t, mu1+sigma1, mu1-sigma1, facecolor=dic["color"], alpha=0.5)
+        #ax.plot(t, mu1, lw=2, label=dic["label"], color=dic["color"])
+        df = pd.DataFrame(dtype="object")
+        for t,d in enumerate(arr):
+            en = pd.DataFrame({"nr":d}, dtype="object")
+            df = pd.concat([df, en], ignore_index = True, axis=1)
+
+        print(df)
+        sns.lineplot(data=df, hue=df.index, errorbar='sd')
+        #ax.fill_between(t, mu1+sigma1, mu1-sigma1, facecolor=dic["color"], alpha=0.5)
         print(dic["label"], round(mu1[-1], 1))
         all_means.append(mu1[-1])
     print("All means:", round(np.mean(all_means), 1), "\n")
@@ -94,8 +113,6 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, title:str="", out
         plot_std_line(experiments, title=title, output_filename=output_filename)
     pass
 
-def do_it_all_varShow():
-    pass
 
 
 def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, key_type, title:str="", output_filename=None):
