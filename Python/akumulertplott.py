@@ -45,31 +45,31 @@ t       = [determ[6], determ[7], determ[8]]
 tWoff   = [determ[9], determ[10], determ[11]]
 tWoffFq = [determ[12], determ[13], determ[14]]
 
-ex_lost_dict = determ[:3]
 gruppert = [
-    {"Individ": "Global","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/G_S_B_exLimit"},
-    {"Individ": "Global","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/G_SUfq_B_exLimit"},
-    {"Individ": "Global","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/G_T_B_exLimit"},
-    {"Individ": "Global","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/G_TWoff_B_exLimit"},
-    {"Individ": "Global","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/G_TWoffFq_B_exLimit"},
+    {"Individ": "Global","Kontroller": "Sin",       "label": "G_S_B_exLimit",       "path":"../../Master_Resultater/Determ/G_S_B_exLimit"},
+    {"Individ": "Global","Kontroller": "SUfq",      "label": "G_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/G_SUfq_B_exLimit"},
+    {"Individ": "Global","Kontroller": "Tanh",      "label": "G_T_B_exLimit",       "path":"../../Master_Resultater/Determ/G_T_B_exLimit"},
+    {"Individ": "Global","Kontroller": "TWoff",     "label": "G_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/G_TWoff_B_exLimit"},
+    {"Individ": "Global","Kontroller": "TWoffFq",   "label": "G_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/G_TWoffFq_B_exLimit"},
 
-    {"Individ": "Two","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/T_S_B_exLimit"},
-    {"Individ": "Two","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/T_SUfq_B_exLimit"},
-    {"Individ": "Two","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/T_T_B_exLimit"},
-    {"Individ": "Two","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/T_TWoff_B_exLimit"},
-    {"Individ": "Two","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/T_TWoffFq_B_exLimit"},
+    {"Individ": "Two","Kontroller": "Sin",          "label": "T_S_B_exLimit",       "path":"../../Master_Resultater/Determ/T_S_B_exLimit"},
+    {"Individ": "Two","Kontroller": "SUfq",         "label": "T_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/T_SUfq_B_exLimit"},
+    {"Individ": "Two","Kontroller": "Tanh",         "label": "T_T_B_exLimit",       "path":"../../Master_Resultater/Determ/T_T_B_exLimit"},
+    {"Individ": "Two","Kontroller": "TWoff",        "label": "T_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/T_TWoff_B_exLimit"},
+    {"Individ": "Two","Kontroller": "TWoffFq",      "label": "T_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/T_TWoffFq_B_exLimit"},
 
-    {"Individ": "Zero","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/Z_S_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/Z_SUfq_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/Z_T_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/Z_TWoff_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/Z_TWoffFq_B_exLimit"}
+    {"Individ": "Zero","Kontroller": "Sin",         "label": "Z_S_B_exLimit",       "path":"../../Master_Resultater/Determ/Z_S_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "SUfq",        "label": "Z_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/Z_SUfq_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "Tanh",        "label": "Z_T_B_exLimit",       "path":"../../Master_Resultater/Determ/Z_T_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoff",       "label": "Z_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/Z_TWoff_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoffFq",     "label": "Z_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/Z_TWoffFq_B_exLimit"}
 ]
 
-do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score")
+ex_lost_dict = gruppert[:1]
+#do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score")
 
 
-#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
+do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 #do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
