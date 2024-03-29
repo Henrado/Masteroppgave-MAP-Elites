@@ -98,48 +98,41 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, title:str="", out
 def do_it_all_varShow():
     pass
 
-def plot_boxplot(experiments:list, scale:float=1, output_filename=None, title="", xlabel="Evaluations", ylabel=""):
-    t = np.arange(experiments[0]["data"][0].shape[0])*scale
-    all_data = []
-    fig, axs = plt.subplots(figsize=(9, 5))
 
-    for dic in experiments:
-        arr = dic["data"][:,-1]
-        all_data.append(arr)
-        print(arr)
-
-    # generate some random test data
-
-    # plot violin plot
-    axs.violinplot(all_data,
-                    showmeans=True,
-                    showmedians=False)
-    axs.set_title('Violin plot')
-
-    # adding horizontal grid lines
-    axs.yaxis.grid(True)
-    axs.set_xticks([y + 1 for y in range(len(all_data))],
-                labels=[name["label"] for name in experiments], rotation=45, ha='right')
-    axs.set_xlabel('Four separate samples')
-    axs.set_ylabel('Observed values')
-    fig.autofmt_xdate()
-    plt.show()
-    pass
-
-
-def do_it_all_boxsplot(experiments: list,filename:str, key:str, title:str="", output_filename=None, scale=False):
-    config = {}
+def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, key_type, title:str="", output_filename=None):
     for dic in experiments:
         path = dic["path"]
         dataframes, config = get_all_dataframes(path, filename=filename)
-        dic["data"] = dataframe2numpy(dataframes, key)
+        dic["data"] = dataframe2numpy(dataframes, key=key)[:,-1] # type: ignore
 
-    if scale:
-        algo_config = config["algorithms"][config["algorithms"]["algoTotal"]["algorithms"][0]]
-        algo_iterations = int(np.rint(algo_config["budget"]/algo_config["batch_size"]))
-        plot_boxplot(experiments, scale=algo_iterations,title=title, output_filename=output_filename)
+    df = pd.DataFrame(columns = ['gruppe', 'type', 'verdier'], dtype="object")
+    for dic in experiments:
+        en = pd.DataFrame({"gruppe": dic[key_gruppe], "type":dic[key_type], "verdier": dic["data"]}, dtype="object")
+        df = pd.concat([df, en], ignore_index = True)
+    fig, ax = plt.subplots(figsize=(5.5, 4))
+
+    sns.violinplot(ax = ax,
+                data = df,
+                x = 'gruppe',
+                y = 'verdier',
+                hue = 'type',
+                split = False,
+                inner_kws=dict(box_width=3))
+    ax.set_title(title)
+    ax.legend(title=key_type, fontsize='small')
+
+        # adding horizontal grid lines
+    ax.yaxis.grid(True)
+    ax.xaxis.grid(True)
+    fig.autofmt_xdate()
+    plt.tight_layout()
+    ax.set_xlabel('Type individ', fontdict=dict(fontsize=12))
+    ax.set_ylabel('QD score', fontdict=dict(fontsize=12))
+    if output_filename is not None:
+        fig.savefig(output_filename)
+        plt.close(fig)
     else:
-        plot_boxplot(experiments, title=title, output_filename=output_filename)
+        plt.show()
     pass
 #container_shape = config["containers"][config["algorithms"]["container"]]["shape"]
 
@@ -184,8 +177,30 @@ t       = [determ[6], determ[7], determ[8]]
 tWoff   = [determ[9], determ[10], determ[11]]
 tWoffFq = [determ[12], determ[13], determ[14]]
 
-ex_lost_dict = determ
-do_it_all_boxsplot(ex_lost_dict, "iterations.csv", "qd_score", title="QD", scale=True)
+ex_lost_dict = determ[:3]
+gruppert = [
+    {"Individ": "Global","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/G_S_B_exLimit"},
+    {"Individ": "Global","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/G_SUfq_B_exLimit"},
+    {"Individ": "Global","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/G_T_B_exLimit"},
+    {"Individ": "Global","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/G_TWoff_B_exLimit"},
+    {"Individ": "Global","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/G_TWoffFq_B_exLimit"},
+
+    {"Individ": "Two","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/T_S_B_exLimit"},
+    {"Individ": "Two","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/T_SUfq_B_exLimit"},
+    {"Individ": "Two","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/T_T_B_exLimit"},
+    {"Individ": "Two","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/T_TWoff_B_exLimit"},
+    {"Individ": "Two","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/T_TWoffFq_B_exLimit"},
+
+    {"Individ": "Zero","Kontroller": "Sin", "path":"../../Master_Resultater/Determ/Z_S_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "SUfq", "path":"../../Master_Resultater/Determ/Z_SUfq_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "Tanh", "path":"../../Master_Resultater/Determ/Z_T_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoff", "path":"../../Master_Resultater/Determ/Z_TWoff_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoffFq", "path":"../../Master_Resultater/Determ/Z_TWoffFq_B_exLimit"}
+]
+
+do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score")
+
+
 #do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
 #do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 
