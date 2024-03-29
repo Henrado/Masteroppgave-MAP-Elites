@@ -35,15 +35,6 @@ miljo = [
     {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS2", "label": "CubeSize=2 Half", "color": "forestgreen"},
     {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS5", "label": "CubeSize=5 Half", "color": "black"}
 ]
-two  = [determ[0], determ[3], determ[6], determ[9] , determ[12]]
-zero = [determ[1], determ[4], determ[7], determ[10], determ[13]]
-glob = [determ[2], determ[5], determ[8], determ[11], determ[14]]
-
-s       = [determ[0], determ[1], determ[2]]
-sufq    = [determ[3], determ[4], determ[5]]
-t       = [determ[6], determ[7], determ[8]]
-tWoff   = [determ[9], determ[10], determ[11]]
-tWoffFq = [determ[12], determ[13], determ[14]]
 
 gruppert = [
     {"Individ": "Global","Kontroller": "Sin",       "label": "G_S_B_exLimit",       "path":"../../Master_Resultater/Determ/G_S_B_exLimit"},
@@ -65,12 +56,21 @@ gruppert = [
     {"Individ": "Zero","Kontroller": "TWoffFq",     "label": "Z_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/Z_TWoffFq_B_exLimit"}
 ]
 
-ex_lost_dict = gruppert[:1]
-#do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score")
+two  = [gruppert[0], gruppert[3], gruppert[6], gruppert[9] , gruppert[12]]
+zero = [gruppert[1], gruppert[4], gruppert[7], gruppert[10], gruppert[13]]
+glob = [gruppert[2], gruppert[5], gruppert[8], gruppert[11], gruppert[14]]
+
+s       = [gruppert[0], gruppert[1], gruppert[2]]
+sufq    = [gruppert[3], gruppert[4], gruppert[5]]
+t       = [gruppert[6], gruppert[7], gruppert[8]]
+tWoff   = [gruppert[9], gruppert[10], gruppert[11]]
+tWoffFq = [gruppert[12], gruppert[13], gruppert[14]]
+ex_lost_dict = gruppert
+#do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.svg")
 
 
-do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True)
-#do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
+do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score.svg")
+do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
 do_it_all_stdline(two, "iterations.csv", "qd_score", title="QD_score for Two", scale=True, output_filename="QD_score_two.svg")

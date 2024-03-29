@@ -50,8 +50,11 @@ def dataframe2numpy(dataframes:np.ndarray, key:str="", dtype=None):
     return arr2
 
 def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="", xlabel="Evaluations", ylabel=""):
-    t = np.arange(experiments[0]["data"][0].shape[0])*scale
-    fig, ax = plt.subplots(1)
+    t = np.arange(1,experiments[0]["data"][0].shape[0]+1)*scale
+    #plt.style.use('default')
+    #plt.style.use('seaborn')
+    #print(plt.style.library['seaborn'])
+    fig, ax = plt.subplots(figsize=(5.5, 4))
     all_means = []
 
     for dic in experiments:
@@ -62,16 +65,19 @@ def plot_std_line(experiments:list, scale:float=1, output_filename=None, title="
         sigma1 = arr.std(axis=0)
 
         # plot it!
-        ax.plot(t, mu1, lw=2, label=dic["label"], color=dic["color"])
-        ax.fill_between(t, mu1+sigma1, mu1-sigma1, facecolor=dic["color"], alpha=0.5)
+        ax.plot(t, mu1, lw=1, label=dic["label"])
+        ax.fill_between(t, mu1+sigma1, mu1-sigma1, alpha=0.5)
+        #ax.plot(t, mu1, lw=2, label=dic["label"], color=dic["color"])
+        #ax.fill_between(t, mu1+sigma1, mu1-sigma1, facecolor=dic["color"], alpha=0.5)
         print(dic["label"], round(mu1[-1], 1))
         all_means.append(mu1[-1])
     print("All means:", round(np.mean(all_means), 1), "\n")
     ax.set_title(title)
-    ax.legend(loc='upper left')
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
+    ax.legend(loc='upper left', fontsize=4)
+    ax.set_xlabel(xlabel, fontdict=dict(fontsize=12))
+    ax.set_ylabel(ylabel, fontdict=dict(fontsize=12))
     ax.grid()
+    fig.autofmt_xdate()
     plt.tight_layout()
     if output_filename is not None:
         fig.savefig(output_filename)
