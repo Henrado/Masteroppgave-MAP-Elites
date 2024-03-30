@@ -27,13 +27,13 @@ determ = [
 ]
 
 miljo = [
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS0", "label": "CubeSize=0", "color": "lime"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS1", "label": "CubeSize=1", "color": "magenta"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS2", "label": "CubeSize=2", "color": "red"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS5", "label": "CubeSize=5", "color": "navy"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS1", "label": "CubeSize=1 Half", "color": "gold"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS2", "label": "CubeSize=2 Half", "color": "forestgreen"},
-    {"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS5", "label": "CubeSize=5 Half", "color": "black"}
+    {"CubeSize": 0, "CubeCount": "Ingen"    ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS0", "label": "CubeSize=0", "color": "lime"},
+    {"CubeSize": 1, "CubeCount": "Full"     ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS1", "label": "CubeSize=1", "color": "magenta"},
+    {"CubeSize": 2, "CubeCount": "Full"     ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS2", "label": "CubeSize=2", "color": "red"},
+    {"CubeSize": 5, "CubeCount": "Full"     ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_CS5", "label": "CubeSize=5", "color": "navy"},
+    {"CubeSize": 1, "CubeCount": "Halvert"  ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS1", "label": "CubeSize=1 Half", "color": "gold"},
+    {"CubeSize": 2, "CubeCount": "Halvert"  ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS2", "label": "CubeSize=2 Half", "color": "forestgreen"},
+    {"CubeSize": 5, "CubeCount": "Halvert"  ,"path": "../../Master_Resultater/Miljo/Z_TWoff_B_HCS5", "label": "CubeSize=5 Half", "color": "black"}
 ]
 
 gruppert = [
@@ -69,9 +69,13 @@ ex_lost_dict = gruppert
 #do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.svg")
 
 
-do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score.svg")
-do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
+#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score.svg")
+#do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
 
+
+
+#do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score_miljo.svg")
+do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeCount", key_type="CubeSize", title="QD score", output_filename="QD_score_miljo_box.svg")
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
 do_it_all_stdline(two, "iterations.csv", "qd_score", title="QD_score for Two", scale=True, output_filename="QD_score_two.svg")
 do_it_all_stdline(glob, "iterations.csv", "qd_score", title="QD_score for Global", scale=True, output_filename="QD_score_global.svg")

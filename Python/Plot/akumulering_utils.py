@@ -105,6 +105,7 @@ def do_it_all_varShow():
 
 
 def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, key_type, title:str="", output_filename=None):
+    #sns.set_theme("paper", style="white")
     for dic in experiments:
         path = dic["path"]
         dataframes, config = get_all_dataframes(path, filename=filename)
