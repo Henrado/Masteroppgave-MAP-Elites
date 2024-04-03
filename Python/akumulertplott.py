@@ -75,7 +75,7 @@ ex_lost_dict = gruppert
 
 
 #do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score_miljo.svg")
-do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeCount", key_type="CubeSize", title="QD score", output_filename="QD_score_miljo_box.svg")
+do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.svg")
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
 do_it_all_stdline(two, "iterations.csv", "qd_score", title="QD_score for Two", scale=True, output_filename="QD_score_two.svg")
 do_it_all_stdline(glob, "iterations.csv", "qd_score", title="QD_score for Global", scale=True, output_filename="QD_score_global.svg")
