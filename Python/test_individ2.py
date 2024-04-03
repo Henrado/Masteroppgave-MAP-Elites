@@ -17,7 +17,7 @@ import pandas as pd
 from ast import literal_eval
 
 
-directory = "../../Determ/G_S_B_exLimit/1"
+directory = "../../Master_Resultater/Determ/G_T_B_exLimit/1"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -56,8 +56,8 @@ try:
     # Lager evaluator:
     env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
     
-    for i in range(2):
-        svar = env.evaluate(genom, False)
+    for i in range(1):
+        svar = env.evaluate(genom, True)
         print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
         print("Endte :",svar)
         diff = np.interp(ind[0]["fitness"]-svar[0][0], [-1, 1], [-180, 180])

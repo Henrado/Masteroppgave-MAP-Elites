@@ -20,7 +20,7 @@ from ast import literal_eval
 import pygame
 from pygame.locals import *
 
-directory = "../../Master_Resultater/Determ/Z_T_B_exLimit/1"
+directory = "../../Master_Resultater/Determ/G_T_B_exLimit/1"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -35,12 +35,12 @@ individ.get_dimension_count(controller) # type: ignore
 
 if True:
     p = [
-        {"tid": 1000, "x": 10, "y":10},
-        {"tid": 1000, "x": 16, "y":10},
-        {"tid": 1000, "x": 3, "y":16},
-        {"tid": 1000, "x": 7, "y":7},
-        {"tid": 1000, "x": 12, "y":14},
-        {"tid": 1000, "x": 13, "y":3},
+        {"tid": 500, "x": 10, "y":10},
+        {"tid": 500, "x": 16, "y":10},
+        {"tid": 500, "x": 3, "y":16},
+        {"tid": 500, "x": 7, "y":7},
+        {"tid": 500, "x": 12, "y":14},
+        {"tid": 500, "x": 13, "y":3},
         {"tid": 1, "x": 7, "y":7}
     ]
     genomGenerator = Plan(p)
@@ -66,6 +66,9 @@ try:
     last_ind = 0
     if_pause = True
 
+    env.configRobot(True)
+
+    df = pd.DataFrame(columns=["x", "z", "y_rot"])
     for t in range(10000):
         x,y,ind = genomGenerator.get_solution(t) # type: ignore
         if x==None or y==None:
@@ -79,16 +82,20 @@ try:
         end_rotation += shortestAngle(obs[0][0][3:6],last_rotation)
         last_rotation = obs[0][0][3:6]
 
+        end_x = end_position[0]
+        end_z = end_position[2]
+        end_yrot = end_rotation[1] # type: ignore
+        df.loc[t] = {"x":end_x, "z": end_z, "y_rot": end_yrot}
         if ind != last_ind and if_pause:
             last_ind = ind
-            end_x = end_position[0]
-            end_z = end_position[2]
-            end_yrot = end_rotation[1] # type: ignore
             fitness = env.fitnessfunction(end_x, end_z, end_yrot) # type: ignore 
             fitness = np.interp(fitness, [-1, 1], [-180, 180])
             print((fitness,), (end_x, end_z))
-            input("Trykk enter for å fortsette")
+            #input("Trykk enter for å fortsette")
     pass
 finally:
+    env.configRobot(False)
+    print(df)
+    df.to_csv("Z_T_B_exLimit.csv")
     env.close() # type: ignore
     pass

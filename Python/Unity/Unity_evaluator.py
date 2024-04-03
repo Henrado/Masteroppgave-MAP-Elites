@@ -38,6 +38,7 @@ class UnityEvaluator:
         if time_scale > 1:
             EngineChannel.set_configuration_parameters(time_scale=time_scale)
         
+        self.realRobot = None
         self.env.reset()
 
     def _getBuild_Path(self) -> str:
@@ -61,6 +62,15 @@ class UnityEvaluator:
         while ((diff < -180).any()): diff[diff < -180] += 2*180 # type: ignore
         return diff
     
+    def configRobot(self, start:bool):
+        if self.realRobot == None:
+            self.realRobot = Qutee_interface.Qutee_interface()
+
+        if start:
+            self.realRobot.EnableTorqueALL()
+        else:
+            self.realRobot.DisableTorqueALL()
+    
     def send_comand(self, action):
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         decisionSteps,other = self.env.get_steps(individual_name)
@@ -68,6 +78,8 @@ class UnityEvaluator:
         if (len(decisionSteps.agent_id)>0):
             for id in decisionSteps.agent_id: # Går gjennom alle agenter og setter dems actions 
                 self.env.set_action_for_agent(individual_name,id,ActionTuple(action))
+                if self.realRobot != None:
+                    self.realRobot.setAction(action[0]) # type: ignore
             self.env.step() #Når all data er satt setter man et setp
         return obs
 
