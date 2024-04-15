@@ -24,8 +24,8 @@ from pygame.locals import *
 directory = "../../Master_Resultater/Miljo/Z_TWoff_B_HCS1/1" # Må lage denne csv også 
 
 
-directory = "../../Master_Resultater/Determ/T_TWoffFq_B_exLimit/1"
-csv_name = "T_TWoffFq_B_exLimit_utenkuber.csv"
+directory = "../../Master_Resultater/Determ/Z_T_B_exLimit/2"
+csv_name = "Z_T_B_exLimit_X_retning_MedKuber.csv"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -80,6 +80,10 @@ try:
         if x==None or y==None:
             break
         genom = arr2[x][y][0]["genom"]
+        #genom = np.array([-1,0,-1,0,-1,0,
+        #                  -1,0,-1,0,-1,0,
+        #                  -1,0, 1,0, 1,0,
+        #                  -1,0,-1,0,-1,0])
         individ2 = individ(genom, controller) # type: ignore
         action = individ2.get_actions(t*DELTA_TIME)
         obs = env.send_comand(action)
@@ -102,7 +106,7 @@ try:
 finally:
     #env.configRobot(False)
     #df = pd.concat([pd.DataFrame(p), df])
-    print(df)
+    #print(df)
     df.to_csv(csv_name)
     env.close() # type: ignore
     pass
