@@ -38,16 +38,21 @@ def prepare_sim(csv):
 def do_it_all(base_dir_real, base_dir_sim, ex_name):
     real_dir = base_dir_real + ex_name + "/"
     csv_files = [f for f in os.listdir(real_dir) if f.endswith('.csv')]
-    sim_filename = base_dir_sim + ex_name + "_exLimit_utenkuber.csv"
+    sim_filename_uten = base_dir_sim + "Ubuntu_utenkuber/" + ex_name + "_exLimit_utenkuber.csv"
+    sim_filename_med = base_dir_sim + "Ubuntu_medkuber/" + ex_name + "_exLimit_medkuber.csv"
 
     sim_rename_dict = {"x": "X_pos_sim", "z": "Z_pos_sim", "y_rot": "Y_rot_sim"}
     real_rename_dict = {"X":"X_rot", "Y":"Y_rot", "Z":"Z_rot", "X.1":"X_pos", "Y.1": "Y_pos", "Z.1": "Z_pos"}
     
 
     fig, ax = plt.subplots(figsize=(5.5, 4))
-    sim_csv = read_csv(sim_filename, index_col=0, rename=sim_rename_dict)
-    sim_csv = prepare_sim(sim_csv)
-    ax.plot(sim_csv.loc[:,"Z_pos_sim"], sim_csv.loc[:,"X_pos_sim"], label="Simulering")
+    sim_uten_csv = read_csv(sim_filename_uten, index_col=0, rename=sim_rename_dict)
+    sim_uten_csv = prepare_sim(sim_uten_csv)
+    ax.plot(sim_uten_csv.loc[:,"Z_pos_sim"], sim_uten_csv.loc[:,"X_pos_sim"], label="Simulering uten kuber")
+
+    sim_med_csv = read_csv(sim_filename_med, index_col=0, rename=sim_rename_dict)
+    sim_med_csv = prepare_sim(sim_med_csv)
+    ax.plot(sim_med_csv.loc[:,"Z_pos_sim"], sim_med_csv.loc[:,"X_pos_sim"], label="Simulering med kuber")
     all_csvs = []
     for ind, i in enumerate(csv_files):
         csv = read_csv(os.path.join(real_dir,i), index_col="Frame", skiprows=6, rename=real_rename_dict)
@@ -69,14 +74,18 @@ def do_it_all(base_dir_real, base_dir_sim, ex_name):
 
 if __name__ == "__main__":
     ex_names = ["CS0", "CS1","CS2","CS5","HCS1","HCS2","HCS5"]
-    base_dir_real = "result/FysiskTest/Miljo/Mocap/Miljo_"
-    base_dir_sim  = "result/FysiskTest/Miljo/Sim/Z_TWoff_B_"
+    base_dir_real = "../../Master_Resultater/FysiskTest/Miljo/Mocap/Miljo_"
+    base_dir_sim  = "../../Master_Resultater/FysiskTest/Miljo/Sim/"
 
     ex_names = ["G_S_B", "G_SUfq_B", "G_T_B", "G_TWoff_B", "G_TWoffFq_B"]
-    ex_names = ["T_S_B", "T_SUfq_B", "T_TWoff_B", "T_TWoffFq_B"]
-    ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
-    base_dir_real = "result/FysiskTest/Determ/Mocap/"
-    base_dir_sim  = "result/FysiskTest/Determ/Sim/"
+    #ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
+    #ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
+    base_dir_real = "../../Master_Resultater/FysiskTest/Determ/Mocap/"
+    base_dir_sim  = "../../Master_Resultater/FysiskTest/Determ/Sim/"
+
+    ex_names = ["X-retning", "Z-retning"]
+    base_dir_real = "../../Master_Resultater/FysiskTest/Baseline/Mocap/"
+    base_dir_sim  = "../../Master_Resultater/FysiskTest/Baseline/Sim/"
     for i in ex_names:
         do_it_all(base_dir_real, base_dir_sim, i)
     plt.show()
