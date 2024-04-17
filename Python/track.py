@@ -38,8 +38,8 @@ def prepare_sim(csv):
 def do_it_all(base_dir_real, base_dir_sim, ex_name):
     real_dir = base_dir_real + ex_name + "/"
     csv_files = [f for f in os.listdir(real_dir) if f.endswith('.csv')]
-    sim_filename_uten = base_dir_sim + "Ubuntu_utenkuber/" + ex_name + "_exLimit_utenkuber.csv"
-    sim_filename_med = base_dir_sim + "Ubuntu_medkuber/" + ex_name + "_exLimit_medkuber.csv"
+    sim_filename_uten = base_dir_sim + "Ubuntu20_utenkuber/" + ex_name + "_exLimit_utenkuber.csv"
+    sim_filename_med = base_dir_sim + "Ubuntu20_medkuber/" + ex_name + "_exLimit_medkuber.csv"
 
     sim_rename_dict = {"x": "X_pos_sim", "z": "Z_pos_sim", "y_rot": "Y_rot_sim"}
     real_rename_dict = {"X":"X_rot", "Y":"Y_rot", "Z":"Z_rot", "X.1":"X_pos", "Y.1": "Y_pos", "Z.1": "Z_pos"}
@@ -78,14 +78,14 @@ if __name__ == "__main__":
     base_dir_sim  = "../../Master_Resultater/FysiskTest/Miljo/Sim/"
 
     ex_names = ["G_S_B", "G_SUfq_B", "G_T_B", "G_TWoff_B", "G_TWoffFq_B"]
-    #ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
-    #ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
+    ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
+    ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
     base_dir_real = "../../Master_Resultater/FysiskTest/Determ/Mocap/"
     base_dir_sim  = "../../Master_Resultater/FysiskTest/Determ/Sim/"
 
-    ex_names = ["X-retning", "Z-retning"]
-    base_dir_real = "../../Master_Resultater/FysiskTest/Baseline/Mocap/"
-    base_dir_sim  = "../../Master_Resultater/FysiskTest/Baseline/Sim/"
+    #ex_names = ["X-retning", "Z-retning"]
+    #base_dir_real = "../../Master_Resultater/FysiskTest/Baseline/Mocap/"
+    #base_dir_sim  = "../../Master_Resultater/FysiskTest/Baseline/Sim/"
     for i in ex_names:
         do_it_all(base_dir_real, base_dir_sim, i)
     plt.show()
