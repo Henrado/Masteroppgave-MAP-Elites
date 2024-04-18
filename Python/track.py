@@ -25,7 +25,7 @@ def cut_begining(csv):
         diff = start_pos-line_pos
         
         if np.sqrt(diff.dot(diff)) > 0.2:
-            print(i, diff)
+            #print(i, diff)
             kutt = i
             break
     return csv.iloc[kutt:]
@@ -52,16 +52,25 @@ def do_it_all(base_dir_real, base_dir_sim, ex_name):
 
     sim_med_csv = read_csv(sim_filename_med, index_col=0, rename=sim_rename_dict)
     sim_med_csv = prepare_sim(sim_med_csv)
+    
+    sum_lengde_sim_med = np.sqrt(sim_med_csv.iloc[-1]["X_pos_sim"]**2+sim_med_csv.iloc[-1]["Z_pos_sim"]**2)
+    sum_lengde_sim_uten = np.sqrt(sim_uten_csv.iloc[-1]["X_pos_sim"]**2+sim_uten_csv.iloc[-1]["Z_pos_sim"]**2)
+
     ax.plot(sim_med_csv.loc[:,"Z_pos_sim"], sim_med_csv.loc[:,"X_pos_sim"], label="Simulering med kuber")
     all_csvs = []
+    sum_lengde_real = 0
     for ind, i in enumerate(csv_files):
         csv = read_csv(os.path.join(real_dir,i), index_col="Frame", skiprows=6, rename=real_rename_dict)
         csv = set_to_origin(csv, real_rename_dict.values())
         csv = cut_begining(csv=csv)
+        sum_lengde_real += np.sqrt(csv.iloc[-1]["X_pos"]**2+csv.iloc[-1]["Y_pos"]**2+csv.iloc[-1]["Z_pos"]**2)
         all_csvs.append(csv)
         ax.plot(csv.loc[:,"Z_pos"], csv.loc[:,"X_pos"], label="Kjøring nr: " + str(ind))
     #sns.lineplot(sim, y="X_pos_sim", x="Z_pos_sim", hue="ind")
     #sns.lineplot(lest, y="X_pos", x="Z_pos")
+    print("Med", ex_name, sum_lengde_sim_med/(sum_lengde_real/len(csv_files)))
+    print("Uten", ex_name, sum_lengde_sim_uten/(sum_lengde_real/len(csv_files)))
+    print("Begge", ex_name, ((sum_lengde_sim_uten+sum_lengde_sim_med)/2)/(sum_lengde_real/len(csv_files)))
     ax.set_title(ex_name)
     ax.legend(fontsize=4)
     ax.set_xlabel("Z retning", fontdict=dict(fontsize=12))
@@ -69,7 +78,10 @@ def do_it_all(base_dir_real, base_dir_sim, ex_name):
     ax.grid()
     fig.autofmt_xdate()
     plt.tight_layout()
-    ax.axis('scaled')
+    #ax.axis('scaled')
+    output_filename = ex_name + "_real.svg"
+    #fig.savefig(output_filename)
+    #plt.close(fig)
 
 
 if __name__ == "__main__":
@@ -78,8 +90,8 @@ if __name__ == "__main__":
     base_dir_sim  = "../../Master_Resultater/FysiskTest/Miljo/Sim/"
 
     ex_names = ["G_S_B", "G_SUfq_B", "G_T_B", "G_TWoff_B", "G_TWoffFq_B"]
-    ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
-    ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
+    #ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
+    #ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
     base_dir_real = "../../Master_Resultater/FysiskTest/Determ/Mocap/"
     base_dir_sim  = "../../Master_Resultater/FysiskTest/Determ/Sim/"
 
