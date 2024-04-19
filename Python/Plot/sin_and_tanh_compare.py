@@ -12,13 +12,17 @@ def show():
     sin = A*np.sin(2*np.pi*t*F + PHI) + THETA
     tanh = A*np.tanh(4*np.sin(2*np.pi*(t*F+PHI))) + THETA
 
-    plt.plot(t, sin, label="Sinus")
-    plt.plot(t, tanh, label="Tanh")
-    plt.title("Sammenligning mellom kontrollfunksjoner")
-    plt.xlabel("Tid")
-    plt.ylabel("Verdi")
-    plt.legend()
+    fig, ax = plt.subplots(figsize=(5.5, 4))
+
+    ax.plot(t, sin, label="A∗sin(2π ∗t∗f +ϕ)+θ")
+    ax.plot(t, tanh, label="A∗tanh(4∗sin(2π ∗(t ∗f +ϕ))+θ")
+    ax.set_title("Sammenligning mellom kontrollfunksjoner")
+    ax.legend(loc='upper left',fontsize=8)
+    ax.set_xlabel("Tid", fontdict=dict(fontsize=12))
+    ax.set_ylabel("Verdi", fontdict=dict(fontsize=12))
     plt.grid()
+    fig.autofmt_xdate()
+    plt.tight_layout()
     plt.show()
 
 if __name__ == "__main__":
