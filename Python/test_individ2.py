@@ -18,6 +18,7 @@ from ast import literal_eval
 
 
 directory = "../../Master_Resultater/Determ/G_T_B_exLimit/1"
+directory = "result/Yoga-Win1"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
@@ -32,7 +33,7 @@ fitnessfunction = get_fitnessfunction(config=config)
 
 print("\n"*10)
 test = (18, 10)
-test = (19, 8) #Ikke veldig bra med G_S_B
+test = (10, 16) #Ikke veldig bra med G_S_B
 x = test[0]
 y = test[1]
 ind = arr2[x][y]
@@ -55,9 +56,14 @@ try:
     #qutee_config = None
     # Lager evaluator:
     env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
-    
-    for i in range(1):
-        svar = env.evaluate(genom, True)
+
+    env.env.reset()
+    env.env.reset()
+    env.env.reset()
+
+    for i in range(3):
+        env.env.reset()
+        svar = env.evaluate(genom, False)
         print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
         print("Endte :",svar)
         diff = np.interp(ind[0]["fitness"]-svar[0][0], [-1, 1], [-180, 180])
