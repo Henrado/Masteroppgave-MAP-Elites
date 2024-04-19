@@ -103,6 +103,7 @@ public class Robot : Agent
 
     public override void OnEpisodeBegin()
     {
+        Random.InitState(0);
         return;
         //foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
         //{

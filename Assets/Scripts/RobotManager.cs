@@ -38,8 +38,11 @@ public class RobotManager : MonoBehaviour
     }
 
     public void ResetScene() {
+        Random.InitState(0);
         SceneManager.LoadScene("SampleScene");
+        Random.InitState(0);
         StartCoroutine(SpawnENV());
+        Random.InitState(0);
     }
 
     IEnumerator SpawnENV() {
