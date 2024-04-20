@@ -1,9 +1,38 @@
 #!/usr/bin/bash
 # Array med alle configfilene 
-array=( Z_S_C_exLimit T_S_C_exLimit G_S_C_exLimit Z_SUfq_C_exLimit Z_T_C_exLimit Z_TWoff_C_exLimit Z_TWoffFq_C_exLimit G_SUfq_C_exLimit G_T_C_exLimit G_TWoff_C_exLimit G_TWoffFq_C_exLimit T_SUfq_C_exLimit T_T_C_exLimit T_TWoff_C_exLimit T_TWoffFq_C_exLimit )
+array=( Z_S_B_exLimit T_S_B_exLimit )
 start=1
-stop=10
-eksperiment_navn="Circle"
+stop=20
+
+# array=( Z_SUfq_B_exLimit T_SUfq_B_exLimit  )
+# start=21
+# stop=40
+
+# array=( Z_T_B_exLimit T_T_B_exLimit )
+# start=41
+# stop=60
+
+# array=( Z_TWoff_B_exLimit T_TWoff_B_exLimit )
+# start=61
+# stop=80
+
+# array=( Z_TWoffFq_B_exLimit G_TWoffFq_B_exLimit T_TWoffFq_B_exLimit )
+# start=81
+# stop=100
+
+# array=( G_S_B_exLimit G_SUfq_B_exLimit )
+# start=101
+# stop=120
+
+# array=( G_T_B_exLimit G_TWoff_B_exLimit )
+# start=121
+# stop=140
+
+# array=( T_TWoffFq_B_exLimit )
+# start=141
+# stop=160
+
+eksperiment_navn="kontrollers_timescale"
 echo ${array[0]}
 for i in "${array[@]}";
 do

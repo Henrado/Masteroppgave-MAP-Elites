@@ -3,10 +3,10 @@ sbatch<<EOT
 #!/usr/bin/bash
 #SBATCH -J $1 #job_name
 #SBATCH --array=$2-$3
-#SBATCH --mem=3G
+#SBATCH --mem=2G
 #SBATCH --ntasks=1
 #SBATCH --output=result/$5/$1/%a/output.txt
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=1
 #$6
 
 source ~/.bashrc
