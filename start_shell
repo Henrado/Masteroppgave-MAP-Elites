@@ -5,8 +5,9 @@ source ~/.bashrc
 conda activate env39
 
 echo "Job done at $HOSTNAME"
-echo "Twolock, TanhWOff, basic, Nye vinkler med at samtidig?"
+echo "Seeded timescale"
 
+python3 main3.py -c conf/Z_TWoff_B_seeded.yaml -o Dunder_seedtest_timescale
 
 #!/usr/bin/bash
 
