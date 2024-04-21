@@ -35,7 +35,7 @@ def prepare_sim(csv):
     csv.loc[:,"Z_pos_sim"] = csv.loc[:,"Z_pos_sim"]*10
     return csv
 
-def do_it_all(base_dir_real, base_dir_sim, ex_name):
+def do_it_all(ax, base_dir_real, base_dir_sim, ex_name):
     real_dir = base_dir_real + ex_name + "/"
     csv_files = [f for f in os.listdir(real_dir) if f.endswith('.csv')]
     sim_filename_uten = base_dir_sim + "Ubuntu20_utenkuber/" + ex_name + "_exLimit_utenkuber.csv"
@@ -45,9 +45,10 @@ def do_it_all(base_dir_real, base_dir_sim, ex_name):
     real_rename_dict = {"X":"X_rot", "Y":"Y_rot", "Z":"Z_rot", "X.1":"X_pos", "Y.1": "Y_pos", "Z.1": "Z_pos"}
     
 
-    fig, ax = plt.subplots(figsize=(5.5, 4))
+    #fig, ax = plt.subplots(figsize=(5.5, 4))
     sim_uten_csv = read_csv(sim_filename_uten, index_col=0, rename=sim_rename_dict)
     sim_uten_csv = prepare_sim(sim_uten_csv)
+    print(ax)
     ax.plot(sim_uten_csv.loc[:,"Z_pos_sim"], sim_uten_csv.loc[:,"X_pos_sim"], label="Simulering uten kuber")
 
     sim_med_csv = read_csv(sim_filename_med, index_col=0, rename=sim_rename_dict)
@@ -71,14 +72,13 @@ def do_it_all(base_dir_real, base_dir_sim, ex_name):
     print("Med", ex_name, sum_lengde_sim_med/(sum_lengde_real/len(csv_files)))
     print("Uten", ex_name, sum_lengde_sim_uten/(sum_lengde_real/len(csv_files)))
     print("Begge", ex_name, ((sum_lengde_sim_uten+sum_lengde_sim_med)/2)/(sum_lengde_real/len(csv_files)))
-    ax.set_title(ex_name)
-    ax.legend(fontsize=4)
+    ax.set_title(ex_name, fontsize=14)
+    ax.legend(fontsize=6)
     ax.set_xlabel("Z retning", fontdict=dict(fontsize=12))
-    ax.set_ylabel("X retning", fontdict=dict(fontsize=12))
+    #ax.set_ylabel("X retning", fontdict=dict(fontsize=12))
     ax.grid()
-    fig.autofmt_xdate()
-    plt.tight_layout()
-    #ax.axis('scaled')
+    #ax.set_aspect('equal', 'datalim')
+    ax.set_aspect('equal')
     output_filename = ex_name + "_real.svg"
     #fig.savefig(output_filename)
     #plt.close(fig)
@@ -89,15 +89,28 @@ if __name__ == "__main__":
     base_dir_real = "../../Master_Resultater/FysiskTest/Miljo/Mocap/Miljo_"
     base_dir_sim  = "../../Master_Resultater/FysiskTest/Miljo/Sim/"
 
-    ex_names = ["G_S_B", "G_SUfq_B", "G_T_B", "G_TWoff_B", "G_TWoffFq_B"]
+    #ex_names = ["G_S_B", "G_SUfq_B", "G_T_B", "G_TWoff_B", "G_TWoffFq_B"]
     #ex_names = ["T_S_B", "T_SUfq_B", "T_T_B", "T_TWoff_B", "T_TWoffFq_B"]
     #ex_names = ["Z_S_B", "Z_SUfq_B", "Z_T_B", "Z_TWoff_B", "Z_TWoffFq_B"]
-    base_dir_real = "../../Master_Resultater/FysiskTest/Determ/Mocap/"
-    base_dir_sim  = "../../Master_Resultater/FysiskTest/Determ/Sim/"
+    #base_dir_real = "../../Master_Resultater/FysiskTest/Determ/Mocap/"
+    #base_dir_sim  = "../../Master_Resultater/FysiskTest/Determ/Sim/"
 
     #ex_names = ["X-retning", "Z-retning"]
     #base_dir_real = "../../Master_Resultater/FysiskTest/Baseline/Mocap/"
     #base_dir_sim  = "../../Master_Resultater/FysiskTest/Baseline/Sim/"
-    for i in ex_names:
-        do_it_all(base_dir_real, base_dir_sim, i)
+    fig, axs = plt.subplots(4, 2,figsize=(5, 9),  sharex=True, sharey=True)
+    #axs = axs.reshape(-1)
+    for i, ax in zip(ex_names, axs.flat):
+        do_it_all(ax, base_dir_real, base_dir_sim, i)
+    
+    axs.flat[0].set_ylabel("X retning", fontdict=dict(fontsize=12))
+
+    ## access each axes object via axs.flat
+    for ax in axs.flat:
+        ## check if something was plotted 
+        if not bool(ax.has_data()):
+            fig.delaxes(ax) ## delete if nothing is plotted in the axes obj
+
+    fig.autofmt_xdate()
+    plt.tight_layout()
     plt.show()
