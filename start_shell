@@ -7,7 +7,7 @@ conda activate env39
 echo "Job done at $HOSTNAME"
 echo "Seeded timescale"
 
-python3 main3.py -c conf/Z_TWoff_B_seeded.yaml -o Dunder_seedtest_timescale
+python3 main3.py -c conf/Z_TWoff_B_seeded.yaml -o RobinHPC_seedtest_timescale -w 300
 
 #!/usr/bin/bash
 
@@ -30,9 +30,17 @@ sacct -j 3947 --format=JobID,Start,End,Elapsed,REQCPUS,ALLOCTRES%30
 
 # Til ifi maskinen
 # KJøres på HPC  
+rsync --progress -a result/* henrme@login.ifi.uio.no:~/resultater_timescale/
 rsync --progress result/* henrme@login.ifi.uio.no:~/resultater/
 rsync --progress -a result/G_SUfq_B_exLimit/* henrme@login.ifi.uio.no:~/resultater/G_SUfq_B_exLimit/
+
+# Disse må kjøres
+rsync --progress -a miljo_timescale/* henrme@login.ifi.uio.no:~/resultater_timescale/miljo_timescale
+rsync --progress -a kontrollers_timescale/* henrme@login.ifi.uio.no:~/resultater_timescale/kontrollers_timescale
+
+
 
 # Fra ifi til min data:
 # Kjøres på min
 rsync -chavzP --stats henrme@login.ifi.uio.no:~/resultater /mnt/c/Users/henri/Documents/GitHub/
+rsync -chavzP --stats henrme@login.ifi.uio.no:~/resultater_timescale /mnt/c/Users/henri/Documents/GitHub/resultater_timescale/
