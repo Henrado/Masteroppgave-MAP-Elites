@@ -19,12 +19,16 @@ import pandas as pd
 from ast import literal_eval
 import pygame
 from pygame.locals import *
+"""
+OBS skal helst ikke brukes får et annet svar
 
+
+"""
 #directory = "../../Master_Resultater/Determ/T_TWoff_Fq_B_exLimit/2" ### Trenger csv
 directory = "../../Master_Resultater/Miljo/Z_TWoff_B_HCS1/1" # Må lage denne csv også 
 
-
 directory = "../../Master_Resultater/Determ/Z_T_B_exLimit/2"
+directory = "result/time_scale1"
 csv_name = "Z_T_B_exLimit_X_retning_MedKuber.csv"
 
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
@@ -41,7 +45,7 @@ individ.get_dimension_count(controller) # type: ignore
 if True:
     p = [
         #{"tid": 500, "x": 10, "y":10},
-        {"tid": 1000, "x": 10, "y":16}
+        {"tid": 1000, "x": 10, "y":16} #16,11 for timescale1
         #{"tid": 500, "x": 3, "y":16},
         #{"tid": 500, "x": 7, "y":7},
         #{"tid": 500, "x": 12, "y":14},
@@ -56,7 +60,7 @@ try:
     # Create the channel
     if "Qutee" in config:
         qutee_config = config["Qutee"]
-        qutee_config["CubeCount"] = 0
+        #qutee_config["CubeCount"] = 0
     else:
         qutee_config = None 
     print(qutee_config)
@@ -73,7 +77,7 @@ try:
 
     #env.configRobot(True)
     #input("Start")
-
+    dataF = pd.DataFrame(columns=["genom"])
     df = pd.DataFrame(columns=["x", "z", "y_rot", "ind"])
     for t in range(10000):
         x,y,ind = genomGenerator.get_solution(t) # type: ignore
@@ -87,6 +91,7 @@ try:
         individ2 = individ(genom, controller) # type: ignore
         action = individ2.get_actions(t*DELTA_TIME)
         obs = env.send_comand(action)
+        dataF.loc[t] = {"genom": action}
         
         end_position = obs[0][0][:3] # Henter observasjonene til agent 0 
         end_rotation += shortestAngle(obs[0][0][3:6],last_rotation)
@@ -98,15 +103,16 @@ try:
         df.loc[t] = {"x":end_x, "z": end_z, "y_rot": end_yrot, "ind": ind}
         if ind != last_ind and if_pause:
             last_ind = ind
-            fitness = env.fitnessfunction(end_x, end_z, end_yrot) # type: ignore 
-            fitness = np.interp(fitness, [-1, 1], [-180, 180])
-            print((fitness,), (end_x, end_z))
+    fitness = env.fitnessfunction(end_x, end_z, end_yrot) # type: ignore 
+    fitness = np.interp(fitness, [-1, 1], [-180, 180])
+    print((fitness,), (end_x, end_z))
             #input("Trykk enter for å fortsette")
     pass
 finally:
     #env.configRobot(False)
     #df = pd.concat([pd.DataFrame(p), df])
     #print(df)
-    df.to_csv(csv_name)
+    #df.to_csv(csv_name)
+    #dataF.to_csv("test3.csv")
     env.close() # type: ignore
     pass
