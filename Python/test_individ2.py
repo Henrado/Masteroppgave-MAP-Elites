@@ -18,7 +18,7 @@ from ast import literal_eval
 
 
 directory = "../../Master_Resultater/Determ/G_T_B_exLimit/1"
-
+directory = "result/time_scale1"
 d, config = get_one_dataframes(directory, "grid.solutions.csv", parse=True)
 
 arr2 = d.to_numpy()
@@ -32,7 +32,7 @@ fitnessfunction = get_fitnessfunction(config=config)
 
 print("\n"*10)
 test = (18, 10)
-test = (19, 8) #Ikke veldig bra med G_S_B
+test = (16, 11) #Ikke veldig bra med G_S_B
 x = test[0]
 y = test[1]
 ind = arr2[x][y]
@@ -56,12 +56,24 @@ try:
     # Lager evaluator:
     env = UnityEvaluator(1000, qutee_config=qutee_config, editor_mode=False, headless=False, worker_id=0, individ=individ, controller=controller, fitnessfunction=fitnessfunction, time_scale=1)
     
-    for i in range(1):
-        svar = env.evaluate(genom, True)
+    a=[]
+    b=[]
+    c=[]
+
+    for i in range(3):
+        csvPath = str(i) + "_gang.csv"
+        svar = env.evaluate(genom, csvPath=csvPath)
         print("Skulle:", (ind[0]["fitness"], ind[0]["features"]))
         print("Endte :",svar)
         diff = np.interp(ind[0]["fitness"]-svar[0][0], [-1, 1], [-180, 180])
         print("Diff:", diff , (ind[0]["features"][0]-svar[1][0], ind[0]["features"][1]-svar[1][1]))
+        if round(diff[0], 2) == 0:
+            a.append(i)
+        else:
+            c.append([i, diff[0]])
+    print("a",len(a), a)
+    print("b",len(b), b)
+    print("c",len(c), c)
     pass
 
 finally:

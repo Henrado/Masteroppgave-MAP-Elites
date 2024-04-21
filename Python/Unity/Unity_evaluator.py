@@ -72,6 +72,9 @@ class UnityEvaluator:
             self.realRobot.DisableTorqueALL()
     
     def send_comand(self, action):
+        """
+        OBS gir ikke samme resultat som evaluate. Denne skal helst ikke brukes
+        """
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         decisionSteps,other = self.env.get_steps(individual_name)
         obs = decisionSteps.obs
@@ -83,12 +86,14 @@ class UnityEvaluator:
             self.env.step() #Når all data er satt setter man et setp
         return obs
 
-    def evaluate(self, ind, realRobot=False):
+    def evaluate(self, ind, realRobot=False, csvPath=None):
         DELTA_TIME = 0.01
         if realRobot:
             Q = Qutee_interface.Qutee_interface()
             Q.EnableTorqueALL()
-        individ = self.individ(ind[:], self.controller)
+        if csvPath != None:
+            df = pd.DataFrame(columns=["x", "z", "y_rot", "ind"])
+        individ = self.individ(ind[:], self.controller) # type: ignore
         self.env.reset()
         individual_name = list(self.env._env_specs)[0] # Henter mlagentene vil her være: Qutee_behavior
         end_position = np.zeros((1,3))
@@ -113,6 +118,11 @@ class UnityEvaluator:
                 last_rotation = obs[0][0][3:6]
                 reward += decisionSteps.reward
                 cumulativeReward = obs[0][0][6]
+                end_x = end_position[0]
+                end_z = end_position[2]
+                end_yrot = end_rotation[1] # type: ignore
+                if csvPath != None:
+                    df.loc[t] = {"x":end_x, "z": end_z, "y_rot": end_yrot, "ind": ind} # type: ignore
                 if realRobot:
                     Q.setAction(action[0]) # type: ignore
 
@@ -129,5 +139,7 @@ class UnityEvaluator:
         if realRobot:
             Q.DisableTorqueALL() # type: ignore
             #Q.quit() # type: ignore
+        if csvPath != None:
+            df.to_csv(csvPath)
         return (fitness,), (end_x, end_z)
     
