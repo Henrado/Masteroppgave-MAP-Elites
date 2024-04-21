@@ -12,7 +12,7 @@ def read_csv(filname, index_col, skiprows=0, rename=None):
 
 
 def prepare_sim(csv):
-    csv.loc[:,"X_pos_sim"] = csv.loc[:,"X_pos_sim"]*10
+    csv.loc[:,"X_pos_sim"] = -csv.loc[:,"X_pos_sim"]*10
     csv.loc[:,"Z_pos_sim"] = csv.loc[:,"Z_pos_sim"]*10
     return csv
 
@@ -24,7 +24,7 @@ def do_it_all(sim1, sim2, endepunkt, ex_name):
     
     sim1_csv = read_csv(sim1, index_col=0, rename=sim_rename_dict)
     sim1_csv = prepare_sim(sim1_csv)
-    #ax.plot(sim1_csv.loc[:,"Z_pos_sim"], sim1_csv.loc[:,"X_pos_sim"], label="Sim med ekstra kommando")
+    ax.plot(sim1_csv.loc[:,"Z_pos_sim"], sim1_csv.loc[:,"X_pos_sim"], label="Sim med ekstra kommando")
 
     sim2_csv = read_csv(sim2, index_col=0, rename=sim_rename_dict)
     sim2_csv = prepare_sim(sim2_csv)
@@ -32,7 +32,7 @@ def do_it_all(sim1, sim2, endepunkt, ex_name):
     ax.plot(sim2_csv.loc[:,"Z_pos_sim"], sim2_csv.loc[:,"X_pos_sim"], label="Sim uten ekstra kommando")
 
     #plt.plot([6.9774365*10], [0.6545745*10], 'o', label="Skulle ha endt") #Dette er for løsning (10,16)
-    plt.plot([endepunkt[0]*10], [endepunkt[1]*10], 'o', label="Skulle ha endt") #Dette er for løsning (16,11)
+    ax.plot([endepunkt[0]*10], [-endepunkt[1]*10], 'o', label="Skulle ha endt") #Dette er for løsning (16,11)
 
     ax.set_title(ex_name)
     ax.legend(fontsize=8)
@@ -42,6 +42,7 @@ def do_it_all(sim1, sim2, endepunkt, ex_name):
     fig.autofmt_xdate()
     plt.tight_layout()
     #ax.axis('scaled')
+    ax.set_aspect('equal', 'datalim')
     output_filename = ex_name + "_real.svg"
     #fig.savefig(output_filename)
     #plt.close(fig)
