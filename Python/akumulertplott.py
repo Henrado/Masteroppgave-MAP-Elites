@@ -37,36 +37,36 @@ miljo = [
 ]
 
 gruppert = [
-    {"Individ": "Global","Kontroller": "Sin",       "label": "G_S_B_exLimit",       "path":"../../Master_Resultater/Determ/G_S_B_exLimit"},
-    {"Individ": "Global","Kontroller": "SUfq",      "label": "G_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/G_SUfq_B_exLimit"},
-    {"Individ": "Global","Kontroller": "Tanh",      "label": "G_T_B_exLimit",       "path":"../../Master_Resultater/Determ/G_T_B_exLimit"},
-    {"Individ": "Global","Kontroller": "TWoff",     "label": "G_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/G_TWoff_B_exLimit"},
-    {"Individ": "Global","Kontroller": "TWoffFq",   "label": "G_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/G_TWoffFq_B_exLimit"},
+    {"Individ": "Global","Kontroller": "Sin",       "label": "G_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_S_B_exLimit"},
+    #{"Individ": "Global","Kontroller": "SUfq",      "label": "G_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_SUfq_B_exLimit"},
+    {"Individ": "Global","Kontroller": "Tanh",      "label": "G_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_T_B_exLimit"},
+    #{"Individ": "Global","Kontroller": "TWoff",     "label": "G_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_TWoff_B_exLimit"},
+    #{"Individ": "Global","Kontroller": "TWoffFq",   "label": "G_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_TWoffFq_B_exLimit"},
 
-    {"Individ": "Two","Kontroller": "Sin",          "label": "T_S_B_exLimit",       "path":"../../Master_Resultater/Determ/T_S_B_exLimit"},
-    {"Individ": "Two","Kontroller": "SUfq",         "label": "T_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/T_SUfq_B_exLimit"},
-    {"Individ": "Two","Kontroller": "Tanh",         "label": "T_T_B_exLimit",       "path":"../../Master_Resultater/Determ/T_T_B_exLimit"},
-    {"Individ": "Two","Kontroller": "TWoff",        "label": "T_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/T_TWoff_B_exLimit"},
-    {"Individ": "Two","Kontroller": "TWoffFq",      "label": "T_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/T_TWoffFq_B_exLimit"},
+    #{"Individ": "Two","Kontroller": "Sin",          "label": "T_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_S_B_exLimit"},
+    #{"Individ": "Two","Kontroller": "SUfq",         "label": "T_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_SUfq_B_exLimit"},
+    #{"Individ": "Two","Kontroller": "Tanh",         "label": "T_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_T_B_exLimit"},
+    {"Individ": "Two","Kontroller": "TWoff",        "label": "T_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_TWoff_B_exLimit"},
+    #{"Individ": "Two","Kontroller": "TWoffFq",      "label": "T_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_TWoffFq_B_exLimit"},
 
-    {"Individ": "Zero","Kontroller": "Sin",         "label": "Z_S_B_exLimit",       "path":"../../Master_Resultater/Determ/Z_S_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "SUfq",        "label": "Z_SUfq_B_exLimit",    "path":"../../Master_Resultater/Determ/Z_SUfq_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "Tanh",        "label": "Z_T_B_exLimit",       "path":"../../Master_Resultater/Determ/Z_T_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoff",       "label": "Z_TWoff_B_exLimit",   "path":"../../Master_Resultater/Determ/Z_TWoff_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoffFq",     "label": "Z_TWoffFq_B_exLimit", "path":"../../Master_Resultater/Determ/Z_TWoffFq_B_exLimit"}
+    {"Individ": "Zero","Kontroller": "Sin",         "label": "Z_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_S_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "SUfq",        "label": "Z_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_SUfq_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "Tanh",        "label": "Z_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_T_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoff",       "label": "Z_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_TWoff_B_exLimit"},
+    {"Individ": "Zero","Kontroller": "TWoffFq",     "label": "Z_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_TWoffFq_B_exLimit"}
 ]
 
-two  = [gruppert[0], gruppert[3], gruppert[6], gruppert[9] , gruppert[12]]
-zero = [gruppert[1], gruppert[4], gruppert[7], gruppert[10], gruppert[13]]
-glob = [gruppert[2], gruppert[5], gruppert[8], gruppert[11], gruppert[14]]
+# two  = [gruppert[0], gruppert[3], gruppert[6], gruppert[9] , gruppert[12]]
+# zero = [gruppert[1], gruppert[4], gruppert[7], gruppert[10], gruppert[13]]
+# glob = [gruppert[2], gruppert[5], gruppert[8], gruppert[11], gruppert[14]]
 
-s       = [gruppert[0], gruppert[1], gruppert[2]]
-sufq    = [gruppert[3], gruppert[4], gruppert[5]]
-t       = [gruppert[6], gruppert[7], gruppert[8]]
-tWoff   = [gruppert[9], gruppert[10], gruppert[11]]
-tWoffFq = [gruppert[12], gruppert[13], gruppert[14]]
+# s       = [gruppert[0], gruppert[1], gruppert[2]]
+# sufq    = [gruppert[3], gruppert[4], gruppert[5]]
+# t       = [gruppert[6], gruppert[7], gruppert[8]]
+# tWoff   = [gruppert[9], gruppert[10], gruppert[11]]
+# tWoffFq = [gruppert[12], gruppert[13], gruppert[14]]
 ex_lost_dict = gruppert
-#do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.svg")
+do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.svg")
 
 
 #do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score.svg")
@@ -75,7 +75,7 @@ ex_lost_dict = gruppert
 
 
 #do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score_miljo.svg")
-do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.svg")
+#do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.svg")
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
 do_it_all_stdline(two, "iterations.csv", "qd_score", title="QD_score for Two", scale=True, output_filename="QD_score_two.svg")
 do_it_all_stdline(glob, "iterations.csv", "qd_score", title="QD_score for Global", scale=True, output_filename="QD_score_global.svg")
