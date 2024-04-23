@@ -26,7 +26,7 @@ srun bash -c "echo hello ${SLURM_ARRAY_TASK_ID}" &
 
 squeue
 scontrol show node
-sacct -j 3947 --format=JobID,Start,End,Elapsed,REQCPUS,ALLOCTRES%30
+sacct -j 12972 --format=JobID,Jobname%30,Start,End,Elapsed,REQCPUS,ALLOCTRES%30
 
 # Til ifi maskinen
 # KJøres på HPC  
@@ -36,8 +36,9 @@ rsync --progress -a result/G_SUfq_B_exLimit/* henrme@login.ifi.uio.no:~/resultat
 
 # Disse må kjøres
 rsync --progress -a miljo_timescale/* henrme@login.ifi.uio.no:~/resultater_timescale/miljo_timescale
-rsync --progress -a kontrollers_timescale/* henrme@login.ifi.uio.no:~/resultater_timescale/kontrollers_timescale
-
+rsync --progress -a kontrollers_timescale/* henrme@login.ifi.uio.no:~/timescale/kontrollers_timescale
+rsync --progress -a miljo/* henrme@login.ifi.uio.no:~/timescale/miljo_timescale2
+rsync --progress -a opprydding/* henrme@login.ifi.uio.no:~/timescale/opprydding
 
 
 # Fra ifi til min data:
