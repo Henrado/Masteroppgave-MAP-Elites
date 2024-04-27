@@ -27,11 +27,11 @@ directory = "../../timescale/timescale/kontrollers_timescale/G_T_B_exLimit/121"
 directory = "../../timescale/timescale/kontrollers_timescale/G_TWoff_B_exLimit/363"
 directory = "../../timescale/timescale/kontrollers_timescale/G_TWoffFq_B_exLimit/326"
 
-#directory = "../../timescale/timescale/kontrollers_timescale/T_S_B_exLimit/"
+directory = "../../timescale/timescale/kontrollers_timescale/T_S_B_exLimit/155"
 directory = "../../timescale/timescale/kontrollers_timescale/T_SUfq_B_exLimit/280"
 directory = "../../timescale/timescale/kontrollers_timescale/T_T_B_exLimit/281"
 directory = "../../timescale/timescale/kontrollers_timescale/T_TWoff_B_exLimit/301"
-#directory = "../../timescale/timescale/kontrollers_timescale/T_TWoffFq_B_exLimit/"
+directory = "../../timescale/timescale/kontrollers_timescale/T_TWoffFq_B_exLimit/123"
 
 directory = "../../timescale/timescale/kontrollers_timescale/Z_S_B_exLimit/4"
 directory = "../../timescale/timescale/kontrollers_timescale/Z_SUfq_B_exLimit/21"
@@ -41,9 +41,9 @@ directory = "../../timescale/timescale/kontrollers_timescale/Z_TWoffFq_B_exLimit
 
 directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_CS0/1"
 directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_CS1/416"
-#directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_CS2/"
+directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_CS2/170"
 directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_CS5/458"
-#directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_HCS1/1"
+directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_HCS1/583"
 directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_HCS2/381"
 directory = "../../timescale/timescale/miljo_timescale/Z_TWoff_B_HCS5/221"
 
