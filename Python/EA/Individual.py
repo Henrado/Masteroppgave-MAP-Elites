@@ -221,10 +221,14 @@ class Individual_globalLock:
 
 if __name__ == "__main__":
     s = TanhControllerWOffFq
-    #ind = Individual_zeroLocked
-    ind = Individual_twoLock
-    ind = Individual_globalLock
-    count = ind.get_dimension_count(s) # type: ignore
-    genom = np.arange(count)
-    print(genom)
-    a = ind(genom, s)
+    ind_t = Individual_twoLock
+    ind_g = Individual_globalLock
+    ind_z = Individual_zeroLocked
+    count_t = ind_t.get_dimension_count(s) # type: ignore
+    count_g = ind_g.get_dimension_count(s) # type: ignore
+    count_z = ind_z.get_dimension_count(s) # type: ignore
+
+    print("Ikke delt", count_z)
+    print("Segment delt", count_t)
+    print("Fullt delt", count_g)
+    #a = ind(genom, s)
