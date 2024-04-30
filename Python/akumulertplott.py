@@ -37,42 +37,44 @@ miljo = [
 ]
 
 gruppert = [
-    {"Individ": "Global","Kontroller": "Sin",       "label": "G_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_S_B_exLimit"},
-    #{"Individ": "Global","Kontroller": "SUfq",      "label": "G_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_SUfq_B_exLimit"},
-    {"Individ": "Global","Kontroller": "Tanh",      "label": "G_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_T_B_exLimit"},
-    #{"Individ": "Global","Kontroller": "TWoff",     "label": "G_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_TWoff_B_exLimit"},
-    #{"Individ": "Global","Kontroller": "TWoffFq",   "label": "G_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/G_TWoffFq_B_exLimit"},
+    {"Individ": "Fullt delt","Kontroller": "SinFreq",     "label": "Fullt delt SinFreq",      "path":"../../Master_Resultater/timescale1/kontrollers_timescale/G_S_B_exLimit"},
+    {"Individ": "Fullt delt","Kontroller": "Sin",         "label": "Fullt delt Sin",          "path":"../../Master_Resultater/timescale1/kontrollers_timescale/G_SUfq_B_exLimit"},
+    {"Individ": "Fullt delt","Kontroller": "Tan",         "label": "Fullt delt Tan",          "path":"../../Master_Resultater/timescale1/kontrollers_timescale/G_T_B_exLimit"},
+    {"Individ": "Fullt delt","Kontroller": "TanOff",      "label": "Fullt delt TanOff",       "path":"../../Master_Resultater/timescale1/kontrollers_timescale/G_TWoff_B_exLimit"},
+    {"Individ": "Fullt delt","Kontroller": "TanOffFreq",  "label": "Fullt delt TanOffFreq",   "path":"../../Master_Resultater/timescale1/kontrollers_timescale/G_TWoffFq_B_exLimit"},
 
-    #{"Individ": "Two","Kontroller": "Sin",          "label": "T_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_S_B_exLimit"},
-    #{"Individ": "Two","Kontroller": "SUfq",         "label": "T_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_SUfq_B_exLimit"},
-    #{"Individ": "Two","Kontroller": "Tanh",         "label": "T_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_T_B_exLimit"},
-    {"Individ": "Two","Kontroller": "TWoff",        "label": "T_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_TWoff_B_exLimit"},
-    #{"Individ": "Two","Kontroller": "TWoffFq",      "label": "T_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/T_TWoffFq_B_exLimit"},
+    {"Individ": "Segment delt","Kontroller": "SinFreq",   "label": "Segment delt SinFreq",    "path":"../../Master_Resultater/timescale1/kontrollers_timescale/T_S_B_exLimit"},
+    {"Individ": "Segment delt","Kontroller": "Sin",       "label": "Segment delt Sin",        "path":"../../Master_Resultater/timescale1/kontrollers_timescale/T_SUfq_B_exLimit"},
+    {"Individ": "Segment delt","Kontroller": "Tan",       "label": "Segment delt Tan",        "path":"../../Master_Resultater/timescale1/kontrollers_timescale/T_T_B_exLimit"},
+    {"Individ": "Segment delt","Kontroller": "TanOff",    "label": "Segment delt TanOff",     "path":"../../Master_Resultater/timescale1/kontrollers_timescale/T_TWoff_B_exLimit"},
+    {"Individ": "Segment delt","Kontroller": "TanOffFreq","label": "Segment delt TanOffFreq", "path":"../../Master_Resultater/timescale1/kontrollers_timescale/T_TWoffFq_B_exLimit"},
 
-    {"Individ": "Zero","Kontroller": "Sin",         "label": "Z_S_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_S_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "SUfq",        "label": "Z_SUfq_B_exLimit",    "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_SUfq_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "Tanh",        "label": "Z_T_B_exLimit",       "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_T_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoff",       "label": "Z_TWoff_B_exLimit",   "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_TWoff_B_exLimit"},
-    {"Individ": "Zero","Kontroller": "TWoffFq",     "label": "Z_TWoffFq_B_exLimit", "path":"../../resultater_timescale/resultater_timescale/kontrollers_timescale/Z_TWoffFq_B_exLimit"}
+    {"Individ": "Ikke delt","Kontroller": "SinFreq",      "label": "Ikke delt SinFreq",       "path":"../../Master_Resultater/timescale1/kontrollers_timescale/Z_S_B_exLimit"},
+    {"Individ": "Ikke delt","Kontroller": "Sin",          "label": "Ikke delt Sin",           "path":"../../Master_Resultater/timescale1/kontrollers_timescale/Z_SUfq_B_exLimit"},
+    {"Individ": "Ikke delt","Kontroller": "Tan",          "label": "Ikke delt Tan",           "path":"../../Master_Resultater/timescale1/kontrollers_timescale/Z_T_B_exLimit"},
+    {"Individ": "Ikke delt","Kontroller": "TanOff",       "label": "Ikke delt TanOff",        "path":"../../Master_Resultater/timescale1/kontrollers_timescale/Z_TWoff_B_exLimit"},
+    {"Individ": "Ikke delt","Kontroller": "TanOffFreq",   "label": "Ikke delt TanOffFreq",    "path":"../../Master_Resultater/timescale1/kontrollers_timescale/Z_TWoffFq_B_exLimit"}
 ]
 
-# two  = [gruppert[0], gruppert[3], gruppert[6], gruppert[9] , gruppert[12]]
-# zero = [gruppert[1], gruppert[4], gruppert[7], gruppert[10], gruppert[13]]
-# glob = [gruppert[2], gruppert[5], gruppert[8], gruppert[11], gruppert[14]]
+fult    = [gruppert[0], gruppert[1], gruppert[2], gruppert[3], gruppert[4]]
+segment = [gruppert[5], gruppert[6], gruppert[7], gruppert[8] , gruppert[9]]
+ikke    = [gruppert[10], gruppert[11], gruppert[12], gruppert[13], gruppert[14]]
 
-# s       = [gruppert[0], gruppert[1], gruppert[2]]
-# sufq    = [gruppert[3], gruppert[4], gruppert[5]]
-# t       = [gruppert[6], gruppert[7], gruppert[8]]
-# tWoff   = [gruppert[9], gruppert[10], gruppert[11]]
-# tWoffFq = [gruppert[12], gruppert[13], gruppert[14]]
+sinFreq   = [gruppert[0], gruppert[5], gruppert[10]]
+sin       = [gruppert[1], gruppert[6], gruppert[11]]
+tan       = [gruppert[2], gruppert[7], gruppert[12]]
+tanOff    = [gruppert[3], gruppert[8], gruppert[13]]
+tanOffFreq= [gruppert[4], gruppert[9], gruppert[14]]
 ex_lost_dict = gruppert
-do_it_all_boxsplot(gruppert, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.svg")
+do_it_all_boxsplot(ex_lost_dict, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.pdf")
 
 
-#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score.svg")
-#do_it_all_stdline(ex_lost_dict, "evals.csv", "cont_size", title="Konteiner fylt")
+do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD score per iterasjon", scale=True, output_filename="QD_score.pdf")
 
+for i in ex_lost_dict:
+    i["filname"] = i["path"].split("/")[5]
 
+do_it_all_grid_per_ex(ex_lost_dict, performance=True, activity=False)
 
 #do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD_score", scale=True, output_filename="QD_score_miljo.svg")
 #do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.svg")

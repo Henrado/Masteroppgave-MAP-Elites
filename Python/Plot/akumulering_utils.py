@@ -117,13 +117,18 @@ def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, 
         df = pd.concat([df, en], ignore_index = True)
     fig, ax = plt.subplots(figsize=(5.5, 4))
 
-    sns.violinplot(ax = ax,
+    """ sns.violinplot(ax = ax,
                 data = df,
                 x = 'gruppe',
                 y = 'verdier',
                 hue = 'type',
                 split = False,
-                inner_kws=dict(box_width=3))
+                inner_kws=dict(box_width=3)) """
+    sns.boxplot(ax= ax,
+                data=df,
+                x="gruppe",
+                y="verdier",
+                hue="type")
     ax.set_title(title)
     ax.legend(title=key_type, fontsize='small')
 
@@ -178,12 +183,12 @@ def do_it_all_grid_per_ex(ex_lost_dict, performance:bool, activity:bool):
     for i in ex_lost_dict:
         filname = "grid.quality_array.csv"
         path = i["path"]
-        output_filename = i["label"] + "_performancesGrid_mean.pdf"
+        output_filename = i["filname"] + "_performancesGrid_mean.pdf"
         if performance:
             do_it_all_grid(path, filname, output_filename, True, "mean")
 
         filname = "grid.activity_per_bin.csv"
-        output_filename = i["label"] + "_grid.activity_per_bin_mean.pdf"
+        output_filename = i["filname"] + "_grid.activity_per_bin_mean.pdf"
         if activity:
             do_it_all_grid(path, filname, output_filename, False, "mean")
         plt.close()
