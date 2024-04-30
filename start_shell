@@ -44,4 +44,5 @@ rsync --progress -a opprydding/* henrme@login.ifi.uio.no:~/timescale/opprydding
 # Fra ifi til min data:
 # Kjøres på min
 rsync -chavzP --stats henrme@login.ifi.uio.no:~/resultater /mnt/c/Users/henri/Documents/GitHub/
+rsync -chavzP --stats henrme@login.ifi.uio.no:~/timescale /mnt/c/Users/henri/Documents/GitHub/timescale/
 rsync -chavzP --stats henrme@login.ifi.uio.no:~/resultater_timescale /mnt/c/Users/henri/Documents/GitHub/resultater_timescale/
