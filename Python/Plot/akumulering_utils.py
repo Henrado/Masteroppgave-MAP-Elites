@@ -95,9 +95,9 @@ def do_it_all_stdline(experiments: list,filename:str, key:str, title:str="", out
     if scale:
         algo_config = config["algorithms"][config["algorithms"]["algoTotal"]["algorithms"][0]]
         algo_iterations = int(np.rint(algo_config["budget"]/algo_config["batch_size"]))
-        plot_std_line(experiments, scale=algo_iterations,title=title, output_filename=output_filename)
+        plot_std_line(experiments, scale=algo_iterations,title=title, output_filename=output_filename, xlabel="Evalueringer", ylabel="QD score")
     else:
-        plot_std_line(experiments, title=title, output_filename=output_filename)
+        plot_std_line(experiments, title=title, output_filename=output_filename, xlabel="Evalueringer", ylabel="QD score")
     pass
 
 def do_it_all_varShow():
@@ -137,7 +137,7 @@ def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, 
     ax.xaxis.grid(True)
     fig.autofmt_xdate()
     plt.tight_layout()
-    ax.set_xlabel('Type individ', fontdict=dict(fontsize=12))
+    ax.set_xlabel('Type kontrollteknikk', fontdict=dict(fontsize=12))
     ax.set_ylabel('QD score', fontdict=dict(fontsize=12))
     if output_filename is not None:
         fig.savefig(output_filename)

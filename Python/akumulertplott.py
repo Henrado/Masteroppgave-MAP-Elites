@@ -65,17 +65,17 @@ sin       = [gruppert[1], gruppert[6], gruppert[11]]
 tan       = [gruppert[2], gruppert[7], gruppert[12]]
 tanOff    = [gruppert[3], gruppert[8], gruppert[13]]
 tanOffFreq= [gruppert[4], gruppert[9], gruppert[14]]
-ex_lost_dict = miljo
-#do_it_all_boxsplot(ex_lost_dict, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.pdf")
-#do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD score per iterasjon", scale=True, output_filename="QD_score.pdf")
+ex_lost_dict = gruppert
+do_it_all_boxsplot(ex_lost_dict, "iterations.csv", key="qd_score", key_gruppe="Individ", key_type="Kontroller", title="QD score", output_filename="QD_score_box.pdf")
+do_it_all_stdline(ex_lost_dict, "iterations.csv", "qd_score", title="QD score per iterasjon", scale=True, output_filename="QD_score.pdf")
 for i in ex_lost_dict:
     i["filname"] = i["path"].split("/")[5][10:]
 
 #do_it_all_grid_per_ex(ex_lost_dict, performance=True, activity=False)
 
 
-do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD score per iterasjon", scale=True, output_filename="QD_score_miljo.pdf")
-do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.pdf")
+#do_it_all_stdline(miljo, "iterations.csv", "qd_score", title="QD score per iterasjon", scale=True, output_filename="QD_score_miljo.pdf")
+#do_it_all_boxsplot(miljo, "iterations.csv", key="qd_score", key_gruppe="CubeSize", key_type="CubeCount", title="QD score", output_filename="QD_score_miljo_box.pdf")
 """ do_it_all_stdline(zero, "iterations.csv", "qd_score", title="QD_score for Zero", scale=True, output_filename="QD_score_zero.svg")
 do_it_all_stdline(two, "iterations.csv", "qd_score", title="QD_score for Two", scale=True, output_filename="QD_score_two.svg")
 do_it_all_stdline(glob, "iterations.csv", "qd_score", title="QD_score for Global", scale=True, output_filename="QD_score_global.svg")
