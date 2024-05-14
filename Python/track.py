@@ -80,13 +80,13 @@ def do_it_all(ax, base_dir_real, base_dir_sim, ex_name_tuple):
     print("Med", ex_name, sum_lengde_sim_med/(sum_lengde_real/len(csv_files)))
     print("Uten", ex_name, sum_lengde_sim_uten/(sum_lengde_real/len(csv_files)))
     print("Begge", ex_name, ((sum_lengde_sim_uten+sum_lengde_sim_med)/2)/(sum_lengde_real/len(csv_files)))
-    ax.set_title(ex_title, fontsize=10)
+    ax.set_title(ex_title, fontsize=9.5)
     ax.legend(fontsize=5).set_zorder(10)
     ax.set_xlabel("Z retning", fontdict=dict(fontsize=8))
     #ax.set_ylabel("X retning", fontdict=dict(fontsize=12))
     ax.grid()
     #ax.set_aspect('equal', 'datalim')
-    ax.set_xlim(-20, 120)
+    ax.set_xlim(-20, 125)
     ax.set_aspect('equal')
     ax.set_ylim(-100, 100)
     output_filename = ex_name + "_real.svg"
@@ -137,18 +137,15 @@ if __name__ == "__main__":
     kontroller_base_dir_real = "../../Master_Resultater/FysiskTestTimescale/Determ/Mocap/"
     kontroller_base_dir_sim  = "../../Master_Resultater/FysiskTestTimescale/Determ/Sim/"
 
-    fig, axs = plt.subplots(1, 2,figsize=(5.3, 2.8),  sharex=True, sharey=True)
+    fig, axs = plt.subplots(3, 3,figsize=(5.3, 8.5),  sharex=True, sharey=True)
     #axs = axs.reshape(-1)
-    ex_names = ex_names2
-    #for i, ax in zip(ex_names.items(), axs.flat):
-        #do_it_all(ax, kontroller_base_dir_real, kontroller_base_dir_sim, i)
+    ex_names = miljo_ex_names2
+    for i, ax in zip(ex_names.items(), axs.flat):
+        do_it_all(ax, miljo_base_dir_real, miljo_base_dir_sim, i)
     
-    do_it_all(axs.flat[0], base_dir_real_base, base_dir_sim_base, ("X-retning","X-retning"))
-    do_it_all(axs.flat[1], base_dir_real_base, base_dir_sim_base, ("Z-retning","Z-retning"))
-
     axs.flat[0].set_ylabel("X retning", fontdict=dict(fontsize=8))
-    #axs.flat[3].set_ylabel("X retning", fontdict=dict(fontsize=8))
-    #axs.flat[6].set_ylabel("X retning", fontdict=dict(fontsize=8))
+    axs.flat[3].set_ylabel("X retning", fontdict=dict(fontsize=8))
+    axs.flat[6].set_ylabel("X retning", fontdict=dict(fontsize=8))
 
     ## access each axes object via axs.flat
     for ax in axs.flat:
@@ -156,8 +153,9 @@ if __name__ == "__main__":
         if not bool(ax.has_data()):
             fig.delaxes(ax) ## delete if nothing is plotted in the axes obj
 
-    #axs.flat[5].set_xlabel("Z retning", fontdict=dict(fontsize=8))
     fig.autofmt_xdate()
+    axs.flat[4].set_xlabel("Z retning", fontdict=dict(fontsize=8))
+    axs.flat[5].set_xlabel("Z retning", fontdict=dict(fontsize=8))
     plt.tight_layout()
     #fig.savefig("real_ex3_2.pdf")
     plt.show()

@@ -135,10 +135,10 @@ def do_it_all_boxsplot(experiments: list,filename:str, key:str, key_gruppe:str, 
         # adding horizontal grid lines
     ax.yaxis.grid(True)
     ax.xaxis.grid(True)
+    ax.set_xlabel('', fontdict=dict(fontsize=0))
+    ax.set_ylabel('QD score', fontdict=dict(fontsize=12))
     fig.autofmt_xdate()
     plt.tight_layout()
-    ax.set_xlabel('Type kontrollteknikk', fontdict=dict(fontsize=12))
-    ax.set_ylabel('QD score', fontdict=dict(fontsize=12))
     if output_filename is not None:
         fig.savefig(output_filename)
         plt.close(fig)
