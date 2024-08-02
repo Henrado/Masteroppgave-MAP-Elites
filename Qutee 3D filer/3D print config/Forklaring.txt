@@ -1,0 +1,4 @@
+ninjatek_chinchilla_prusaMK3.ini er konfingurasjonsfilen som jeg har brukt til å printe med chinchilla tpu (ninjatek). 
+Den kommer fra 
+https://forum.prusa3d.com/forum/original-prusa-i3-mk3s-mk3-how-do-i-print-this-printing-help/chinchilla-ninjatek-my-way/
+Og brukes i Prusa slicer 
